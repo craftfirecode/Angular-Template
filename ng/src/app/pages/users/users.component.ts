@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {AsyncPipe, NgForOf} from '@angular/common';
-import {ApiService, User} from '../../api.service';
+import { AsyncPipe, NgForOf } from '@angular/common';
+import { ApiService, User } from '../../api.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -9,12 +10,14 @@ import {ApiService, User} from '../../api.service';
     AsyncPipe
   ],
   templateUrl: './users.component.html',
-  styleUrl: './users.component.scss'
+  styleUrls: ['./users.component.scss']
 })
-export class UsersComponent {
-  users$;
+export class UsersComponent implements OnInit {
+  users$!: Observable<User[]>;
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService) {}
+
+  ngOnInit() {
     this.users$ = this.apiService.getUsers();
   }
 }
