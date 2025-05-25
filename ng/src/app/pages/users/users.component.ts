@@ -11,14 +11,10 @@ import {ApiService, User} from '../../api.service';
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
-export class UsersComponent implements OnInit {
-  users: User[] = [];
+export class UsersComponent {
+  users$;
 
-  constructor(private apiService: ApiService) {}
-
-  ngOnInit() {
-    this.apiService.getUsers().subscribe((data: User[]) => {
-      this.users = data;
-    });
+  constructor(private apiService: ApiService) {
+    this.users$ = this.apiService.getUsers();
   }
 }
