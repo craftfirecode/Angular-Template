@@ -11,8 +11,8 @@
 - **Datenbindung** (`[innerText]`)
 - **SCSS für Komponenten-Styles** (`styleUrl`)
 - **Standalone Components** (`imports: [...]` im Decorator)
--
 
 ## Verwendete Angular-Features in ./ng
 
 - **API Services** (`AysncApiService`)
+- **Routing** (`RouterModule`, `Routes`, `routerLink`)
