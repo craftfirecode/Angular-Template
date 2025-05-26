@@ -3,5 +3,8 @@
     <img [src]="imagePath + 'logo.png'" alt="logo" class="w-24 mx-auto mb-4">
     <h1>EasyTask</h1>
     <p>Enterprise-level task management</p>
+    <div *ngIf="userStore.selectedUser() as user">
+      <p>Signal is coming in: {{ user.name }}</p>
+    </div>
   </div>
 </div>

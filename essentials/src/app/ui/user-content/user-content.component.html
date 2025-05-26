@@ -1,0 +1,5 @@
+<p>user-content works!</p>
+<ng-container *ngIf="userStore.selectedUser() as user">
+  <h4 [innerText]="user.name"></h4>
+  <p [innerText]="user.story"></p>
+</ng-container>

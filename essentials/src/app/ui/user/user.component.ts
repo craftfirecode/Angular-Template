@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, computed, input, signal,} from '@angular/core';
 import {IUsers} from './userDump';
 import {NgIf} from '@angular/common';
 
@@ -11,8 +11,8 @@ import {NgIf} from '@angular/common';
   styleUrl: './user.component.scss'
 })
 export class UserComponent {
-  @Input() data: IUsers | undefined;
-
+  data = input.required<IUsers>();
+  
   onClickUser(): void {
     console.log(JSON.stringify(this.data));
   }
