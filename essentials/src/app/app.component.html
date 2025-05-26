@@ -1,16 +1,16 @@
 <div class="container mx-auto mt-5">
 
-  <app-header/>
-  <main class="flex mt-5 gap-5">
-    <aside class="w-[350px]">
-      <ul id="users" class="flex gap-5 flex-col">
-        <li *ngFor="let user of users$ | async">
-          <app-user (click)="updateUserStore(user)" [data]="user"></app-user>
-        </li>
-      </ul>
-    </aside>
-    <div class="border w-full">
-      <app-user-content/>
-    </div>
-  </main>
+    <app-header/>
+    <main class="flex mt-5 gap-5">
+        <aside class="w-[550px]">
+            <ul id="users" class="flex gap-5 flex-col">
+                <li *ngFor="let user of users$ | async">
+                    <app-user (click)="updateUserStore(user)" [data]="user"></app-user>
+                </li>
+            </ul>
+        </aside>
+        <div class="border w-full">
+            <app-user-content/>
+        </div>
+    </main>
 </div>

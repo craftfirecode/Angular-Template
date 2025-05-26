@@ -1,9 +1,23 @@
+<!-- user-content.component.html -->
 <ng-container *ngIf="userStore.selectedUser() as user; else noSignal">
-    Signal is coming:
-    <h4 [innerText]="user.name"></h4>
-    <p [innerText]="user.story"></p>
+    <ng-container *ngIf="user.admin">
+        <ng-container *ngTemplateOutlet="adminTemplate; context: { $implicit: user }"></ng-container>
+    </ng-container>
+    <ng-container *ngIf="!user.admin">
+        <ng-container *ngTemplateOutlet="userTemplate; context: { $implicit: user }"></ng-container>
+    </ng-container>
 </ng-container>
 
 <ng-template #noSignal>
-    <p>Kein Benutzer ausgewählt.</p>
+    <p [innerText]="'No user selected'"></p>
+</ng-template>
+
+<ng-template #adminTemplate let-user>
+    <h4 [innerText]="'Admin: ' + user.name"></h4>
+    <p [innerText]="user.story"></p>
+</ng-template>
+
+<ng-template #userTemplate let-user>
+    <h4 [innerText]="user.name"></h4>
+    <p [innerText]="user.story"></p>
 </ng-template>
