@@ -1,4 +1,3 @@
-<!-- user-content.component.html -->
 <ng-container *ngIf="userStore.selectedUser() as user; else noSignal">
     <ng-container *ngIf="user.admin">
         <ng-container *ngTemplateOutlet="adminTemplate; context: { $implicit: user }"></ng-container>
