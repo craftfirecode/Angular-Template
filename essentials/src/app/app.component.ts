@@ -14,13 +14,13 @@ import {Observable, of} from 'rxjs';
 export class AppComponent implements OnInit {
   title = 'essentials';
   users$!: Observable<IUsers[]>;
-  selectedUser: WritableSignal<number> = signal(0);
+  selectedUser: WritableSignal<IUsers | undefined> = signal(undefined);
 
   ngOnInit() {
     this.users$ = of(usersDump);
   }
 
-  onClickUser(userId: number): void {
-    this.selectedUser.set(userId);
+  onClickUser(userData: IUsers): void {
+    this.selectedUser.set(userData);
   }
 }
