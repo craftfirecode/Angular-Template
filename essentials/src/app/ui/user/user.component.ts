@@ -12,4 +12,8 @@ import {NgIf} from '@angular/common';
 })
 export class UserComponent {
   @Input() data: IUsers | undefined;
+
+  alertMessage(): void {
+    alert(JSON.stringify(this.data));
+  }
 }

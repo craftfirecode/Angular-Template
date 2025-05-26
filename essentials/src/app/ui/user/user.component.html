@@ -1,5 +1,7 @@
 <div class="">
-  <button class="flex w-full rounded-full p-1 gap-4 items-center bg-[#5437f7] hover:bg-[#7f22fe]">
+  <button
+    (click)="alertMessage()"
+    class="flex w-full rounded-full p-1 gap-4 items-center bg-[#5437f7] hover:bg-[#7f22fe]">
     <img class="rounded-full" alt="avatar" width="35px" [src]="data?.img"/>
     <span [innerText]="data?.name"></span>
   </button>
