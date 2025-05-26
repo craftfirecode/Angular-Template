@@ -13,7 +13,7 @@ import {NgIf} from '@angular/common';
 export class UserComponent {
   @Input() data: IUsers | undefined;
 
-  alertMessage(): void {
+  onClickUser(): void {
     alert(JSON.stringify(this.data));
   }
 }
