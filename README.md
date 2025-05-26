@@ -16,7 +16,7 @@ Grundlegende Angular-Konzepte und -Features:
 
 - ✅ Komponenten (`@Component`)
 - ✅ Input Properties (`@Input`, inkl. Validierung z. B. `input.required`)
-- ✅ Signals (`signal`, z. B. zur lokalen State-Verwaltung)
+- ✅ Signals (`signal`, State-Verwaltung)
 - ✅ Services & Dependency Injection (`UserStoreService`, Konstruktorinjektion)
 - ✅ Strukturelle Direktiven (`*ngIf`, `*ngTemplateOutlet`)
 - ✅ Template-Referenzen (`#templateName`)
