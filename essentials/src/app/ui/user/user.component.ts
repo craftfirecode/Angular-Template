@@ -14,6 +14,6 @@ export class UserComponent {
   @Input() data: IUsers | undefined;
 
   onClickUser(): void {
-    alert(JSON.stringify(this.data));
+    console.log(JSON.stringify(this.data));
   }
 }

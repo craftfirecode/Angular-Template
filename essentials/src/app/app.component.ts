@@ -14,6 +14,7 @@ import {Observable, of} from 'rxjs';
 export class AppComponent implements OnInit {
   title = 'essentials';
   users$!: Observable<IUsers[]>;
+  selectedUser: number | undefined;
 
   ngOnInit() {
     this.users$ = of(usersDump);
