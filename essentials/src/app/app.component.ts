@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal, WritableSignal} from '@angular/core';
 import {HeaderComponent} from './ui/header/header.component';
 import {UserComponent} from './ui/user/user.component';
 import {AsyncPipe, NgForOf} from '@angular/common';
@@ -14,9 +14,13 @@ import {Observable, of} from 'rxjs';
 export class AppComponent implements OnInit {
   title = 'essentials';
   users$!: Observable<IUsers[]>;
-  selectedUser: number | undefined;
+  selectedUser: WritableSignal<number> = signal(0);
 
   ngOnInit() {
     this.users$ = of(usersDump);
+  }
+
+  onClickUser(userId: number): void {
+    this.selectedUser.set(userId);
   }
 }
