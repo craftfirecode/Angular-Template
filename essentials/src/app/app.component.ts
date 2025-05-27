@@ -23,8 +23,4 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.users$ = of(usersDump);
   }
-
-  updateUserStore(userData: IUsers) {
-    this.userStore.setSelectedUser(userData);
-  }
 }
