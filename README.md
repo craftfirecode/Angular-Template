@@ -23,6 +23,7 @@ Grundlegende Angular-Konzepte und -Features:
 - ✅ Template-Referenzen (`#templateName`)
 - ✅ Template Context (`context: { $implicit: ... }`)
 - ✅ Datenbindung (`[innerText]`, u. a.)
+- ✅ Custom Event (`(onSelectUser($event))`, u. a.)
 - ✅ Styling via SCSS (`styleUrls`)
 - ✅ Standalone Components (`imports: [...]` im Decorator)
 
