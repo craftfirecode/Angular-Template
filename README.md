@@ -16,7 +16,7 @@ Grundlegende Angular-Konzepte und -Features:
 
 - ✅ Komponenten (`@Component`)
 - ✅ Input Properties (`@Input`, inkl. `input()`)
-- ✅ Input Properties (`@Output`, inkl. `output()`)
+- ✅ Output Properties (`@Output`, inkl. `output()`)
 - ✅ Signals (`signal`, State-Verwaltung)
 - ✅ Services & Dependency Injection (`UserStoreService`, Konstruktorinjektion)
 - ✅ Strukturelle Direktiven (`*ngIf`, `*ngTemplateOutlet`)
