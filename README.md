@@ -32,7 +32,7 @@ Grundlegende Angular-Konzepte und -Features:
 Erweiterte Angular-Features:
 
 - 🔄 API-Integration (`AsyncApiService`)
-- 🌐 Routing (`RouterModule`, `Routes`, `routerLink`)
+- 🌐 Routing (`RouterModule`, `Routes`, `routerLink`, `outlet`)
 
 ## Zielsetzung
 
