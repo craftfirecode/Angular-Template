@@ -1,4 +1,4 @@
-import {Component, input, OnInit} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {IUsers} from '../../dump/userDump';
 import {UserStoreService} from '../../user-store.service';
 import {NgForOf} from '@angular/common';
@@ -11,16 +11,11 @@ import {NgForOf} from '@angular/common';
   ],
   styleUrl: './user.component.scss'
 })
-export class UserComponent implements OnInit {
+export class UserComponent {
   headline = input.required<string>();
-  users$: ReturnType<UserStoreService['usersList$']> | null = null;
 
-  constructor(private userStore: UserStoreService) {
+  constructor(public userStore: UserStoreService) {
     // injects
-  }
-
-  ngOnInit(): void {
-    this.users$ = this.userStore.usersList$();
   }
 
   onClickUser(user: IUsers): void {

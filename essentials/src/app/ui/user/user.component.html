@@ -1,11 +1,11 @@
 <div>
-  <h5 class="uppercase" [innerText]="headline()"></h5>
+  <div class="uppercase mb-3" [innerText]="headline()"></div>
   <ul class="flex gap-3 flex-col">
-    <li class="text-xs text-gray-500" [innerText]="'Click on a user to see details'"></li>
-    <li *ngFor="let user of users$">
+    <li *ngFor="let user of userStore.usersList$()">
       <button
         (click)="onClickUser(user)"
-        class="flex w-full rounded-full p-1 gap-4 items-center bg-[#5437f7] hover:bg-[#7f22fe]">
+        [class.bg-red-500]="userStore.selectedUser()?.id === user.id"
+        class="flex w-full text-white rounded-full p-1 gap-4 items-center bg-[#5437f7] hover:bg-[#7f22fe]">
         <img class="rounded-full" alt="avatar" width="35px" [src]="user.img"/>
         <span [innerText]="user.name"></span>
       </button>
