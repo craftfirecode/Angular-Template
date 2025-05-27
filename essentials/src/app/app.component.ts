@@ -22,6 +22,6 @@ export class AppComponent implements OnInit {
   }
 
   get userHeadline() {
-    return this.users$?.length + ' users found';
+    return this.users$?.length + ' ' + 'users found';
   }
 }
