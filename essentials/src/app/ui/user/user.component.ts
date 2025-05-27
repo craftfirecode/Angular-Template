@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {Component, EventEmitter, input, Output} from '@angular/core';
 import {IUsers} from '../../dump/userDump';
 import {UserStoreService} from '../../user-store.service';
 import {NgForOf} from '@angular/common';
@@ -13,6 +13,7 @@ import {NgForOf} from '@angular/common';
 })
 export class UserComponent {
   headline = input.required<string>();
+  @Output() userEmitted: EventEmitter<IUsers> = new EventEmitter();
 
   constructor(public userStore: UserStoreService) {
     // injects
@@ -20,5 +21,6 @@ export class UserComponent {
 
   onClickUser(user: IUsers): void {
     this.userStore.setSelectedUser(user);
+    this.userEmitted.emit(user);
   }
 }
