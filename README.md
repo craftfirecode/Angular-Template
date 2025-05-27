@@ -15,7 +15,8 @@ Das Projekt ist in zwei Bereiche unterteilt:
 Grundlegende Angular-Konzepte und -Features:
 
 - ✅ Komponenten (`@Component`)
-- ✅ Input Properties (`@Input`, inkl. Validierung z. B. `input.required`)
+- ✅ Input Properties (`@Input`, inkl. `input()`)
+- ✅ Input Properties (`@Output`, inkl. `output()`)
 - ✅ Signals (`signal`, State-Verwaltung)
 - ✅ Services & Dependency Injection (`UserStoreService`, Konstruktorinjektion)
 - ✅ Strukturelle Direktiven (`*ngIf`, `*ngTemplateOutlet`)
