@@ -1,4 +1,4 @@
-import {Component, EventEmitter, input, Output} from '@angular/core';
+import {Component, input, output} from '@angular/core';
 import {IUsers} from '../../dump/userDump';
 import {UserStoreService} from '../../user-store.service';
 import {NgForOf} from '@angular/common';
@@ -13,7 +13,7 @@ import {NgForOf} from '@angular/common';
 })
 export class UserComponent {
   headline = input.required<string>();
-  @Output() userEmitted: EventEmitter<IUsers> = new EventEmitter();
+  userEmitted = output<IUsers>();
 
   constructor(public userStore: UserStoreService) {
     // injects
