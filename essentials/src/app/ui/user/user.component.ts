@@ -12,8 +12,8 @@ import {NgForOf} from '@angular/common';
   styleUrl: './user.component.scss'
 })
 export class UserComponent {
-  headline = input.required<string>();
-  userEmitted = output<IUsers>();
+  headline = input.required<string>(); // It is a signal in Angular 17
+  userEmitted = output<IUsers>(); // It is a EventEmitter in Angular 17
 
   constructor(public userStore: UserStoreService) {
     // injects
