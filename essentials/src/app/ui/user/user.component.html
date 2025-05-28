@@ -1,5 +1,6 @@
 <div>
   <div class="uppercase mb-3" [innerText]="headline()"></div>
+  <b [innerText]="'*ngFor'"></b>
   <ul class="flex gap-3 flex-col">
     <li *ngFor="let user of userStore.usersList$()">
       <button
@@ -10,5 +11,20 @@
         <span [innerText]="user.name"></span>
       </button>
     </li>
+
+    <hr/>
+    <b [innerText]="'@for'"></b>
+    <!-- This is an alternative way to use ngFor with trackBy -->
+    @for (user of userStore.usersList$(); track user.id) {
+      <li>
+        <button
+          (click)="onClickUser(user)"
+          [class.bg-red-500]="userStore.selectedUser()?.id === user.id"
+          class="flex w-full text-white rounded-full p-1 gap-4 items-center bg-[#5437f7] hover:bg-[#7f22fe]">
+          <img class="rounded-full" alt="avatar" width="35px" [src]="user.img"/>
+          <span [innerText]="user.name"></span>
+        </button>
+      </li>
+    }
   </ul>
 </div>
