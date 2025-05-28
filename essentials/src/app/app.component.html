@@ -1,3 +1,13 @@
+@if (emittedUser?.name) {
+  <div class="container mx-auto mt-5">
+    <b>Output Event from app-user:</b> {{ emittedUser?.name }}
+  </div>
+} @else {
+  <div class="container mx-auto mt-5">
+    <b>No Output Event from app-user.</b>
+  </div>
+}
+
 <div class="container mx-auto mt-5">
   <app-header/>
   <main class="flex mt-5 gap-5">
@@ -8,8 +18,4 @@
       <app-user-content/>
     </div>
   </main>
-</div>
-
-<div class="container mx-auto mt-5">
-  <b>Output Event from app-user:</b> {{ emittedUser?.name }}
 </div>

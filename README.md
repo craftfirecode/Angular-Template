@@ -21,6 +21,7 @@ Grundlegende Angular-Konzepte und -Features:
 - ✅ Services & Dependency Injection (`UserStoreService`, Konstruktorinjektion)
 - ✅ Strukturelle Direktiven (`*ngIf`, `*ngTemplateOutlet`)
 - ✅ Iteration über Listen (`*ngFor` vs. `@for` mit `track`)
+- ✅ Conditional (`*if`, `*else` vs. `@if` mit `@else`)
 - ✅ Template-Referenzen (`#templateName`)
 - ✅ Template Context (`context: { $implicit: ... }`)
 - ✅ Datenbindung (`[innerText]`, u. a.)
