@@ -36,19 +36,6 @@ Erweiterte Angular-Features:
 - 🔄 API-Integration (`AsyncApiService`)
 - 🌐 Routing (`RouterModule`, `Routes`, `routerLink`, `outlet`)
 
-### 📁 `./ng-auth`
-
-Backend-Authentifizierung mit NestJS:
-
-- 🔑 Authentifizierungs-API (NestJS, TypeORM, SQLite)
-- 🔒 User-Management (Registrierung, Login, JWT)
-- 🌍 CORS-Konfiguration für lokale Angular-Entwicklung
-- 🗄️ Modularer Aufbau (`AuthModule`, `UsersModule`)
-- 🧪 Beispiel-Endpoints und Testdaten
-
-Der Ordner enthält das Backend für Authentifizierung und Userverwaltung, das mit der Angular-Frontend-Anwendung
-kommuniziert.
-
 ## Zielsetzung
 
 - 🧠 Vertiefung moderner Angular-Konzepte
