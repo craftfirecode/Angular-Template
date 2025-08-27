@@ -1,19 +1,28 @@
-<main>
-  <h1>Anmeldung</h1>
-  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-    <div class="flex gap-5">
-      <mat-form-field class="example-full-width">
-        <mat-label>Email</mat-label>
-        <input type="email" matInput placeholder="" formControlName="email">
-      </mat-form-field>
-
-      <mat-form-field class="example-full-width">
-        <mat-label>Passwort</mat-label>
-        <input type="password" matInput placeholder="" formControlName="password">
-      </mat-form-field>
-    </div>
+<main class="flex grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-5 items-center mt-15">
+  <div>
     <div>
-      <button matButton="elevated" type="submit" [disabled]="!profileForm.valid">Submit</button>
+      <lucide-icon size="50" [img]="Bird" class="my-icon"></lucide-icon>
     </div>
-  </form>
+    <div class="my-5">
+      <h4>Sign in to your account</h4>
+    </div>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <div class="flex-col gap-5">
+        <mat-form-field class="w-full">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput placeholder="" formControlName="email">
+        </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>Passwort</mat-label>
+          <input type="password" matInput placeholder="" formControlName="password">
+        </mat-form-field>
+      </div>
+      <div>
+        <button matButton="elevated" type="submit" [disabled]="!profileForm.valid">Submit</button>
+      </div>
+    </form>
+  </div>
+  <div class="hidden md:flex">
+    <img src="/dump.jpg" alt="" />
+  </div>
 </main>

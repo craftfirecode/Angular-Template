@@ -13,6 +13,7 @@ import {
   MatSnackBarLabel,
   MatSnackBarRef
 } from '@angular/material/snack-bar';
+import {LucideAngularModule, Bird} from 'lucide-angular';
 
 @Component({
   selector: 'app-login',
@@ -24,13 +25,15 @@ import {
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    MatButtonModule
+    MatButtonModule,
+    LucideAngularModule
   ],
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
   error: string | null = null;
   private _snackBar = inject(MatSnackBar);
+  readonly Bird = Bird;
 
   durationInSeconds = 5;
 
