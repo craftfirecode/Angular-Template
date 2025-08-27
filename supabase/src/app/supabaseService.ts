@@ -21,7 +21,7 @@ export class SupabaseApiService {
     this.channel = this.client.channel('custom-insert-channel')
       .on(
         'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'folders' },
+        { event: '*', schema: 'public', table: 'folders' },
         (payload: any) => {
           console.log('Change received!', payload);
           this.refreshFolderList(); // Aktualisiere die Liste bei Änderungen
