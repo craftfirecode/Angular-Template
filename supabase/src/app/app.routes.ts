@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './login.component';
-import { RegisterComponent } from './register.component';
-import { ProtectedComponent } from './protected.component';
-import { authGuard } from './auth.guard';
-import { guestGuard } from './guest.guard';
+import { LoginComponent } from './features/auth/login.component';
+import { RegisterComponent } from './features/auth/register.component';
+import { ProtectedComponent } from './features/protected/protected.component';
+import {authGuard, guestGuard} from './core';
+
 
 export const routes: Routes = [
 	{ path: 'login', component: LoginComponent, canActivate: [guestGuard] },

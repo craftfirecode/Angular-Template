@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { SupabaseService } from './supabase.service';
-import { Router } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+import {SupabaseService} from '../../core';
 
 @Component({
   selector: 'app-register',
@@ -31,12 +30,11 @@ export class RegisterComponent {
 
   async onSubmit() {
     const res = await this.auth.signUp(this.email, this.password);
-    if (res.error) {
-      this.message = res.error.message;
+    if ((res as any).error) {
+      this.message = (res as any).error.message;
       return;
     }
     this.message = 'Check your email for confirmation (if enabled). You can now login.';
-    // optionally navigate to login
     this.router.navigate(['/login']);
   }
 }

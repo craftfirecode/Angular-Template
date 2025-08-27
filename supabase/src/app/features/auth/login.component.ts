@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { SupabaseService } from './supabase.service';
-import { Router } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+import {SupabaseService} from '../../core';
 
 @Component({
   selector: 'app-login',
@@ -32,8 +31,8 @@ export class LoginComponent {
   async onSubmit() {
     this.error = null;
     const res = await this.auth.signIn(this.email, this.password);
-    if (res.error) {
-      this.error = res.error.message;
+    if ((res as any).error) {
+      this.error = (res as any).error.message;
       return;
     }
     this.router.navigate(['/protected']);
