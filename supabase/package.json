@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:supabase": "node dist/supabase/server/server.mjs"
+    "serve:ssr:supabase": "node --no-deprecation dist/supabase/server/server.mjs"
   },
   "prettier": {
     "printWidth": 100,
@@ -33,8 +33,8 @@
     "@angular/ssr": "^20.2.0",
     "express": "^5.1.0",
     "rxjs": "~7.8.0",
-  "tslib": "^2.3.0",
-  "@supabase/supabase-js": "^2.33.0"
+    "tslib": "^2.3.0",
+    "@supabase/supabase-js": "^2.33.0"
   },
   "dependenciesMeta": {
     "@supabase/supabase-js": {
