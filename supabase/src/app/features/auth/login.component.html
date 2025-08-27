@@ -1,23 +1,19 @@
 <main>
-    <form class="example-form">
-        <mat-form-field class="example-full-width">
-            <mat-label>Favorite food</mat-label>
-            <input matInput placeholder="Ex. Pizza" value="Sushi">
-        </mat-form-field>
-    </form>
+  <h1>Anmeldung</h1>
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <div class="flex gap-5">
+      <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput placeholder="" formControlName="email">
+      </mat-form-field>
 
-
-
-  <label for="name">Name: </label>
-  <input id="name" type="text" [formControl]="name">
-
-
-    <h2>Login</h2>
-    <form (ngSubmit)="onSubmit()">
-        <label>Email<input name="email" [(ngModel)]="email" required /></label>
-        <label>Password<input name="password" type="password" [(ngModel)]="password" required /></label>
-        <button type="submit">Login</button>
-    </form>
-    <p *ngIf="error">{{ error }}</p>
-    <p><a routerLink="/register">Register</a></p>
+      <mat-form-field class="example-full-width">
+        <mat-label>Passwort</mat-label>
+        <input type="password" matInput placeholder="" formControlName="password">
+      </mat-form-field>
+    </div>
+    <div>
+      <button matButton="elevated" type="submit" [disabled]="!profileForm.valid">Submit</button>
+    </div>
+  </form>
 </main>
