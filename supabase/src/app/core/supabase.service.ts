@@ -1,6 +1,6 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { Injectable, signal } from '@angular/core';
-import {SUPABASE_ANON_KEY, SUPABASE_URL} from './supabase.config';
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from './supabase.config';
 
 const URL = SUPABASE_URL;
 const KEY = SUPABASE_ANON_KEY;
