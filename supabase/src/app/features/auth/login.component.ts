@@ -1,32 +1,25 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
-import {SupabaseService} from '../../core';
+import { SupabaseService } from '../../core';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
-  template: `
-    <main>
-      <h2>Login</h2>
-      <form (ngSubmit)="onSubmit()">
-        <label>Email<input name="email" [(ngModel)]="email" required /></label>
-        <label>Password<input name="password" type="password" [(ngModel)]="password" required /></label>
-        <button type="submit">Login</button>
-      </form>
-      <p *ngIf="error">{{ error }}</p>
-      <p><a routerLink="/register">Register</a></p>
-    </main>
-  `
+  imports: [CommonModule, FormsModule, RouterModule, MatInputModule, MatFormFieldModule, ReactiveFormsModule],
+  templateUrl: './login.component.html',
 })
 export class LoginComponent {
   email = '';
   password = '';
   error: string | null = null;
 
-  constructor(private auth: SupabaseService, private router: Router) {}
+  name = new FormControl('');
+
+  constructor(private auth: SupabaseService, private router: Router) { }
 
   async onSubmit() {
     this.error = null;
