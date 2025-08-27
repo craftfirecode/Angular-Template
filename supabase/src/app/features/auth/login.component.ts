@@ -1,5 +1,5 @@
 import {Component, inject} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {RouterModule, Router} from '@angular/router';
 import {SupabaseService} from '../../core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -26,7 +26,8 @@ import {LucideAngularModule, Bird} from 'lucide-angular';
     MatFormFieldModule,
     ReactiveFormsModule,
     MatButtonModule,
-    LucideAngularModule
+    LucideAngularModule,
+    NgOptimizedImage
   ],
   templateUrl: './login.component.html',
 })
@@ -76,8 +77,9 @@ export class LoginComponent {
       color: hotpink;
     }
   `,
-  imports: [MatButtonModule, MatSnackBarLabel, MatSnackBarActions, MatSnackBarAction],
+  imports: [MatButtonModule, MatSnackBarLabel],
 })
+
 export class PizzaPartyAnnotatedComponent {
   snackBarRef = inject(MatSnackBarRef);
 }
