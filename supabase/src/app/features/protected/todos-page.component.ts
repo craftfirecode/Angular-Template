@@ -28,7 +28,10 @@ import {createClient} from '@supabase/supabase-js';
       <ul>
         @for (todos of filteredTodos(); track todos.id) {
           <li>
-            <a [href]="'protected/todos/' + todos.id">{{ todos.id }} – {{ todos.title }}</a>
+            <div>
+              {{ todos.id }} – {{ todos.title }}
+              <button (click)="deleteTodo(todos.id)">deleteTodo</button>
+            </div>
           </li>
         }
       </ul>
@@ -38,10 +41,18 @@ import {createClient} from '@supabase/supabase-js';
 })
 export class TodosPageComponent {
   id: string | null = null;
+  supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   private _bottomSheet = inject(MatBottomSheet);
 
   openBottomSheet(): void {
     this._bottomSheet.open(BottomSheetOverviewExampleSheet);
+  }
+
+  async deleteTodo(id: number): Promise<any> {
+    await this.supabase
+      .from('todos')
+      .delete()
+      .eq('id', id)
   }
 
   // computed Signal für gefilterte Todos
@@ -75,7 +86,7 @@ export class BottomSheetOverviewExampleSheet {
   });
 
   async onSubmit() {
-    const {data, error} = await this.supabase
+    await this.supabase
       .from('todos')
       .insert([
         {title: this.profileForm.value.newTodo, folder_id: 27},
