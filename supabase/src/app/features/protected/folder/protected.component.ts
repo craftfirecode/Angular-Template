@@ -17,7 +17,7 @@ import {createClient} from '@supabase/supabase-js';
   standalone: true,
   imports: [CommonModule, MatButton, MatFabButton],
   template: `
-    <main>
+    <main class="mt-5 pb-30">
       <!--      <button (click)="logout()">Sign out</button>-->
       <div class="flex-row">
         @for (folder of data.folderList(); track folder.id) {

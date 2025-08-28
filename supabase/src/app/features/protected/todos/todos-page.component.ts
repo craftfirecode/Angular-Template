@@ -14,7 +14,7 @@ import {MatButton, MatFabButton} from '@angular/material/button';
   standalone: true,
   imports: [CommonModule, MatBottomSheetModule, MatButton, MatFabButton],
   template: `
-    <main class="mt-5">
+    <main class="mt-5 pb-30">
       <a href="/supabase/public" matButton="outlined">Zurück</a>
       <div class="my-5">
         <div *ngFor="let todo of filteredTodos()">
