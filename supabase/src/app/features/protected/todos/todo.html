@@ -1,7 +1,7 @@
 <main class="mt-5 pb-30">
   <a href="/supabase/public" matButton="outlined">Zurück</a>
   <div class="my-5">
-    <div *ngFor="let todo of filteredTodos()">
+    @for (todo of filteredTodos(); track folder.id) {
       <div class="my-5 flex gap-3 items-center">
         <button class="w-full left" matButton="outlined">{{ todo.title }}</button>
         <div role="button" (click)="deleteTodo(todo.id)">
@@ -14,7 +14,7 @@
           </svg>
         </div>
       </div>
-    </div>
+    }
   </div>
   <button matFab="elevated" (click)="openBottomSheet()" class="fab">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
