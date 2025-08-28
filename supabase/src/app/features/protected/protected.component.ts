@@ -7,7 +7,7 @@ import {
   MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
 import {MatListModule} from '@angular/material/list';
-import {MatButton, MatButtonModule} from '@angular/material/button'
+import {MatButton, MatFabButton} from '@angular/material/button'
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {createClient} from '@supabase/supabase-js';
@@ -15,10 +15,10 @@ import {createClient} from '@supabase/supabase-js';
 @Component({
   selector: 'app-protected',
   standalone: true,
-  imports: [CommonModule, MatButton],
+  imports: [CommonModule, MatButton, MatFabButton],
   template: `
     <main>
-<!--      <button (click)="logout()">Sign out</button>-->
+      <!--      <button (click)="logout()">Sign out</button>-->
       <div class="flex-row">
         @for (folder of data.folderList(); track folder.id) {
           <div class="my-5 flex gap-5 items-center">
@@ -37,7 +37,14 @@ import {createClient} from '@supabase/supabase-js';
           </div>
         }
       </div>
-      <button matButton="elevated" (click)="openBottomSheet()">Open file</button>
+      <button matFab="elevated" (click)="openBottomSheet()" class="fab">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+             class="lucide lucide-plus-icon lucide-plus">
+          <path d="M5 12h14"/>
+          <path d="M12 5v14"/>
+        </svg>
+      </button>
     </main>
   `
 })

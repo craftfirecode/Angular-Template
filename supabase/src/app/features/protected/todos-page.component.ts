@@ -7,12 +7,12 @@ import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-s
 import { createClient } from '@supabase/supabase-js';
 import {FolderService} from '../../folder.service';
 import {BottomSheetNewTodo} from './BottomSheetNewTodo';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatFabButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-todos-page',
   standalone: true,
-  imports: [CommonModule, MatBottomSheetModule, MatButton],
+  imports: [CommonModule, MatBottomSheetModule, MatButton, MatFabButton],
   template: `
     <main class="mt-5">
       <a href="/" matButton="outlined">Zurück</a>
@@ -32,7 +32,14 @@ import {MatButton} from '@angular/material/button';
           </div>
         </div>
       </div>
-      <button matButton="elevated" (click)="openBottomSheet()">Open file</button>
+      <button matFab="elevated" (click)="openBottomSheet()" class="fab">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+             class="lucide lucide-plus-icon lucide-plus">
+          <path d="M5 12h14"/>
+          <path d="M12 5v14"/>
+        </svg>
+      </button>
     </main>
   `
 })

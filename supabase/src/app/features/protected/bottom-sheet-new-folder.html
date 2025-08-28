@@ -1,12 +1,11 @@
 <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="w-full max-w-xs">
-  <div class="flex flex-col gap-5">
+  <div class="flex flex-col gap-5 my-5">
     <mat-form-field class="w-full">
-      <mat-label>New Todo</mat-label>
+      <mat-label>New Folder</mat-label>
       <input type="text" matInput placeholder="" formControlName="newFolder">
     </mat-form-field>
   </div>
-  <div class="mt-5">
+  <div class="my-5">
     <button matButton="elevated" type="submit" [disabled]="!profileForm.valid">Submit</button>
   </div>
 </form>
-BottomSheetNewFolder
