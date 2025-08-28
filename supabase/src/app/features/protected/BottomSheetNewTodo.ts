@@ -29,10 +29,8 @@ export class BottomSheetNewTodo {
 
     await this.supabase
       .from('todos')
-      .insert([{ title: this.profileForm.value.newTodo, folder_id: +folderId }])
+      .insert([{ title: this.profileForm.value.newTodo, folder_id: folderId }])
       .select();
-
     this.profileForm.reset();
-    this._bottomSheetRef.dismiss();
   }
 }
