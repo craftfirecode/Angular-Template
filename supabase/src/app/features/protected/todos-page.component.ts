@@ -45,7 +45,7 @@ export class TodosPageComponent {
   private _bottomSheet = inject(MatBottomSheet);
 
   openBottomSheet(): void {
-    this._bottomSheet.open(BottomSheetOverviewExampleSheet);
+    this._bottomSheet.open(BottomSheetNewTodo);
   }
 
   async deleteTodo(id: number): Promise<any> {
@@ -73,11 +73,11 @@ export class TodosPageComponent {
 }
 
 @Component({
-  selector: 'bottom-sheet-overview-example-sheet',
-  templateUrl: 'bottom-sheet-overview-example-sheet.html',
+  selector: 'bottom-sheet-new-todo',
+  templateUrl: 'bottom-sheet-new-todo.html',
   imports: [MatListModule, MatButton, MatFormField, MatInput, MatLabel, ReactiveFormsModule],
 })
-export class BottomSheetOverviewExampleSheet {
+export class BottomSheetNewTodo {
 
   supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -95,5 +95,5 @@ export class BottomSheetOverviewExampleSheet {
     this.profileForm.reset(); // Formular nach Submit leeren
   }
 
-  private _bottomSheetRef = inject<MatBottomSheetRef<BottomSheetOverviewExampleSheet>>(MatBottomSheetRef);
+  private _bottomSheetRef = inject<MatBottomSheetRef<BottomSheetNewTodo>>(MatBottomSheetRef);
 }
