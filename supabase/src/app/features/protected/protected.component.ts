@@ -1,14 +1,21 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {SupabaseService} from '../../core';
+import {SUPABASE_ANON_KEY, SUPABASE_URL, SupabaseService} from '../../core';
 import {supabaseRealtimeFolders} from '../../supabaseRealtimeFolders';
-import {MatButton} from '@angular/material/button';
-import {LucideAngularModule, FileIcon} from 'lucide-angular';
+import {
+  MatBottomSheet,
+  MatBottomSheetRef,
+} from '@angular/material/bottom-sheet';
+import {MatListModule} from '@angular/material/list';
+import {MatButton, MatButtonModule} from '@angular/material/button'
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {createClient} from '@supabase/supabase-js';
 
 @Component({
   selector: 'app-protected',
   standalone: true,
-  imports: [CommonModule, MatButton, LucideAngularModule],
+  imports: [CommonModule, MatButton],
   template: `
     <main>
       <h4>Todos</h4>
@@ -31,16 +38,47 @@ import {LucideAngularModule, FileIcon} from 'lucide-angular';
           </div>
         }
       </div>
+      <button matButton="elevated" (click)="openBottomSheet()">Open file</button>
     </main>
   `
 })
 export class ProtectedComponent {
+  private _bottomSheet = inject(MatBottomSheet);
+
   constructor(public auth: SupabaseService, public data: supabaseRealtimeFolders) {
   }
 
-  readonly FileIcon = FileIcon;
+  openBottomSheet(): void {
+    this._bottomSheet.open(BottomSheetNewFolder);
+  }
 
   logout() {
     this.auth.signOut();
+  }
+}
+
+@Component({
+  selector: 'bottom-sheet-new-folder',
+  templateUrl: 'bottom-sheet-new-folder.html',
+  imports: [MatListModule, MatButton, MatFormField, MatInput, MatLabel, ReactiveFormsModule],
+})
+export class BottomSheetNewFolder {
+  private _bottomSheetRef =
+    inject<MatBottomSheetRef<BottomSheetNewFolder>>(MatBottomSheetRef);
+
+  supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  profileForm = new FormGroup({
+    newFolder: new FormControl('', Validators.required),
+  });
+
+  async onSubmit() {
+    await this.supabase
+      .from('folders')
+      .insert([
+        {title: this.profileForm.value.newFolder}
+      ])
+      .select()
+    this.profileForm.reset(); // Formular nach Submit leeren
   }
 }
