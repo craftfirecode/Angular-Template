@@ -32,9 +32,6 @@ import {createClient} from '@supabase/supabase-js';
           </li>
         }
       </ul>
-
-      <p>You have received a file called "cat-picture.jpeg".</p>
-
       <button matButton="elevated" (click)="openBottomSheet()">Open file</button>
     </main>
   `
@@ -84,6 +81,7 @@ export class BottomSheetOverviewExampleSheet {
         {title: this.profileForm.value.newTodo, folder_id: 27},
       ])
       .select()
+    this.profileForm.reset(); // Formular nach Submit leeren
   }
 
   private _bottomSheetRef = inject<MatBottomSheetRef<BottomSheetOverviewExampleSheet>>(MatBottomSheetRef);
