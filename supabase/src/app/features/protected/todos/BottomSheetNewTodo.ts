@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { SUPABASE_ANON_KEY, SUPABASE_URL } from '../../core';
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from '../../../core';
 import { createClient } from '@supabase/supabase-js';
 import {MatButton} from '@angular/material/button'
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {FolderService} from '../../folder.service';
+import {FolderService} from '../../../folder.service';
 
 
 @Component({

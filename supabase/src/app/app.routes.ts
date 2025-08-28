@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './features/auth/login.component';
 import { RegisterComponent } from './features/auth/register.component';
-import { ProtectedComponent } from './features/protected/protected.component';
+import { ProtectedComponent } from './features/protected/folder/protected.component';
 import { authGuard, guestGuard } from './core';
-import {TodosPageComponent} from './features/protected/todos-page.component';
+import {TodosPageComponent} from './features/protected/todos/todos-page.component';
 
 export const routes: Routes = [
 	{ path: 'login', component: LoginComponent, canActivate: [guestGuard] },

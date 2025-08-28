@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {SUPABASE_ANON_KEY, SUPABASE_URL, SupabaseService} from '../../core';
-import {supabaseRealtimeFolders} from '../../supabaseRealtimeFolders';
+import {SUPABASE_ANON_KEY, SUPABASE_URL, SupabaseService} from '../../../core';
+import {supabaseRealtimeFolders} from '../../../supabaseRealtimeFolders';
 import {
   MatBottomSheet,
   MatBottomSheetRef,

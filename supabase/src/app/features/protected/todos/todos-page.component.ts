@@ -1,11 +1,11 @@
 import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SUPABASE_ANON_KEY, SUPABASE_URL, SupabaseService } from '../../core';
+import { SUPABASE_ANON_KEY, SUPABASE_URL, SupabaseService } from '../../../core';
 import { ActivatedRoute } from '@angular/router';
-import { supabaseRealtimeTodos } from '../../supabaseRealtimeTodos';
+import { supabaseRealtimeTodos } from '../../../supabaseRealtimeTodos';
 import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { createClient } from '@supabase/supabase-js';
-import {FolderService} from '../../folder.service';
+import {FolderService} from '../../../folder.service';
 import {BottomSheetNewTodo} from './BottomSheetNewTodo';
 import {MatButton, MatFabButton} from '@angular/material/button';
 
@@ -15,7 +15,7 @@ import {MatButton, MatFabButton} from '@angular/material/button';
   imports: [CommonModule, MatBottomSheetModule, MatButton, MatFabButton],
   template: `
     <main class="mt-5">
-      <a href="/" matButton="outlined">Zurück</a>
+      <a href="/supabase/public" matButton="outlined">Zurück</a>
       <div class="my-5">
         <div *ngFor="let todo of filteredTodos()">
           <div class="my-5 flex gap-5 items-center">
