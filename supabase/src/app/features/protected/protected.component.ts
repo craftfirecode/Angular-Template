@@ -26,7 +26,7 @@ import {createClient} from '@supabase/supabase-js';
             <a class="w-full left" matButton="outlined" [href]="'protected/todos/' + folder.id">
               {{ folder.title }}
             </a>
-            <button matButton="outlined">
+            <button (click)="deleteFolder(folder.id)" matButton="outlined">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                    class="lucide lucide-trash-icon lucide-trash">
@@ -44,8 +44,16 @@ import {createClient} from '@supabase/supabase-js';
 })
 export class ProtectedComponent {
   private _bottomSheet = inject(MatBottomSheet);
+  supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   constructor(public auth: SupabaseService, public data: supabaseRealtimeFolders) {
+  }
+
+  deleteFolder = async (id: number) => {
+    await this.supabase
+      .from('folders')
+      .delete()
+      .eq('id', id)
   }
 
   openBottomSheet(): void {
