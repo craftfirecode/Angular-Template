@@ -93,6 +93,7 @@ export class BottomSheetNewFolder {
         {title: this.profileForm.value.newFolder}
       ])
       .select()
-    this.profileForm.reset(); // Formular nach Submit leeren
+    this._bottomSheetRef.dismiss();
+    this.profileForm.reset();
   }
 }
