@@ -1,29 +1,13 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SUPABASE_ANON_KEY, SUPABASE_URL, SupabaseService } from '../../../core';
 import { supabaseRealtimeFolders } from '../../../supabaseRealtimeFolders';
-import {
-  MatBottomSheet,
-  MatBottomSheetRef,
-} from '@angular/material/bottom-sheet';
-import { MatListModule } from '@angular/material/list';
+import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { MatButton, MatFabButton } from '@angular/material/button';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { createClient } from '@supabase/supabase-js';
-import {
-  MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogRef,
-  MatDialogTitle,
-} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -63,7 +47,6 @@ import { MatButtonModule } from '@angular/material/button';
           </div>
         }
       </div>
-
       <button matFab="elevated" (click)="openBottomSheet()" class="fab">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -94,19 +77,8 @@ export class ProtectedComponent {
     public data: supabaseRealtimeFolders
   ) {}
 
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(DialogAnimationsExampleDialog, {
-      width: '250px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-    });
-  }
-
   async deleteFolder(id: number) {
-    const dialogRef = this.dialog.open(ConfirmDeleteDialog, {
-      width: '300px',
-    });
-
+    const dialogRef = this.dialog.open(ConfirmDeleteDialog, { width: '300px' });
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result === 'confirm') {
         await this.supabase.from('folders').delete().eq('id', id);
@@ -126,19 +98,10 @@ export class ProtectedComponent {
 @Component({
   selector: 'bottom-sheet-new-folder',
   templateUrl: 'bottom-sheet-new-folder.html',
-  imports: [
-    MatListModule,
-    MatButton,
-    MatFormField,
-    MatInput,
-    MatLabel,
-    ReactiveFormsModule,
-  ],
+  imports: [MatButton, MatFormField, MatInput, MatLabel, ReactiveFormsModule],
 })
 export class BottomSheetNewFolder {
-  private _bottomSheetRef =
-    inject<MatBottomSheetRef<BottomSheetNewFolder>>(MatBottomSheetRef);
-
+  private _bottomSheetRef = inject<MatBottomSheetRef<BottomSheetNewFolder>>(MatBottomSheetRef);
   supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   profileForm = new FormGroup({
@@ -146,43 +109,16 @@ export class BottomSheetNewFolder {
   });
 
   async onSubmit() {
-    await this.supabase.from('folders').insert([
-      { title: this.profileForm.value.newFolder },
-    ]);
+    await this.supabase.from('folders').insert([{ title: this.profileForm.value.newFolder }]);
     this._bottomSheetRef.dismiss();
     this.profileForm.reset();
   }
 }
 
 @Component({
-  selector: 'dialog-animations-example-dialog',
-  templateUrl: 'dialog-animations-example-dialog.html',
-  imports: [
-    MatButtonModule,
-    MatDialogActions,
-    MatDialogClose,
-    MatDialogTitle,
-    MatDialogContent,
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class DialogAnimationsExampleDialog {
-  readonly dialogRef = inject(MatDialogRef<DialogAnimationsExampleDialog>);
-}
-
-/**
- * Neuer Confirm-Dialog
- */
-@Component({
   selector: 'app-confirm-delete-dialog',
   standalone: true,
-  imports: [
-    MatButtonModule,
-    MatDialogActions,
-    MatDialogClose,
-    MatDialogTitle,
-    MatDialogContent,
-  ],
+  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
   template: `
     <h2 mat-dialog-title>Ordner löschen?</h2>
     <mat-dialog-content>
@@ -190,9 +126,7 @@ export class DialogAnimationsExampleDialog {
     </mat-dialog-content>
     <mat-dialog-actions align="end">
       <button mat-button mat-dialog-close="cancel">Abbrechen</button>
-      <button mat-button color="warn" [mat-dialog-close]="'confirm'">
-        Löschen
-      </button>
+      <button mat-button color="warn" [mat-dialog-close]="'confirm'">Löschen</button>
     </mat-dialog-actions>
   `,
 })
