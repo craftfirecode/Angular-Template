@@ -1,7 +1,7 @@
 import {Component, computed, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SUPABASE_ANON_KEY, SUPABASE_URL, SupabaseService} from '../../../core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import {supabaseRealtimeTodos} from '../../../supabaseRealtimeTodos';
 import {MatBottomSheet, MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {createClient} from '@supabase/supabase-js';
@@ -12,7 +12,7 @@ import {MatButton, MatFabButton} from '@angular/material/button';
 @Component({
   selector: 'app-todos-page',
   standalone: true,
-  imports: [CommonModule, MatBottomSheetModule, MatButton, MatFabButton],
+  imports: [CommonModule, MatBottomSheetModule, MatButton, MatFabButton, RouterLink],
   templateUrl: './todo.html',
 })
 export class TodosPageComponent {

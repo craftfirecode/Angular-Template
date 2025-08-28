@@ -1,5 +1,6 @@
 <main class="mt-5 pb-30">
-  <a href="/supabase/public" matButton="outlined">Zurück</a>
+  <a routerLink="/supabase/public/"
+     matButton="outlined">Zurück</a>
   <div class="my-5">
     @for (todo of filteredTodos(); track todo.id) {
       <div class="my-5 flex gap-3 items-center">

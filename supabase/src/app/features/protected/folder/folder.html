@@ -3,9 +3,9 @@
     @for (folder of data.folderList(); track folder.id) {
       <div class="my-5 flex gap-3 items-center">
         <a
+          [routerLink]="'/protected/todos/' + folder.id"
           class="w-full left"
           matButton="outlined"
-          [href]="'protected/todos/' + folder.id"
         >
           {{ folder.title }}
         </a>

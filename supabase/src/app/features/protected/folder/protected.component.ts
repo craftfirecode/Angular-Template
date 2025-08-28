@@ -16,11 +16,12 @@ import {
   MatDialogTitle
 } from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-protected',
   standalone: true,
-  imports: [CommonModule, MatButton, MatFabButton],
+  imports: [CommonModule, MatButton, MatFabButton, RouterLink],
   templateUrl: './folder.html',
 })
 export class ProtectedComponent {
