@@ -20,7 +20,8 @@ import {createClient} from '@supabase/supabase-js';
   standalone: true,
   imports: [CommonModule, MatButtonModule],
   template: `
-    <main>
+    <main class="mt-5">
+      <a href="/" matButton="outlined">Zurück</a>
       <h2>Todos Page</h2>
       <p *ngIf="auth.user()">Willkommen {{ auth.user()?.email }}</p>
       <p>Aktuelle ID: {{ id }}</p>
