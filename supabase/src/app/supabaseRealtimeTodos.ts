@@ -11,7 +11,7 @@ export class supabaseRealtimeTodos {
   // Signal hält die aktuelle Tabelle
   todoList = signal<any[]>([]);
 
-  constructor(id: any) {
+  constructor() {
     this.client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // Initialdaten laden

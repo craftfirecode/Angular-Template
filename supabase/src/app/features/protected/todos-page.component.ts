@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SupabaseService } from '../../core';
-import { ActivatedRoute } from '@angular/router';
-import { supabaseRealtimeTodos } from '../../supabaseRealtimeTodos';
+import {Component, computed} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {SupabaseService} from '../../core';
+import {ActivatedRoute} from '@angular/router';
+import {supabaseRealtimeTodos} from '../../supabaseRealtimeTodos';
 
 @Component({
   selector: 'app-todos-page',
@@ -15,7 +15,7 @@ import { supabaseRealtimeTodos } from '../../supabaseRealtimeTodos';
       <p>Aktuelle ID: {{ id }}</p>
 
       <ul>
-        @for (todos of data.todoList(); track todos.id) {
+        @for (todos of filteredTodos(); track todos.id) {
           <li>
             <a [href]="'protected/todos/' + todos.id">{{ todos.id }} – {{ todos.title }}</a>
           </li>
@@ -26,7 +26,18 @@ import { supabaseRealtimeTodos } from '../../supabaseRealtimeTodos';
 })
 export class TodosPageComponent {
   id: string | null = null;
-  constructor(public auth: SupabaseService, private route: ActivatedRoute, public data: supabaseRealtimeTodos) {
+
+  // computed Signal für gefilterte Todos
+  filteredTodos = computed(() => {
+    if (!this.id) return [];
+    return this.data.todoList().filter(todo => todo.folder_id == this.id);
+  });
+
+  constructor(
+    public auth: SupabaseService,
+    private route: ActivatedRoute,
+    public data: supabaseRealtimeTodos
+  ) {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
     });
