@@ -1,10 +1,10 @@
 import { Injectable, signal } from '@angular/core';
 import { createClient, SupabaseClient, RealtimeChannel } from '@supabase/supabase-js';
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from './core/supabase.config';
+import {SUPABASE_ANON_KEY, SUPABASE_URL} from './core/supabase.config';
 
 @Injectable({ providedIn: 'root' })
 
-export class SupabaseApiService {
+export class supabaseRealtimeFolders {
   private client: SupabaseClient;
   private channel: RealtimeChannel;
 

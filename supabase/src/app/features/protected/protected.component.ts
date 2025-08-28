@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {SupabaseService} from '../../core';
-import {SupabaseApiService} from '../../supabaseService';
+import {supabaseRealtimeFolders} from '../../supabaseRealtimeFolders';
 
 @Component({
   selector: 'app-protected',
@@ -22,7 +22,7 @@ import {SupabaseApiService} from '../../supabaseService';
   `
 })
 export class ProtectedComponent {
-  constructor(public auth: SupabaseService, public data: SupabaseApiService) {}
+  constructor(public auth: SupabaseService, public data: supabaseRealtimeFolders) {}
 
   logout() {
     this.auth.signOut();
