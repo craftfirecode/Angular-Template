@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SUPABASE_ANON_KEY, SUPABASE_URL, SupabaseService} from '../../../core';
 import {supabaseRealtimeFolders} from '../../../supabaseRealtimeFolders';
@@ -11,6 +11,15 @@ import {MatButton, MatFabButton} from '@angular/material/button'
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {createClient} from '@supabase/supabase-js';
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-protected',
@@ -37,6 +46,8 @@ import {createClient} from '@supabase/supabase-js';
           </div>
         }
       </div>
+      <button matButton="elevated" (click)="openDialog('0ms', '0ms')">Open dialog without animation</button>
+
       <button matFab="elevated" (click)="openBottomSheet()" class="fab">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -51,8 +62,17 @@ import {createClient} from '@supabase/supabase-js';
 export class ProtectedComponent {
   private _bottomSheet = inject(MatBottomSheet);
   supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  readonly dialog = inject(MatDialog);
 
   constructor(public auth: SupabaseService, public data: supabaseRealtimeFolders) {
+  }
+
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(DialogAnimationsExampleDialog, {
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
   }
 
   deleteFolder = async (id: number) => {
@@ -96,4 +116,14 @@ export class BottomSheetNewFolder {
     this._bottomSheetRef.dismiss();
     this.profileForm.reset();
   }
+}
+
+@Component({
+  selector: 'dialog-animations-example-dialog',
+  templateUrl: 'dialog-animations-example-dialog.html',
+  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DialogAnimationsExampleDialog {
+  readonly dialogRef = inject(MatDialogRef<DialogAnimationsExampleDialog>);
 }
