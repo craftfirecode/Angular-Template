@@ -11,15 +11,13 @@ import {LucideAngularModule, FileIcon} from 'lucide-angular';
   imports: [CommonModule, MatButton, LucideAngularModule],
   template: `
     <main>
-      <h2>Protected Area</h2>
-      <p *ngIf="auth.user()">Welcome {{ auth.user()?.email }}</p>
-      <button (click)="logout()">Sign out</button>
-
+      <h4>Todos</h4>
+<!--      <button (click)="logout()">Sign out</button>-->
       <div class="flex-row">
         @for (folder of data.folderList(); track folder.id) {
           <div class="my-5 flex gap-5 items-center">
             <a class="w-full left" matButton="outlined" [href]="'protected/todos/' + folder.id">
-              {{ folder.id }} – {{ folder.title }}
+              {{ folder.title }}
             </a>
             <button matButton="outlined">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
