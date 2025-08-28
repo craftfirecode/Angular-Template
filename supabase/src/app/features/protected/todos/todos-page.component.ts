@@ -1,10 +1,10 @@
-import { Component, computed, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SUPABASE_ANON_KEY, SUPABASE_URL, SupabaseService } from '../../../core';
-import { ActivatedRoute } from '@angular/router';
-import { supabaseRealtimeTodos } from '../../../supabaseRealtimeTodos';
-import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
-import { createClient } from '@supabase/supabase-js';
+import {Component, computed, inject} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {SUPABASE_ANON_KEY, SUPABASE_URL, SupabaseService} from '../../../core';
+import {ActivatedRoute} from '@angular/router';
+import {supabaseRealtimeTodos} from '../../../supabaseRealtimeTodos';
+import {MatBottomSheet, MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import {createClient} from '@supabase/supabase-js';
 import {FolderService} from '../../../folder.service';
 import {BottomSheetNewTodo} from './BottomSheetNewTodo';
 import {MatButton, MatFabButton} from '@angular/material/button';
@@ -28,6 +28,25 @@ export class TodosPageComponent {
     if (!folderId) return [];
     return this.data.todoList().filter(todo => todo.folder_id == +folderId);
   });
+
+  async toggleCompleted(ref: any, state: any): Promise<void> {
+    console.log(state)
+    console.log(ref.id)
+
+    if (state === null || state === false) {
+      await this.supabase
+        .from('todos')
+        .update({ completed: true })
+        .eq('id', ref.id)
+    }
+
+    if (state === true) {
+      await this.supabase
+        .from('todos')
+        .update({ completed: false })
+        .eq('id', ref.id)
+    }
+  }
 
   constructor() {
     // FolderID aus der Route setzen
