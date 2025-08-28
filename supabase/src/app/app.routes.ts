@@ -1,15 +1,27 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './features/auth/login.component';
-import { RegisterComponent } from './features/auth/register.component';
-import { ProtectedComponent } from './features/protected/folder/protected.component';
-import { authGuard, guestGuard } from './core';
-import {TodosPageComponent} from './features/protected/todos/todos-page.component';
+import { guestGuard, authGuard } from './core';
 
 export const routes: Routes = [
-	{ path: 'login', component: LoginComponent, canActivate: [guestGuard] },
-	{ path: 'register', component: RegisterComponent, canActivate: [guestGuard] },
-	{ path: 'protected', component: ProtectedComponent, canActivate: [authGuard] },
-	{ path: 'protected/todos/:id', component: TodosPageComponent, canActivate: [authGuard] },
-	{ path: '', redirectTo: 'protected', pathMatch: 'full' },
-	{ path: '**', redirectTo: 'protected' }
+  {
+    path: 'login',
+    loadComponent: () => import('./features/auth/login.component').then(m => m.LoginComponent),
+    canActivate: [guestGuard]
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./features/auth/register.component').then(m => m.RegisterComponent),
+    canActivate: [guestGuard]
+  },
+  {
+    path: 'protected',
+    loadComponent: () => import('./features/protected/folder/protected.component').then(m => m.ProtectedComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'protected/todos/:id',
+    loadComponent: () => import('./features/protected/todos/todos-page.component').then(m => m.TodosPageComponent),
+    canActivate: [authGuard]
+  },
+  { path: '', redirectTo: 'protected', pathMatch: 'full' },
+  { path: '**', redirectTo: 'protected' }
 ];
