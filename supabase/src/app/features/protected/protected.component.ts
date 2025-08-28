@@ -15,7 +15,9 @@ import {supabaseRealtimeFolders} from '../../supabaseRealtimeFolders';
 
       <ul>
         @for (folder of data.folderList(); track folder.id) {
-          <li>{{ folder.id }} – {{ folder.title }}</li>
+          <li>
+            <a [href]="'protected/todos/' + folder.id">{{ folder.id }} – {{ folder.title }}</a>
+          </li>
         }
       </ul>
     </main>
