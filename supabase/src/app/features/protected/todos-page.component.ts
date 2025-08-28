@@ -1,6 +1,6 @@
 import {Component, computed, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {SupabaseService} from '../../core';
+import {SUPABASE_ANON_KEY, SUPABASE_URL, SupabaseService} from '../../core';
 import {ActivatedRoute} from '@angular/router';
 import {supabaseRealtimeTodos} from '../../supabaseRealtimeTodos';
 import {
@@ -9,7 +9,11 @@ import {
   MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
 import {MatListModule} from '@angular/material/list';
-import {MatButtonModule} from '@angular/material/button'
+import {MatButton, MatButtonModule} from '@angular/material/button'
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {createClient} from '@supabase/supabase-js';
+
 
 @Component({
   selector: 'app-todos-page',
@@ -42,6 +46,7 @@ export class TodosPageComponent {
   openBottomSheet(): void {
     this._bottomSheet.open(BottomSheetOverviewExampleSheet);
   }
+
   // computed Signal für gefilterte Todos
   filteredTodos = computed(() => {
     if (!this.id) return [];
@@ -62,14 +67,24 @@ export class TodosPageComponent {
 @Component({
   selector: 'bottom-sheet-overview-example-sheet',
   templateUrl: 'bottom-sheet-overview-example-sheet.html',
-  imports: [MatListModule],
+  imports: [MatListModule, MatButton, MatFormField, MatInput, MatLabel, ReactiveFormsModule],
 })
 export class BottomSheetOverviewExampleSheet {
-  private _bottomSheetRef =
-    inject<MatBottomSheetRef<BottomSheetOverviewExampleSheet>>(MatBottomSheetRef);
 
-  openLink(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
+  supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  profileForm = new FormGroup({
+    newTodo: new FormControl('', Validators.required),
+  });
+
+  async onSubmit() {
+    const {data, error} = await this.supabase
+      .from('todos')
+      .insert([
+        {title: this.profileForm.value.newTodo, folder_id: 27},
+      ])
+      .select()
   }
+
+  private _bottomSheetRef = inject<MatBottomSheetRef<BottomSheetOverviewExampleSheet>>(MatBottomSheetRef);
 }
