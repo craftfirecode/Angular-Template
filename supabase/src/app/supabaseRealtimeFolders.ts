@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { createClient, SupabaseClient, RealtimeChannel } from '@supabase/supabase-js';
-import {SUPABASE_ANON_KEY, SUPABASE_URL} from './core/supabase.config';
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from './core';
 
 @Injectable({ providedIn: 'root' })
 

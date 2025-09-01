@@ -14,6 +14,7 @@ import {MatButton, MatFabButton} from '@angular/material/button';
   standalone: true,
   imports: [CommonModule, MatBottomSheetModule, MatButton, MatFabButton, RouterLink],
   templateUrl: './todo.html',
+  styleUrls: ['./todo.css']
 })
 export class TodosPageComponent {
   private folderService = inject(FolderService);
@@ -22,17 +23,11 @@ export class TodosPageComponent {
   public data = inject(supabaseRealtimeTodos);
   supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // computed Signal für gefilterte Todos
   filteredTodos = computed(() => {
-    const folderId = this.folderService.folderID();
-    if (!folderId) return [];
-    return this.data.todoList().filter(todo => todo.folder_id == +folderId);
+    return this.data.todoList()
   });
 
   async toggleCompleted(ref: any, state: any): Promise<void> {
-    console.log(state)
-    console.log(ref.id)
-
     if (state === null || state === false) {
       await this.supabase
         .from('todos')
@@ -49,7 +44,6 @@ export class TodosPageComponent {
   }
 
   constructor() {
-    // FolderID aus der Route setzen
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       this.folderService.setFolderID(id);

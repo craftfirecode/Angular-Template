@@ -26,14 +26,10 @@ import {RouterLink} from '@angular/router';
 })
 export class ProtectedComponent {
   private _bottomSheet = inject(MatBottomSheet);
+  auth = inject(SupabaseService);
+  data = inject(supabaseRealtimeFolders);
   supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   readonly dialog = inject(MatDialog);
-
-  constructor(
-    public auth: SupabaseService,
-    public data: supabaseRealtimeFolders
-  ) {
-  }
 
   async deleteFolder(id: number) {
     const dialogRef = this.dialog.open(ConfirmDeleteDialog, {width: '300px'});

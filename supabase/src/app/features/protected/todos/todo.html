@@ -2,7 +2,7 @@
   <a routerLink="/supabase/public/"
      matButton="outlined">Zurück</a>
   <div class="my-5">
-    @for (todo of filteredTodos(); track todo.id) {
+    @for (todo of data.todoList(); track todo.id) {
       <div class="my-5 flex gap-3 items-center">
         <input type="checkbox" [checked]="todo.completed" (change)="toggleCompleted(todo, todo.completed)" />
         <button class="w-full left" matButton="outlined">
@@ -29,22 +29,3 @@
     </svg>
   </button>
 </main>
-
-<style>
-.line-through {
-  text-decoration: line-through;
-}
-
-input[type="checkbox"] {
-  width: 1.5em;
-  height: 1.5em;
-  accent-color: black; /* Tailwind blue-500 */
-  border-radius: 0.3em;
-  transition: box-shadow 0.2s;
-}
-input[type="checkbox"]:focus {
-  border: 2px solid #d1d5db; /* Tailwind gray-300 */
-  outline: none;
-  box-shadow: none;
-}
-</style>
