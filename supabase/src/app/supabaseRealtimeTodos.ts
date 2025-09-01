@@ -21,7 +21,9 @@ export class supabaseRealtimeTodos {
     effect(() => {
       const id = this.folderService.folderID();
       if (id) {
-        this.refreshTodoList(id);
+        // When the folder ID changes we want to clear the current list
+        // immediately to avoid briefly showing items from the previous folder.
+        this.refreshTodoList(id, true);
       }
     });
 
@@ -34,7 +36,9 @@ export class supabaseRealtimeTodos {
           console.log('Change received!', payload);
           const currentFolder = this.folderService.folderID();
           if (currentFolder) {
-            this.refreshTodoList(currentFolder); // Aktualisiere die Liste bei Änderungen
+            // For realtime events (inserts/updates/deletes) do NOT clear first
+            // to avoid a visual blink when modifying the current list.
+            this.refreshTodoList(currentFolder, false); // Aktualisiere die Liste bei Änderungen
           } else {
             console.log('No folder selected; skipping refresh on realtime event.');
           }
@@ -50,7 +54,7 @@ export class supabaseRealtimeTodos {
   }
 
   // Holt aktuelle Tabelle
-  async refreshTodoList(folderId?: string | null) {
+  async refreshTodoList(folderId?: string | null, clearBeforeLoad: boolean = false) {
     const id = folderId ?? this.folderService.folderID();
 
     if (!id) {
@@ -58,7 +62,14 @@ export class supabaseRealtimeTodos {
       return;
     }
 
-    const { data, error } = await this.client
+    // Optionally clear the currently shown todos before fetching.
+    // We only want to do this on folder switches; realtime updates or
+    // local add/delete should not clear to avoid a visible blink.
+    if (clearBeforeLoad) {
+      this.todoList.set([]);
+    }
+
+  const { data, error } = await this.client
       .from('todos')
       .select('*')
       .eq('folder_id', id)
