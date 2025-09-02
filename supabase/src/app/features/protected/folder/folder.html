@@ -1,4 +1,10 @@
 <main class="mt-5 pb-30">
+
+<div class="flex gap-2 justify-center">
+    <p-button type="button" (click)="visible1 = true" icon="pi pi-arrow-up" />
+</div>
+
+
   <div class="flex-row">
     @for (folder of data.folderList(); track folder.id) {
       <div class="my-5 flex gap-3 items-center">
@@ -48,3 +54,12 @@
     </svg>
   </button>
 </main>
+
+
+<p-drawer header="Bottom Drawer h-auto" [(visible)]="visible1" position="bottom">
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquip ex ea commodo consequat.
+  </p>
+</p-drawer>

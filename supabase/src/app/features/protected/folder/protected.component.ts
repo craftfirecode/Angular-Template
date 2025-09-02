@@ -17,11 +17,13 @@ import {
 } from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
+import { ButtonModule } from 'primeng/button';
+import {Drawer} from 'primeng/drawer';
 
 @Component({
   selector: 'app-protected',
   standalone: true,
-  imports: [CommonModule, MatButton, MatFabButton, RouterLink],
+  imports: [CommonModule, MatButton, MatFabButton, RouterLink, ButtonModule, Drawer],
   templateUrl: './folder.html',
 })
 export class ProtectedComponent {
@@ -30,7 +32,7 @@ export class ProtectedComponent {
   data = inject(supabaseRealtimeFolders);
   supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   readonly dialog = inject(MatDialog);
-
+  visible1 = false;
   async deleteFolder(id: number) {
     const dialogRef = this.dialog.open(ConfirmDeleteDialog, {width: '300px'});
     dialogRef.afterClosed().subscribe(async (result) => {
