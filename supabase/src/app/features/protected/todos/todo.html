@@ -1,31 +1,33 @@
+<p-button class="fixed bottom-10 right-10"
+          type="button"
+          (click)="openDrawer()"
+          icon="pi pi-plus"/>
+
 <main class="mt-5 pb-30">
-  <a routerLink="/supabase/public/"
-     matButton="outlined">Zurück</a>
+  <a routerLink="/supabase/public/" pButton class="p-button-outlined" severity="contrast">Zurück</a>
   <div class="my-5">
     @for (todo of data.todoList(); track todo.id) {
       <div class="my-5 flex gap-3 items-center">
         <input type="checkbox" [checked]="todo.completed" (change)="toggleCompleted(todo, todo.completed)" />
-        <button class="w-full left" matButton="outlined">
+        <div class="w-full left border border-gray-200 px-4 py-2 shadow rounded-full hover:bg-gray-100">
           <span [ngClass]="{ 'line-through': todo.completed }">{{ todo.title }}</span>
-        </button>
-        <div role="button" (click)="deleteTodo(todo.id)">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-               class="lucide lucide-trash-icon lucide-trash text-red-500">
-            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
-            <path d="M3 6h18"/>
-            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-          </svg>
         </div>
+        <button pButton type="button" icon="pi pi-trash" class="p-button-text p-button-rounded p-button-danger" (click)="deleteTodo(todo.id)"></button>
       </div>
     }
   </div>
-  <button matFab="elevated" (click)="openBottomSheet()" class="fab">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-         class="lucide lucide-plus-icon lucide-plus">
-      <path d="M5 12h14"/>
-      <path d="M12 5v14"/>
-    </svg>
-  </button>
+
 </main>
+
+<p-drawer header="New Todo" styleClass="h-full" [(visible)]="fab" position="bottom">
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="w-full">
+    <div class="flex flex-col gap-5 mt-5">
+      <input pInputText type="text" placeholder="New Todo" formControlName="newTodo" />
+    </div>
+    <div class="mt-5 mb-15">
+      <p-button type="submit" label="Submit" icon="pi pi-send" [disabled]="!profileForm.valid"></p-button>
+    </div>
+  </form>
+</p-drawer>
+
+<p-confirmDialog />

@@ -1,44 +1,50 @@
-import {Component, computed, inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {SUPABASE_ANON_KEY, SUPABASE_URL, SupabaseService} from '../../../core';
+import {SUPABASE_ANON_KEY, SUPABASE_URL} from '../../../core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {supabaseRealtimeTodos} from '../../../supabaseRealtimeTodos';
-import {MatBottomSheet, MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {createClient} from '@supabase/supabase-js';
 import {FolderService} from '../../../folder.service';
-import {BottomSheetNewTodo} from './BottomSheetNewTodo';
-import {MatButton, MatFabButton} from '@angular/material/button';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ButtonModule} from 'primeng/button';
+import {Drawer} from 'primeng/drawer';
+import {InputText} from 'primeng/inputtext';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
 
 @Component({
   selector: 'app-todos-page',
   standalone: true,
-  imports: [CommonModule, MatBottomSheetModule, MatButton, MatFabButton, RouterLink],
+  imports: [CommonModule, RouterLink, ButtonModule, Drawer, ReactiveFormsModule, InputText, ConfirmDialogModule],
+  providers: [ConfirmationService],
   templateUrl: './todo.html',
   styleUrls: ['./todo.css']
 })
 export class TodosPageComponent {
   private folderService = inject(FolderService);
   private route = inject(ActivatedRoute);
-  private _bottomSheet = inject(MatBottomSheet);
   public data = inject(supabaseRealtimeTodos);
   supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  confirmation = inject(ConfirmationService);
 
-  filteredTodos = computed(() => {
-    return this.data.todoList()
+  fab = false;
+
+  profileForm = new FormGroup({
+    newTodo: new FormControl('', Validators.required),
   });
 
   async toggleCompleted(ref: any, state: any): Promise<void> {
     if (state === null || state === false) {
       await this.supabase
         .from('todos')
-        .update({ completed: true })
+        .update({completed: true})
         .eq('id', ref.id)
     }
 
     if (state === true) {
       await this.supabase
         .from('todos')
-        .update({ completed: false })
+        .update({completed: false})
         .eq('id', ref.id)
     }
   }
@@ -50,8 +56,19 @@ export class TodosPageComponent {
     });
   }
 
-  openBottomSheet() {
-    this._bottomSheet.open(BottomSheetNewTodo);
+  openDrawer() {
+    this.fab = true;
+  }
+
+  async onSubmit() {
+    const folderId = this.folderService.folderID();
+    if (!folderId) return;
+
+    await this.supabase
+      .from('todos')
+      .insert([{title: this.profileForm.value.newTodo, folder_id: folderId}]);
+
+    this.profileForm.reset();
   }
 
   async deleteTodo(id: number) {
@@ -59,5 +76,6 @@ export class TodosPageComponent {
       .from('todos')
       .delete()
       .eq('id', id);
+
   }
 }

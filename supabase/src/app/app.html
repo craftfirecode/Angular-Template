@@ -1,3 +1,5 @@
 <div class="container mx-auto px-5">
-    <router-outlet *ngIf="ready()" />
+  @if (ready()) {
+    <router-outlet />
+  }
 </div>

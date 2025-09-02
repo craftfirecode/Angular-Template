@@ -3,8 +3,6 @@
           (click)="fab = true"
           icon="pi pi-plus"/>
 
-<p-confirmDialog />
-
 <main class="mt-5 pb-30">
   <div class="flex-row">
     @for (folder of data.folderList(); track folder.id) {
@@ -38,3 +36,5 @@
     </div>
   </form>
 </p-drawer>
+
+<p-confirmDialog />

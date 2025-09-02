@@ -3,16 +3,6 @@ import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {RouterModule, Router} from '@angular/router';
 import {SupabaseService} from '../../core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatButtonModule} from '@angular/material/button';
-import {
-  MatSnackBar,
-  MatSnackBarAction,
-  MatSnackBarActions,
-  MatSnackBarLabel,
-  MatSnackBarRef
-} from '@angular/material/snack-bar';
 import {LucideAngularModule, Bird} from 'lucide-angular';
 
 @Component({
@@ -22,10 +12,7 @@ import {LucideAngularModule, Bird} from 'lucide-angular';
     CommonModule,
     FormsModule,
     RouterModule,
-    MatInputModule,
-    MatFormFieldModule,
     ReactiveFormsModule,
-    MatButtonModule,
     LucideAngularModule,
     NgOptimizedImage
   ],
@@ -33,16 +20,7 @@ import {LucideAngularModule, Bird} from 'lucide-angular';
 })
 export class LoginComponent {
   error: string | null = null;
-  private _snackBar = inject(MatSnackBar);
   readonly Bird = Bird;
-
-  durationInSeconds = 5;
-
-  openSnackBar() {
-    this._snackBar.openFromComponent(PizzaPartyAnnotatedComponent, {
-      duration: this.durationInSeconds * 1000,
-    });
-  }
 
   profileForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -57,29 +35,8 @@ export class LoginComponent {
     const password: string = this.profileForm.value.password ?? '';
     const res = await this.auth.signIn(email, password);
     if ((res as any).error) {
-      this.openSnackBar()
       return;
     }
     this.router.navigate(['/protected']);
   }
-}
-
-
-@Component({
-  selector: ' snack-bar-error',
-  templateUrl: './snack-bar-error.html',
-  styles: `
-    :host {
-      display: flex;
-    }
-
-    .example-pizza-party {
-      color: hotpink;
-    }
-  `,
-  imports: [MatButtonModule, MatSnackBarLabel],
-})
-
-export class PizzaPartyAnnotatedComponent {
-  snackBarRef = inject(MatSnackBarRef);
 }
