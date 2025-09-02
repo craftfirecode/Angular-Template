@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ViewChild, ElementRef} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SUPABASE_ANON_KEY, SUPABASE_URL} from '../../../core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
@@ -9,14 +9,11 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {ButtonModule} from 'primeng/button';
 import {Drawer} from 'primeng/drawer';
 import {InputText} from 'primeng/inputtext';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {ConfirmationService} from 'primeng/api';
 
 @Component({
   selector: 'app-todos-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, ButtonModule, Drawer, ReactiveFormsModule, InputText, ConfirmDialogModule],
-  providers: [ConfirmationService],
+  imports: [CommonModule, RouterLink, ButtonModule, Drawer, ReactiveFormsModule, InputText],
   templateUrl: './todo.html',
   styleUrls: ['./todo.css']
 })
@@ -25,7 +22,7 @@ export class TodosPageComponent {
   private route = inject(ActivatedRoute);
   public data = inject(supabaseRealtimeTodos);
   supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  confirmation = inject(ConfirmationService);
+  @ViewChild('todoInput') todoInput!: ElementRef<HTMLInputElement>;
 
   fab = false;
 
@@ -66,16 +63,17 @@ export class TodosPageComponent {
 
     await this.supabase
       .from('todos')
-      .insert([{title: this.profileForm.value.newTodo, folder_id: folderId}]);
+      .insert([{ title: this.profileForm.value.newTodo, folder_id: folderId }]);
 
     this.profileForm.reset();
+    this.fab = true;
+    setTimeout(() => this.todoInput?.nativeElement.focus(), 0);
   }
 
   async deleteTodo(id: number) {
-    await this.supabase
-      .from('todos')
-      .delete()
-      .eq('id', id);
-
-  }
+        await this.supabase
+          .from('todos')
+          .delete()
+          .eq('id', id);
+    };
 }
