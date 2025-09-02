@@ -1,65 +1,38 @@
+<p-button class="fixed bottom-10 right-10"
+          type="button"
+          (click)="fab = true"
+          icon="pi pi-plus"/>
+
 <main class="mt-5 pb-30">
-
-<div class="flex gap-2 justify-center">
-    <p-button variant="outlined" type="button" (click)="visible1 = true" icon="pi pi-arrow-up" />
-</div>
-
-
   <div class="flex-row">
     @for (folder of data.folderList(); track folder.id) {
       <div class="my-5 flex gap-3 items-center">
         <a
           [routerLink]="'/protected/todos/' + folder.id"
-          class="w-full left"
-          matButton="outlined"
+          class="w-full left border border-gray-200 px-4 py-2 shadow rounded-full hover:bg-gray-100"
         >
           {{ folder.title }}
         </a>
-        <div role="button" (click)="deleteFolder(folder.id)" matButton="outlined">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-trash-icon lucide-trash text-red-500"
-          >
-            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-            <path d="M3 6h18" />
-            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-          </svg>
-        </div>
+        <p-button icon="pi pi-trash"
+                  (click)="deleteFolder(folder.id)"
+                  [rounded]="true"
+                  [text]="true"
+                  severity="danger"/>
       </div>
     }
   </div>
-  <button matFab="elevated" (click)="openBottomSheet()" class="fab">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="lucide lucide-plus-icon lucide-plus"
-    >
-      <path d="M5 12h14" />
-      <path d="M12 5v14" />
-    </svg>
-  </button>
 </main>
 
-
-<p-drawer header="Bottom Drawer h-auto" [(visible)]="visible1" position="bottom">
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-    aliquip ex ea commodo consequat.
-  </p>
+<p-drawer header="New Folder" styleClass="h-full" [(visible)]="fab" position="bottom">
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="w-full">
+    <div class="flex flex-col gap-5 my-5">
+      <input pInputText type="text" placeholder="" formControlName="newFolder">
+    </div>
+    <div class="mt-5 mb-15">
+      <p-button type="submit"
+                [disabled]="!profileForm.valid"
+                (click)="fab = true"
+                icon="pi pi-send"/>
+    </div>
+  </form>
 </p-drawer>

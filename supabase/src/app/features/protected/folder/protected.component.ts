@@ -19,12 +19,14 @@ import {MatButtonModule} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import {Drawer} from 'primeng/drawer';
+import {InputText} from 'primeng/inputtext';
 
 @Component({
   selector: 'app-protected',
   standalone: true,
-  imports: [CommonModule, MatButton, MatFabButton, RouterLink, ButtonModule, Drawer],
+  imports: [CommonModule, MatButton, MatFabButton, RouterLink, ButtonModule, Drawer, ReactiveFormsModule, InputText],
   templateUrl: './folder.html',
+  styleUrls: ['./folder.css']
 })
 export class ProtectedComponent {
   private _bottomSheet = inject(MatBottomSheet);
@@ -32,7 +34,16 @@ export class ProtectedComponent {
   data = inject(supabaseRealtimeFolders);
   supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   readonly dialog = inject(MatDialog);
-  visible1 = false;
+  fab = false;
+  profileForm = new FormGroup({
+    newFolder: new FormControl('', Validators.required),
+  });
+
+  async onSubmit() {
+    await this.supabase.from('folders').insert([{title: this.profileForm.value.newFolder}]);
+    this.profileForm.reset();
+  }
+
   async deleteFolder(id: number) {
     const dialogRef = this.dialog.open(ConfirmDeleteDialog, {width: '300px'});
     dialogRef.afterClosed().subscribe(async (result) => {
@@ -42,32 +53,8 @@ export class ProtectedComponent {
     });
   }
 
-  openBottomSheet(): void {
-    this._bottomSheet.open(BottomSheetNewFolder);
-  }
-
   logout() {
     this.auth.signOut();
-  }
-}
-
-@Component({
-  selector: 'bottom-sheet-new-folder',
-  templateUrl: 'bottom-sheet-new-folder.html',
-  imports: [MatButton, MatFormField, MatInput, MatLabel, ReactiveFormsModule],
-})
-export class BottomSheetNewFolder {
-  private _bottomSheetRef = inject<MatBottomSheetRef<BottomSheetNewFolder>>(MatBottomSheetRef);
-  supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-  profileForm = new FormGroup({
-    newFolder: new FormControl('', Validators.required),
-  });
-
-  async onSubmit() {
-    await this.supabase.from('folders').insert([{title: this.profileForm.value.newFolder}]);
-    this._bottomSheetRef.dismiss();
-    this.profileForm.reset();
   }
 }
 
