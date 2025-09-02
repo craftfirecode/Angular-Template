@@ -12,11 +12,14 @@
         <div class="w-full left border border-gray-200 px-4 py-2 shadow rounded-full hover:bg-gray-100">
           <span [ngClass]="{ 'line-through': todo.completed }">{{ todo.title }}</span>
         </div>
-        <button pButton type="button" icon="pi pi-trash" class="p-button-text p-button-rounded p-button-danger" (click)="deleteTodo(todo.id)"></button>
+        <p-button icon="pi pi-trash"
+                  (click)="deleteTodo(todo.id)"
+                  [rounded]="true"
+                  [text]="true"
+                  severity="danger"/>
       </div>
     }
   </div>
-
 </main>
 
 <p-drawer header="New Todo" styleClass="h-full" [(visible)]="fab" position="bottom">
