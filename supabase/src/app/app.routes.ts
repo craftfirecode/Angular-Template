@@ -7,11 +7,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/login.component').then(m => m.LoginComponent),
     canActivate: [guestGuard]
   },
-  {
-    path: 'register',
-    loadComponent: () => import('./features/auth/register.component').then(m => m.RegisterComponent),
-    canActivate: [guestGuard]
-  },
+  // {
+  //   path: 'register',
+  //   loadComponent: () => import('./features/auth/register.component').then(m => m.RegisterComponent),
+  //   canActivate: [guestGuard]
+  // },
   {
     path: 'protected',
     loadComponent: () => import('./features/protected/folder/protected.component').then(m => m.ProtectedComponent),
