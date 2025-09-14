@@ -7,13 +7,13 @@ import {createClient} from '@supabase/supabase-js';
 import {FolderService} from '../../../folder.service';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
-import {Drawer} from 'primeng/drawer';
 import {InputText} from 'primeng/inputtext';
+import {AnimateOnScroll} from 'primeng/animateonscroll';
 
 @Component({
   selector: 'app-todos-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, ButtonModule, Drawer, ReactiveFormsModule, InputText],
+  imports: [CommonModule, RouterLink, ButtonModule, ReactiveFormsModule, InputText, AnimateOnScroll],
   templateUrl: './todo.html',
   styleUrls: ['./todo.css']
 })

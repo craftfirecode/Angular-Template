@@ -1,34 +1,32 @@
-<p-button class="fixed bottom-5 right-5"
-          type="button"
-          (click)="openDrawer()"
-          icon="pi pi-plus"/>
-
 <main class="mt-5 pb-30">
-  <a routerLink="/supabase/public/" pButton class="p-button-outlined" severity="contrast">Zurück</a>
+  <p-button routerLink="/supabase/public/" outlined severity="contrast" icon="pi pi-angle-left"></p-button>
   <div class="my-5">
     @for (todo of data.todoList(); track todo.id) {
-      <div class="my-5 flex gap-3 items-center">
-        <input type="checkbox" [checked]="todo.completed" (change)="toggleCompleted(todo, todo.completed)" />
-        <div class="w-full left border border-gray-200 px-4 py-2 shadow rounded-full hover:bg-gray-100">
-          <span [ngClass]="{ 'line-through': todo.completed }">{{ todo.title }}</span>
+      <div
+        pAnimateOnScroll
+        enterClass="animate-enter fade-in-10 slide-in-from-r-8 animate-duration-1000"
+        leaveClass="animate-leave fade-out-0"
+        class="flex flex-col"
+      >
+        <div class="my-3 flex gap-3 items-center">
+          <input type="checkbox" [checked]="todo.completed" (change)="toggleCompleted(todo, todo.completed)" />
+          <div class="w-full left border border-gray-200 px-4 py-2 shadow rounded-full hover:bg-gray-100">
+            <span [ngClass]="{ 'line-through': todo.completed }">{{ todo.title }}</span>
+          </div>
+          <p-button icon="pi pi-trash"
+                    (click)="deleteTodo(todo.id)"
+                    [rounded]="true"
+                    [text]="true"
+                    severity="danger"/>
         </div>
-        <p-button icon="pi pi-trash"
-                  (click)="deleteTodo(todo.id)"
-                  [rounded]="true"
-                  [text]="true"
-                  severity="danger"/>
       </div>
     }
   </div>
 </main>
 
-<p-drawer header="New Todo" styleClass="h-full" [(visible)]="fab" position="bottom">
-  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="w-full">
-    <div class="flex flex-col gap-5 mt-5">
-      <input #todoInput pInputText type="text" placeholder="New Todo" formControlName="newTodo" />
-    </div>
-    <div class="mt-5 mb-15">
-      <p-button type="submit" label="Submit" icon="pi pi-send" [disabled]="!profileForm.valid"></p-button>
-    </div>
+<div class="fixed bottom-0 left-0 right-0 bg-white p-3  border-t border-gray-200 flex justify-center md:justify-start items-center">
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="w-full flex gap-3">
+    <input #todoInput pInputText type="text" placeholder="New Todo" formControlName="newTodo" class="w-full shadow-0!" />
+    <p-button type="submit" icon="pi pi-send" [disabled]="!profileForm.valid"></p-button>
   </form>
-</p-drawer>
+</div>

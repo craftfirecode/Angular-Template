@@ -10,11 +10,12 @@ import {Drawer} from 'primeng/drawer';
 import {InputText} from 'primeng/inputtext';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import {AnimateOnScroll} from 'primeng/animateonscroll';
 
 @Component({
   selector: 'app-protected',
   standalone: true,
-  imports: [CommonModule, ConfirmDialogModule, RouterLink, ButtonModule, Drawer, ReactiveFormsModule, InputText],
+  imports: [CommonModule, ConfirmDialogModule, RouterLink, ButtonModule, Drawer, ReactiveFormsModule, InputText, AnimateOnScroll],
   providers: [ConfirmationService],
   templateUrl: './folder.html',
   styleUrls: ['./folder.css']
