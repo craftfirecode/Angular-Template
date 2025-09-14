@@ -1,6 +1,6 @@
 <main class="mt-5 pb-30">
   <p-button routerLink="/supabase/public/" outlined severity="contrast" icon="pi pi-angle-left"></p-button>
-  <div class="my-5">
+  <div class="my-5 overflow-hidden">
     @for (todo of data.todoList(); track todo.id) {
       <div
         pAnimateOnScroll
