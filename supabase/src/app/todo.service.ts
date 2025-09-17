@@ -8,9 +8,10 @@ const API_URL = 'https://auth.craftfire.de';
 @Injectable({ providedIn: 'root' })
 export class TodoService {
   todoList = signal<any[]>([]);
-  loading = signal<boolean>(false); // Neu: Ladezustand
+  loading = signal<boolean>(false);
   private currentFolderId: number | null = null;
-  private requestToken = 0; // Neu: verhindert veraltete Antworten
+  private requestToken = 0;
+  private isInitialLoad = true; // Neuer Flag für ersten Ladevorgang
 
   constructor(
     private http: HttpClient,
@@ -24,19 +25,25 @@ export class TodoService {
   }
 
   async loadTodos(folderId: number) {
-    const token = ++this.requestToken; // eindeutiger Token für diesen Aufruf
-    this.currentFolderId = folderId; // zuerst setzen, damit spätere Updates wissen, welcher Ordner aktiv ist
-    this.loading.set(true);
-    this.todoList.set([]); // Alte Daten sofort entfernen, verhindert Flash
+    const token = ++this.requestToken;
+    const isNewFolder = this.currentFolderId !== folderId;
+    this.currentFolderId = folderId;
+
+    // Nur bei Ordnerwechsel oder initialem Laden die Liste leeren
+    if (isNewFolder || this.isInitialLoad) {
+      this.loading.set(true);
+      this.todoList.set([]);
+      this.isInitialLoad = false;
+    }
+
     try {
       const folder: any = await this.http.get(`${API_URL}/folders/${folderId}`, { headers: this.getHeaders() }).toPromise();
-      // Nur anwenden, wenn dies noch der aktuellste Request ist
       if (token === this.requestToken) {
         this.todoList.set(folder.todos || []);
       }
     } catch (e) {
       console.error('Fehler beim Laden der Todos:', e);
-      if (token === this.requestToken) {
+      if (token === this.requestToken && isNewFolder) {
         this.todoList.set([]);
       }
     } finally {
@@ -46,24 +53,28 @@ export class TodoService {
     }
   }
 
+  async refreshCurrentTodos() {
+    if (this.currentFolderId !== null) {
+      const folder: any = await this.http.get(
+        `${API_URL}/folders/${this.currentFolderId}`,
+        { headers: this.getHeaders() }
+      ).toPromise();
+      this.todoList.set(folder.todos || []);
+    }
+  }
+
   async createTodo(data: any) {
     await this.http.post(`${API_URL}/todos`, data, { headers: this.getHeaders() }).toPromise();
-    if (this.currentFolderId !== null) {
-      await this.loadTodos(this.currentFolderId);
-    }
+    await this.refreshCurrentTodos();
   }
 
   async updateTodo(id: number, data: any) {
     await this.http.put(`${API_URL}/todos/${id}`, data, { headers: this.getHeaders() }).toPromise();
-    if (this.currentFolderId !== null) {
-      await this.loadTodos(this.currentFolderId);
-    }
+    await this.refreshCurrentTodos();
   }
 
   async deleteTodo(id: number) {
     await this.http.delete(`${API_URL}/todos/${id}`, { headers: this.getHeaders() }).toPromise();
-    if (this.currentFolderId !== null) {
-      await this.loadTodos(this.currentFolderId);
-    }
+    await this.refreshCurrentTodos();
   }
 }

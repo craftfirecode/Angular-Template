@@ -6,11 +6,12 @@ import {TodoService} from '../../../todo.service';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
 import {InputText} from 'primeng/inputtext';
+import {AnimateOnScroll} from 'primeng/animateonscroll';
 
 @Component({
   selector: 'app-todos-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, ButtonModule, ReactiveFormsModule, InputText],
+  imports: [CommonModule, RouterLink, ButtonModule, ReactiveFormsModule, InputText, AnimateOnScroll],
   templateUrl: './todo.html',
   styleUrls: ['./todo.css']
 })
