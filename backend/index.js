@@ -56,7 +56,6 @@ app.post("/auth/login", async (req, res) => {
 
 app.get("/folders", authMiddleware, async (req, res) => {
   const folders = await prisma.folder.findMany({
-    where: { userId: req.user.id },
     include: { todos: true },
   });
   res.json(folders);
@@ -66,8 +65,7 @@ app.get("/folders", authMiddleware, async (req, res) => {
 app.get("/folders/:id", authMiddleware, async (req, res) => {
   const folder = await prisma.folder.findFirst({
     where: {
-      id: Number(req.params.id),
-      userId: req.user.id
+      id: Number(req.params.id)
     },
     include: { todos: true },
   });
@@ -84,45 +82,29 @@ app.post("/folders", authMiddleware, async (req, res) => {
 });
 
 app.put("/folders/:id", authMiddleware, async (req, res) => {
-  const folder = await prisma.folder.updateMany({
-    where: { id: Number(req.params.id), userId: req.user.id },
+  const folder = await prisma.folder.update({
+    where: { id: Number(req.params.id) },
     data: req.body,
   });
-  if (!folder.count) return res.status(403).json({ error: "Not allowed" });
   io.emit("folder:updated", req.body);
   res.json({ success: true });
 });
 
 app.delete("/folders/:id", authMiddleware, async (req, res) => {
-  const folder = await prisma.folder.deleteMany({
-    where: { id: Number(req.params.id), userId: req.user.id },
+  const folder = await prisma.folder.delete({
+    where: { id: Number(req.params.id) },
   });
-  if (!folder.count) return res.status(403).json({ error: "Not allowed" });
   io.emit("folder:deleted", Number(req.params.id));
   res.json({ success: true });
 });
 
 app.post("/todos", authMiddleware, async (req, res) => {
-  const folder = await prisma.folder.findFirst({
-    where: { id: req.body.folderId, userId: req.user.id },
-  });
-  if (!folder) return res.status(403).json({ error: "Not allowed" });
   const todo = await prisma.todo.create({ data: req.body });
   io.emit("todo:created", todo);
   res.json(todo);
 });
 
 app.put("/todos/:id", authMiddleware, async (req, res) => {
-  // SICHERHEIT: Prüfe ob Todo zu einem Folder des Users gehört
-  const todo = await prisma.todo.findFirst({
-    where: { id: Number(req.params.id) },
-    include: { folder: true }
-  });
-
-  if (!todo || todo.folder.userId !== req.user.id) {
-    return res.status(403).json({ error: "Not allowed" });
-  }
-
   const updatedTodo = await prisma.todo.update({
     where: { id: Number(req.params.id) },
     data: req.body,
@@ -132,16 +114,6 @@ app.put("/todos/:id", authMiddleware, async (req, res) => {
 });
 
 app.delete("/todos/:id", authMiddleware, async (req, res) => {
-  // SICHERHEIT: Prüfe ob Todo zu einem Folder des Users gehört
-  const todo = await prisma.todo.findFirst({
-    where: { id: Number(req.params.id) },
-    include: { folder: true }
-  });
-
-  if (!todo || todo.folder.userId !== req.user.id) {
-    return res.status(403).json({ error: "Not allowed" });
-  }
-
   const deletedTodo = await prisma.todo.delete({
     where: { id: Number(req.params.id) },
   });
