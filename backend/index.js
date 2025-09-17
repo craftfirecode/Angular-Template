@@ -52,10 +52,10 @@ app.post("/auth/login", async (req, res) => {
   res.json({ token });
 });
 
+// Alle Folder für alle Nutzer (kein userId Filter mehr)
 app.get("/folders", authMiddleware, async (req, res) => {
   try {
     const folders = await prisma.folder.findMany({
-      where: { userId: req.user.id },
       include: { todos: true },
       orderBy: { id: "asc" }
     });
@@ -65,12 +65,12 @@ app.get("/folders", authMiddleware, async (req, res) => {
   }
 });
 
-// Sicherer GET-Endpunkt für einzelnen Folder mit Todos
+// Einzelner Folder (kein userId Filter)
 app.get("/folders/:id", authMiddleware, async (req, res) => {
   const id = Number(req.params.id);
   try {
     const folder = await prisma.folder.findFirst({
-      where: { id, userId: req.user.id },
+      where: { id },
       include: { todos: true }
     });
     if (!folder) return res.status(404).json({ error: "Folder nicht gefunden" });
@@ -80,6 +80,7 @@ app.get("/folders/:id", authMiddleware, async (req, res) => {
   }
 });
 
+// Erstellen (userId bleibt gespeichert, aber Zugriff nicht eingeschränkt)
 app.post("/folders", authMiddleware, async (req, res) => {
   try {
     const folder = await prisma.folder.create({
@@ -91,45 +92,44 @@ app.post("/folders", authMiddleware, async (req, res) => {
   }
 });
 
+// Update ohne userId Einschränkung
 app.put("/folders/:id", authMiddleware, async (req, res) => {
   const id = Number(req.params.id);
   try {
-    const result = await prisma.folder.updateMany({
-      where: { id, userId: req.user.id },
+    const result = await prisma.folder.update({
+      where: { id },
       data: { name: req.body.name, done: req.body.done }
     });
-    if (result.count === 0) return res.status(404).json({ error: "Folder nicht gefunden" });
-    res.json({ success: true });
+    res.json({ success: true, folder: result });
   } catch (e) {
-    res.status(400).json({ error: "Update fehlgeschlagen" });
+    res.status(404).json({ error: "Folder nicht gefunden oder Update fehlgeschlagen" });
   }
 });
 
+// Löschen ohne userId Einschränkung (Todos werden vorher entfernt)
 app.delete("/folders/:id", authMiddleware, async (req, res) => {
   const id = Number(req.params.id);
   try {
-    // Versuche direkt zu löschen (Cascade sollte greifen)
-    const deleted = await prisma.folder.deleteMany({ where: { id, userId: req.user.id } });
-    if (deleted.count === 0) return res.status(404).json({ error: "Folder nicht gefunden" });
+    const folder = await prisma.folder.findUnique({ where: { id } });
+    if (!folder) return res.status(404).json({ error: "Folder nicht gefunden" });
+
+    await prisma.$transaction([
+      prisma.todo.deleteMany({ where: { folderId: id } }),
+      prisma.folder.delete({ where: { id } })
+    ]);
+
     res.json({ success: true });
   } catch (e) {
-    // Fallback falls keine Cascade aktiv (z.B. alte DB-Struktur)
-    try {
-      await prisma.todo.deleteMany({ where: { folderId: id, folder: { userId: req.user.id } } });
-      const deleted = await prisma.folder.deleteMany({ where: { id, userId: req.user.id } });
-      if (deleted.count === 0) return res.status(404).json({ error: "Folder nicht gefunden" });
-      res.json({ success: true, fallback: true });
-    } catch (e2) {
-      res.status(500).json({ error: "Löschen fehlgeschlagen" });
-    }
+    res.status(500).json({ error: "Folder konnte nicht gelöscht werden" });
   }
 });
 
+// Todos: Erstellung ohne userId Prüfung
 app.post("/todos", authMiddleware, async (req, res) => {
   const { name, folderId } = req.body;
   try {
-    const folder = await prisma.folder.findFirst({ where: { id: folderId, userId: req.user.id } });
-    if (!folder) return res.status(403).json({ error: "Kein Zugriff auf Folder" });
+    const folder = await prisma.folder.findFirst({ where: { id: folderId } });
+    if (!folder) return res.status(404).json({ error: "Folder nicht gefunden" });
     const todo = await prisma.todo.create({ data: { name, folderId } });
     res.json(todo);
   } catch (e) {
@@ -137,10 +137,11 @@ app.post("/todos", authMiddleware, async (req, res) => {
   }
 });
 
+// Todo Update ohne userId Prüfung
 app.put("/todos/:id", authMiddleware, async (req, res) => {
   const id = Number(req.params.id);
   try {
-    const exists = await prisma.todo.findFirst({ where: { id, folder: { userId: req.user.id } } });
+    const exists = await prisma.todo.findFirst({ where: { id } });
     if (!exists) return res.status(404).json({ error: "Todo nicht gefunden" });
     const updated = await prisma.todo.update({ where: { id }, data: req.body });
     res.json(updated);
@@ -149,10 +150,11 @@ app.put("/todos/:id", authMiddleware, async (req, res) => {
   }
 });
 
+// Todo Löschen ohne userId Prüfung
 app.delete("/todos/:id", authMiddleware, async (req, res) => {
   const id = Number(req.params.id);
   try {
-    const exists = await prisma.todo.findFirst({ where: { id, folder: { userId: req.user.id } } });
+    const exists = await prisma.todo.findFirst({ where: { id } });
     if (!exists) return res.status(404).json({ error: "Todo nicht gefunden" });
     await prisma.todo.delete({ where: { id } });
     res.json({ success: true });
