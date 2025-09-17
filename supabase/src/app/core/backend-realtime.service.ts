@@ -6,7 +6,8 @@ export class BackendRealtimeService {
   private socket: Socket;
 
   constructor() {
-    this.socket = io('http://localhost:4000');
+    // this.socket = io('http://localhost:4000');
+    this.socket = io('https://auth.craftfire.de');
   }
 
   on(event: string, callback: (data: any) => void) {

@@ -3,7 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './core/supabase.service';
 import { BackendRealtimeService } from './core/backend-realtime.service';
 
-const API_URL = 'http://localhost:4000';
+// const API_URL = 'http://localhost:4000';
+const API_URL = 'https://auth.craftfire.de';
 
 @Injectable({ providedIn: 'root' })
 export class FolderService {
