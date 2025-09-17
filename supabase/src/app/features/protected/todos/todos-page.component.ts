@@ -20,7 +20,6 @@ export class TodosPageComponent {
   todoService = inject(TodoService);
   route = inject(ActivatedRoute);
   @ViewChild('todoInput') todoInput!: ElementRef<HTMLInputElement>;
-  fab = false;
   profileForm = new FormGroup({
     newTodo: new FormControl('', Validators.required),
   });
@@ -30,7 +29,6 @@ export class TodosPageComponent {
       const folderId = Number(params.get('id'));
       this.folderService.setFolderID(folderId);
       this.todoService.loadTodos(folderId);
-      this.todoService.listenRealtime(folderId);
     });
   }
 

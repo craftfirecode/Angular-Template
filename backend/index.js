@@ -1,7 +1,6 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import { createServer } from "http";
-import { Server } from "socket.io";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import cors from "cors";
@@ -11,7 +10,6 @@ dotenv.config();
 const prisma = new PrismaClient();
 const app = express();
 const server = createServer(app);
-const io = new Server(server, { cors: { origin: "*" } });
 
 app.use(cors());
 app.use(express.json());
@@ -77,7 +75,6 @@ app.post("/folders", authMiddleware, async (req, res) => {
   const folder = await prisma.folder.create({
     data: { ...req.body, userId: req.user.id },
   });
-  io.emit("folder:created", folder);
   res.json(folder);
 });
 
@@ -86,7 +83,6 @@ app.put("/folders/:id", authMiddleware, async (req, res) => {
     where: { id: Number(req.params.id) },
     data: req.body,
   });
-  io.emit("folder:updated", req.body);
   res.json({ success: true });
 });
 
@@ -94,13 +90,12 @@ app.delete("/folders/:id", authMiddleware, async (req, res) => {
   const folder = await prisma.folder.delete({
     where: { id: Number(req.params.id) },
   });
-  io.emit("folder:deleted", Number(req.params.id));
   res.json({ success: true });
 });
 
 app.post("/todos", authMiddleware, async (req, res) => {
   const todo = await prisma.todo.create({ data: req.body });
-  io.emit("todo:created", todo);
+  // Vorher: io.emit("todo:created", todo);
   res.json(todo);
 });
 
@@ -109,7 +104,6 @@ app.put("/todos/:id", authMiddleware, async (req, res) => {
     where: { id: Number(req.params.id) },
     data: req.body,
   });
-  io.emit("todo:updated", updatedTodo);
   res.json(updatedTodo);
 });
 
@@ -117,12 +111,7 @@ app.delete("/todos/:id", authMiddleware, async (req, res) => {
   const deletedTodo = await prisma.todo.delete({
     where: { id: Number(req.params.id) },
   });
-  io.emit("todo:deleted", deletedTodo.id);
   res.json(deletedTodo);
-});
-
-io.on("connection", (socket) => {
-  console.log("Client connected:", socket.id);
 });
 
 const PORT = process.env.PORT || 4000;

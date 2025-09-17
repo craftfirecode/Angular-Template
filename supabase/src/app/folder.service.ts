@@ -1,7 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './core/supabase.service';
-import { BackendRealtimeService } from './core/backend-realtime.service';
 
 // const API_URL = 'http://localhost:4000';
 const API_URL = 'https://auth.craftfire.de';
@@ -13,13 +12,9 @@ export class FolderService {
 
   constructor(
     private http: HttpClient,
-    private auth: AuthService,
-    private realtime: BackendRealtimeService
+    private auth: AuthService
   ) {
     this.loadFolders();
-    this.realtime.on('folder:created', () => this.loadFolders());
-    this.realtime.on('folder:updated', () => this.loadFolders());
-    this.realtime.on('folder:deleted', () => this.loadFolders());
   }
 
   private getHeaders() {
@@ -39,14 +34,20 @@ export class FolderService {
 
   async createFolder(data: any) {
     await this.http.post(`${API_URL}/folders`, data, { headers: this.getHeaders() }).toPromise();
+    // Nach dem Erstellen aktualisierte Daten laden
+    await this.loadFolders();
   }
 
   async updateFolder(id: number, data: any) {
     await this.http.put(`${API_URL}/folders/${id}`, data, { headers: this.getHeaders() }).toPromise();
+    // Nach dem Aktualisieren neue Daten laden
+    await this.loadFolders();
   }
 
   async deleteFolder(id: number) {
     await this.http.delete(`${API_URL}/folders/${id}`, { headers: this.getHeaders() }).toPromise();
+    // Nach dem Löschen aktualisierte Liste laden
+    await this.loadFolders();
   }
 
   setFolderID(id: number | null) {
