@@ -1,60 +1,63 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { Injectable, signal } from '@angular/core';
-import { SUPABASE_ANON_KEY, SUPABASE_URL } from './supabase.config';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-const URL = SUPABASE_URL;
-const KEY = SUPABASE_ANON_KEY;
+const API_URL = 'http://localhost:4000';
+const TOKEN_KEY = 'jwt_token';
 
 @Injectable({ providedIn: 'root' })
-export class SupabaseService {
-  private client: SupabaseClient;
+export class AuthService {
   public user = signal<any | null>(null);
   private initPromise: Promise<void> | null = null;
 
-  constructor() {
-    this.client = createClient(URL, KEY);
-    // start initialization and keep a promise so other callers can wait
+  constructor(private http: HttpClient) {
     this.initPromise = this.init();
-    this.client.auth.onAuthStateChange((_event, session) => {
-      this.user.set(session?.user ?? null);
-    });
   }
 
   private async init() {
-    try {
-      const { data } = await this.client.auth.getUser();
-      this.user.set(data.user ?? null);
-    } catch (e) {
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) {
       this.user.set(null);
+      return;
+    }
+    // Versuche, User-Daten zu laden (z.B. /folders als Ping)
+    try {
+      const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+      await this.http.get(`${API_URL}/folders`, { headers }).toPromise();
+      // User ist eingeloggt, aber wir haben keine Userdaten → nur Token merken
+      this.user.set({ token });
+    } catch {
+      this.user.set(null);
+      localStorage.removeItem(TOKEN_KEY);
     }
   }
 
-  // allow callers (e.g. guards) to wait for initial session load
   async ready() {
     if (this.initPromise) await this.initPromise;
   }
 
-  async signUp(email: string, password: string) {
-    const res = await this.client.auth.signUp({ email, password });
-    return res;
+  async signUp(email: string, username: string, password: string) {
+    return this.http.post(`${API_URL}/auth/register`, { email, username, password }).toPromise();
   }
 
-  async signIn(email: string, password: string) {
-    const res = await this.client.auth.signInWithPassword({ email, password });
+  async signIn(username: string, password: string) {
+    const res: any = await this.http.post(`${API_URL}/auth/login`, { username, password }).toPromise();
+    if (res.token) {
+      localStorage.setItem(TOKEN_KEY, res.token);
+      this.user.set({ token: res.token });
+    }
     return res;
   }
 
   async signOut() {
-    await this.client.auth.signOut();
+    localStorage.removeItem(TOKEN_KEY);
     this.user.set(null);
   }
 
   isAuthenticated() {
-    return !!this.user();
+    return !!localStorage.getItem(TOKEN_KEY);
   }
 
-  async ensureAuthenticated() {
-    await this.ready();
-    return this.isAuthenticated();
+  getToken() {
+    return localStorage.getItem(TOKEN_KEY);
   }
 }

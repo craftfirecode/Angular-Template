@@ -8,8 +8,8 @@
     </div>
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="w-full max-w-xs">
       <div class="flex flex-col gap-5">
-          <input type="email" placeholder="" formControlName="email">
-          <input type="password" placeholder="" formControlName="password">
+          <input type="text" placeholder="Username" formControlName="username">
+          <input type="password" placeholder="Password" formControlName="password">
       </div>
       <div class="mt-5">
         <button type="submit" [disabled]="!profileForm.valid">Submit</button>

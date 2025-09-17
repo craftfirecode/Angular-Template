@@ -1,10 +1,8 @@
 import {Component, inject, ViewChild, ElementRef} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {SUPABASE_ANON_KEY, SUPABASE_URL} from '../../../core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
-import {supabaseRealtimeTodos} from '../../../supabaseRealtimeTodos';
-import {createClient} from '@supabase/supabase-js';
 import {FolderService} from '../../../folder.service';
+import {TodoService} from '../../../todo.service';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
 import {InputText} from 'primeng/inputtext';
@@ -18,62 +16,41 @@ import {AnimateOnScroll} from 'primeng/animateonscroll';
   styleUrls: ['./todo.css']
 })
 export class TodosPageComponent {
-  private folderService = inject(FolderService);
-  private route = inject(ActivatedRoute);
-  public data = inject(supabaseRealtimeTodos);
-  supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  folderService = inject(FolderService);
+  todoService = inject(TodoService);
+  route = inject(ActivatedRoute);
   @ViewChild('todoInput') todoInput!: ElementRef<HTMLInputElement>;
-
   fab = false;
-
   profileForm = new FormGroup({
     newTodo: new FormControl('', Validators.required),
   });
 
-  async toggleCompleted(ref: any, state: any): Promise<void> {
-    if (state === null || state === false) {
-      await this.supabase
-        .from('todos')
-        .update({completed: true})
-        .eq('id', ref.id)
-    }
-
-    if (state === true) {
-      await this.supabase
-        .from('todos')
-        .update({completed: false})
-        .eq('id', ref.id)
-    }
-  }
-
   constructor() {
     this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
-      this.folderService.setFolderID(id);
+      const folderId = Number(params.get('id'));
+      this.folderService.setFolderID(folderId);
+      this.todoService.loadTodos(folderId);
+      this.todoService.listenRealtime(folderId);
     });
   }
 
-  openDrawer() {
-    this.fab = true;
+  async toggleCompleted(todo: any, state: any): Promise<void> {
+    await this.todoService.updateTodo(todo.id, { completed: !state });
+  }
+
+  async deleteTodo(id: number) {
+    await this.todoService.deleteTodo(id);
   }
 
   async onSubmit() {
     const folderId = this.folderService.folderID();
-    if (!folderId) return;
-
-    await this.supabase
-      .from('todos')
-      .insert([{ title: this.profileForm.value.newTodo, folder_id: folderId }]);
-
-    this.profileForm.reset();
-    this.fab = true;
-    setTimeout(() => this.todoInput?.nativeElement.focus(), 0);
+    if (folderId && this.profileForm.value.newTodo) {
+      await this.todoService.createTodo({
+        name: this.profileForm.value.newTodo,
+        folderId: folderId
+      });
+      this.profileForm.reset();
+      if (this.todoInput) this.todoInput.nativeElement.focus();
+    }
   }
-
-  async deleteTodo(id: number) {
-        await this.supabase
-          .from('todos')
-          .delete()
-          .eq('id', id);
-    };
 }

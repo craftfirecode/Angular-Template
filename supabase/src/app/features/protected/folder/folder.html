@@ -5,7 +5,7 @@
 
 <main class="mt-5 pb-30">
   <div class="flex-row overflow-hidden">
-    @for (folder of data.folderList(); track folder.id) {
+    @for (folder of folderService.folderList(); track folder.id) {
       <div
         pAnimateOnScroll
         enterClass="animate-enter fade-in-10 slide-in-from-r-8 animate-duration-1000"
@@ -18,7 +18,7 @@
             [routerLink]="'/protected/todos/' + folder.id"
             class="w-full left border border-gray-200 px-4 py-2 shadow rounded-full hover:bg-gray-100"
           >
-            {{ folder.title }}
+            {{ folder.name }}
           </a>
           <p-button icon="pi pi-trash"
                     (click)="deleteFolder(folder.id)"

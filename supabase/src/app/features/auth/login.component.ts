@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {RouterModule, Router} from '@angular/router';
-import {SupabaseService} from '../../core';
+import {AuthService} from '../../core/supabase.service';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {LucideAngularModule, Bird} from 'lucide-angular';
 
@@ -23,18 +23,19 @@ export class LoginComponent {
   readonly Bird = Bird;
 
   profileForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    username: new FormControl('', [Validators.required]),
     password: new FormControl('', Validators.required)
   });
 
-  constructor(private auth: SupabaseService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   async onSubmit() {
     this.error = null;
-    const email: string = this.profileForm.value.email ?? '';
+    const username: string = this.profileForm.value.username ?? '';
     const password: string = this.profileForm.value.password ?? '';
-    const res = await this.auth.signIn(email, password);
+    const res = await this.auth.signIn(username, password);
     if ((res as any).error) {
+      this.error = (res as any).error;
       return;
     }
     this.router.navigate(['/protected']);

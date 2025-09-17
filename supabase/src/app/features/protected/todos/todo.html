@@ -1,7 +1,7 @@
 <main class="mt-5 pb-30">
   <p-button routerLink="/supabase/public/" outlined severity="contrast" icon="pi pi-angle-left"></p-button>
   <div class="my-5 overflow-hidden">
-    @for (todo of data.todoList(); track todo.id) {
+    @for (todo of todoService.todoList(); track todo.id) {
       <div
         pAnimateOnScroll
         enterClass="animate-enter fade-in-10 slide-in-from-r-8 animate-duration-1000"
@@ -12,7 +12,7 @@
         <div class="my-3 flex gap-3 items-center">
           <input type="checkbox" [checked]="todo.completed" (change)="toggleCompleted(todo, todo.completed)" />
           <div class="w-full left border border-gray-200 px-4 py-2 shadow rounded-full hover:bg-gray-100">
-            <span [ngClass]="{ 'line-through': todo.completed }">{{ todo.title }}</span>
+            <span [ngClass]="{ 'line-through': todo.completed }">{{ todo.name }}</span>
           </div>
           <p-button icon="pi pi-trash"
                     (click)="deleteTodo(todo.id)"

@@ -1,9 +1,8 @@
 import {Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {SUPABASE_ANON_KEY, SUPABASE_URL, SupabaseService} from '../../../core';
-import {supabaseRealtimeFolders} from '../../../supabaseRealtimeFolders';
+import {AuthService} from '../../../core/supabase.service';
+import {FolderService} from '../../../folder.service';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {createClient} from '@supabase/supabase-js';
 import {RouterLink} from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import {Drawer} from 'primeng/drawer';
@@ -21,17 +20,20 @@ import {AnimateOnScroll} from 'primeng/animateonscroll';
   styleUrls: ['./folder.css']
 })
 export class ProtectedComponent {
-  auth = inject(SupabaseService);
-  data = inject(supabaseRealtimeFolders);
-  supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  auth = inject(AuthService);
+  folderService = inject(FolderService);
   confirmation = inject(ConfirmationService);
   fab = false;
   profileForm = new FormGroup({
     newFolder: new FormControl('', Validators.required),
   });
 
+  get folders() {
+    return this.folderService.folderList();
+  }
+
   async onSubmit() {
-    await this.supabase.from('folders').insert([{title: this.profileForm.value.newFolder}]);
+    await this.folderService.createFolder({ name: this.profileForm.value.newFolder });
     this.profileForm.reset();
   }
 
@@ -44,7 +46,7 @@ export class ProtectedComponent {
       rejectLabel: 'Abbrechen',
       rejectButtonStyleClass: 'p-button-outlined',
       accept: async () => {
-        await this.supabase.from('folders').delete().eq('id', id);
+        await this.folderService.deleteFolder(id);
       }
     };
 

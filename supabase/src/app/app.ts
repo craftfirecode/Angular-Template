@@ -1,7 +1,7 @@
 import { Component, signal, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import {SupabaseService} from './core';
+import { AuthService } from './core/supabase.service';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +10,9 @@ import {SupabaseService} from './core';
   styleUrls: ['./app.scss']
 })
 export class App {
-  protected readonly title = signal('supabase');
+  protected readonly title = signal('Todo App');
   public readonly ready = signal(false);
-  public readonly auth = inject(SupabaseService);
+  public readonly auth = inject(AuthService);
 
   constructor() {
     // wait for session to be loaded before rendering routes
