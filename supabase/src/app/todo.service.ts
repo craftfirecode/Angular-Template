@@ -8,7 +8,9 @@ const API_URL = 'https://auth.craftfire.de';
 @Injectable({ providedIn: 'root' })
 export class TodoService {
   todoList = signal<any[]>([]);
+  loading = signal<boolean>(false); // Neu: Ladezustand
   private currentFolderId: number | null = null;
+  private requestToken = 0; // Neu: verhindert veraltete Antworten
 
   constructor(
     private http: HttpClient,
@@ -22,20 +24,30 @@ export class TodoService {
   }
 
   async loadTodos(folderId: number) {
+    const token = ++this.requestToken; // eindeutiger Token für diesen Aufruf
+    this.currentFolderId = folderId; // zuerst setzen, damit spätere Updates wissen, welcher Ordner aktiv ist
+    this.loading.set(true);
+    this.todoList.set([]); // Alte Daten sofort entfernen, verhindert Flash
     try {
-      // Nutze den sicheren GET-Endpunkt für einzelne Folders
       const folder: any = await this.http.get(`${API_URL}/folders/${folderId}`, { headers: this.getHeaders() }).toPromise();
-      this.todoList.set(folder.todos || []);
-      this.currentFolderId = folderId;
+      // Nur anwenden, wenn dies noch der aktuellste Request ist
+      if (token === this.requestToken) {
+        this.todoList.set(folder.todos || []);
+      }
     } catch (e) {
       console.error('Fehler beim Laden der Todos:', e);
-      this.todoList.set([]);
+      if (token === this.requestToken) {
+        this.todoList.set([]);
+      }
+    } finally {
+      if (token === this.requestToken) {
+        this.loading.set(false);
+      }
     }
   }
 
   async createTodo(data: any) {
     await this.http.post(`${API_URL}/todos`, data, { headers: this.getHeaders() }).toPromise();
-    // Nach dem Erstellen aktualisierte Daten laden
     if (this.currentFolderId !== null) {
       await this.loadTodos(this.currentFolderId);
     }
@@ -43,7 +55,6 @@ export class TodoService {
 
   async updateTodo(id: number, data: any) {
     await this.http.put(`${API_URL}/todos/${id}`, data, { headers: this.getHeaders() }).toPromise();
-    // Nach dem Aktualisieren neue Daten laden
     if (this.currentFolderId !== null) {
       await this.loadTodos(this.currentFolderId);
     }
@@ -51,7 +62,6 @@ export class TodoService {
 
   async deleteTodo(id: number) {
     await this.http.delete(`${API_URL}/todos/${id}`, { headers: this.getHeaders() }).toPromise();
-    // Nach dem Löschen aktualisierte Daten laden
     if (this.currentFolderId !== null) {
       await this.loadTodos(this.currentFolderId);
     }
