@@ -9,14 +9,9 @@
       } @else {
         @for (todo of todoService.todoList(); track todo.id) {
           <div
-            pAnimateOnScroll
-            enterClass="animate-enter fade-in-10 slide-in-from-r-8 animate-duration-1000"
-            leaveClass="animate-leave fade-out-0"
-            once=true
             class="flex flex-col"
           >
             <div class="my-3 flex gap-3 items-center">
-              <input type="checkbox" [checked]="todo.completed" (change)="toggleCompleted(todo, todo.completed)" />
               <div class="w-full left border border-gray-200 px-4 py-2 shadow rounded-full hover:bg-gray-100">
                 <span [ngClass]="{ 'line-through': todo.completed }">{{ todo.name }}</span>
               </div>
