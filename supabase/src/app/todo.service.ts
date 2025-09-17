@@ -23,10 +23,11 @@ export class TodoService {
 
   async loadTodos(folderId: number) {
     try {
-      // Annahme: Backend liefert alle Todos zu einem Folder
-      const todos: any = await this.http.get(`${API_URL}/folders/${folderId}`, { headers: this.getHeaders() }).toPromise();
-      this.todoList.set(todos.todos || []);
+      // Nutze den neuen sicheren GET-Endpunkt für einzelne Folders
+      const folder: any = await this.http.get(`${API_URL}/folders/${folderId}`, { headers: this.getHeaders() }).toPromise();
+      this.todoList.set(folder.todos || []);
     } catch (e) {
+      console.error('Fehler beim Laden der Todos:', e);
       this.todoList.set([]);
     }
   }
@@ -55,4 +56,3 @@ export class TodoService {
     await this.http.delete(`${API_URL}/todos/${id}`, { headers: this.getHeaders() }).toPromise();
   }
 }
-

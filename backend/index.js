@@ -62,6 +62,19 @@ app.get("/folders", authMiddleware, async (req, res) => {
   res.json(folders);
 });
 
+// Sicherer GET-Endpunkt für einzelnen Folder mit Todos
+app.get("/folders/:id", authMiddleware, async (req, res) => {
+  const folder = await prisma.folder.findFirst({
+    where: {
+      id: Number(req.params.id),
+      userId: req.user.id
+    },
+    include: { todos: true },
+  });
+  if (!folder) return res.status(404).json({ error: "Folder not found" });
+  res.json(folder);
+});
+
 app.post("/folders", authMiddleware, async (req, res) => {
   const folder = await prisma.folder.create({
     data: { ...req.body, userId: req.user.id },
@@ -100,20 +113,40 @@ app.post("/todos", authMiddleware, async (req, res) => {
 });
 
 app.put("/todos/:id", authMiddleware, async (req, res) => {
-  const todo = await prisma.todo.update({
+  // SICHERHEIT: Prüfe ob Todo zu einem Folder des Users gehört
+  const todo = await prisma.todo.findFirst({
+    where: { id: Number(req.params.id) },
+    include: { folder: true }
+  });
+
+  if (!todo || todo.folder.userId !== req.user.id) {
+    return res.status(403).json({ error: "Not allowed" });
+  }
+
+  const updatedTodo = await prisma.todo.update({
     where: { id: Number(req.params.id) },
     data: req.body,
   });
-  io.emit("todo:updated", todo);
-  res.json(todo);
+  io.emit("todo:updated", updatedTodo);
+  res.json(updatedTodo);
 });
 
 app.delete("/todos/:id", authMiddleware, async (req, res) => {
-  const todo = await prisma.todo.delete({
+  // SICHERHEIT: Prüfe ob Todo zu einem Folder des Users gehört
+  const todo = await prisma.todo.findFirst({
+    where: { id: Number(req.params.id) },
+    include: { folder: true }
+  });
+
+  if (!todo || todo.folder.userId !== req.user.id) {
+    return res.status(403).json({ error: "Not allowed" });
+  }
+
+  const deletedTodo = await prisma.todo.delete({
     where: { id: Number(req.params.id) },
   });
-  io.emit("todo:deleted", todo.id);
-  res.json(todo);
+  io.emit("todo:deleted", deletedTodo.id);
+  res.json(deletedTodo);
 });
 
 io.on("connection", (socket) => {
