@@ -29,6 +29,5 @@ model Todo {
   id       Int    @id @default(autoincrement())
   name     String
   folderId Int
-  folder   Folder @relation(fields: [folderId], references: [id])
+  folder   Folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
 }
-

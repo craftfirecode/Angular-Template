@@ -53,65 +53,112 @@ app.post("/auth/login", async (req, res) => {
 });
 
 app.get("/folders", authMiddleware, async (req, res) => {
-  const folders = await prisma.folder.findMany({
-    include: { todos: true },
-  });
-  res.json(folders);
+  try {
+    const folders = await prisma.folder.findMany({
+      where: { userId: req.user.id },
+      include: { todos: true },
+      orderBy: { id: "asc" }
+    });
+    res.json(folders);
+  } catch (e) {
+    res.status(500).json({ error: "Fehler beim Laden" });
+  }
 });
 
 // Sicherer GET-Endpunkt für einzelnen Folder mit Todos
 app.get("/folders/:id", authMiddleware, async (req, res) => {
-  const folder = await prisma.folder.findFirst({
-    where: {
-      id: Number(req.params.id)
-    },
-    include: { todos: true },
-  });
-  if (!folder) return res.status(404).json({ error: "Folder not found" });
-  res.json(folder);
+  const id = Number(req.params.id);
+  try {
+    const folder = await prisma.folder.findFirst({
+      where: { id, userId: req.user.id },
+      include: { todos: true }
+    });
+    if (!folder) return res.status(404).json({ error: "Folder nicht gefunden" });
+    res.json(folder);
+  } catch (e) {
+    res.status(500).json({ error: "Fehler beim Laden" });
+  }
 });
 
 app.post("/folders", authMiddleware, async (req, res) => {
-  const folder = await prisma.folder.create({
-    data: { ...req.body, userId: req.user.id },
-  });
-  res.json(folder);
+  try {
+    const folder = await prisma.folder.create({
+      data: { name: req.body.name, userId: req.user.id }
+    });
+    res.json(folder);
+  } catch (e) {
+    res.status(400).json({ error: "Folder konnte nicht erstellt werden" });
+  }
 });
 
 app.put("/folders/:id", authMiddleware, async (req, res) => {
-  const folder = await prisma.folder.update({
-    where: { id: Number(req.params.id) },
-    data: req.body,
-  });
-  res.json({ success: true });
+  const id = Number(req.params.id);
+  try {
+    const result = await prisma.folder.updateMany({
+      where: { id, userId: req.user.id },
+      data: { name: req.body.name, done: req.body.done }
+    });
+    if (result.count === 0) return res.status(404).json({ error: "Folder nicht gefunden" });
+    res.json({ success: true });
+  } catch (e) {
+    res.status(400).json({ error: "Update fehlgeschlagen" });
+  }
 });
 
 app.delete("/folders/:id", authMiddleware, async (req, res) => {
-  const folder = await prisma.folder.delete({
-    where: { id: Number(req.params.id) },
-  });
-  res.json({ success: true });
+  const id = Number(req.params.id);
+  try {
+    // Versuche direkt zu löschen (Cascade sollte greifen)
+    const deleted = await prisma.folder.deleteMany({ where: { id, userId: req.user.id } });
+    if (deleted.count === 0) return res.status(404).json({ error: "Folder nicht gefunden" });
+    res.json({ success: true });
+  } catch (e) {
+    // Fallback falls keine Cascade aktiv (z.B. alte DB-Struktur)
+    try {
+      await prisma.todo.deleteMany({ where: { folderId: id, folder: { userId: req.user.id } } });
+      const deleted = await prisma.folder.deleteMany({ where: { id, userId: req.user.id } });
+      if (deleted.count === 0) return res.status(404).json({ error: "Folder nicht gefunden" });
+      res.json({ success: true, fallback: true });
+    } catch (e2) {
+      res.status(500).json({ error: "Löschen fehlgeschlagen" });
+    }
+  }
 });
 
 app.post("/todos", authMiddleware, async (req, res) => {
-  const todo = await prisma.todo.create({ data: req.body });
-  // Vorher: io.emit("todo:created", todo);
-  res.json(todo);
+  const { name, folderId } = req.body;
+  try {
+    const folder = await prisma.folder.findFirst({ where: { id: folderId, userId: req.user.id } });
+    if (!folder) return res.status(403).json({ error: "Kein Zugriff auf Folder" });
+    const todo = await prisma.todo.create({ data: { name, folderId } });
+    res.json(todo);
+  } catch (e) {
+    res.status(400).json({ error: "Todo konnte nicht erstellt werden" });
+  }
 });
 
 app.put("/todos/:id", authMiddleware, async (req, res) => {
-  const updatedTodo = await prisma.todo.update({
-    where: { id: Number(req.params.id) },
-    data: req.body,
-  });
-  res.json(updatedTodo);
+  const id = Number(req.params.id);
+  try {
+    const exists = await prisma.todo.findFirst({ where: { id, folder: { userId: req.user.id } } });
+    if (!exists) return res.status(404).json({ error: "Todo nicht gefunden" });
+    const updated = await prisma.todo.update({ where: { id }, data: req.body });
+    res.json(updated);
+  } catch (e) {
+    res.status(400).json({ error: "Update fehlgeschlagen" });
+  }
 });
 
 app.delete("/todos/:id", authMiddleware, async (req, res) => {
-  const deletedTodo = await prisma.todo.delete({
-    where: { id: Number(req.params.id) },
-  });
-  res.json(deletedTodo);
+  const id = Number(req.params.id);
+  try {
+    const exists = await prisma.todo.findFirst({ where: { id, folder: { userId: req.user.id } } });
+    if (!exists) return res.status(404).json({ error: "Todo nicht gefunden" });
+    await prisma.todo.delete({ where: { id } });
+    res.json({ success: true });
+  } catch (e) {
+    res.status(400).json({ error: "Löschen fehlgeschlagen" });
+  }
 });
 
 const PORT = process.env.PORT || 4000;
