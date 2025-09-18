@@ -1,5 +1,5 @@
 import {Component, inject} from '@angular/core';
-import {CommonModule, NgOptimizedImage} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {RouterModule, Router} from '@angular/router';
 import {AuthService} from '../../core/auth.service';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -18,7 +18,6 @@ import {InputText} from 'primeng/inputtext';
     RouterModule,
     ReactiveFormsModule,
     LucideAngularModule,
-    NgOptimizedImage,
     IconField,
     InputIcon,
     ButtonDirective,
@@ -31,12 +30,13 @@ export class LoginComponent {
   error: string | null = null;
   readonly Bird = Bird;
 
+  auth = inject(AuthService)
+  router = inject(Router)
+
   profileForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', Validators.required)
   });
-
-  constructor(private auth: AuthService, private router: Router) {}
 
   async onSubmit() {
     this.error = null;

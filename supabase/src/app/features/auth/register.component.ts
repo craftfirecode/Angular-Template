@@ -21,7 +21,9 @@ import {InputTextModule} from 'primeng/inputtext';
         <label>Password<input name="password" type="password" [(ngModel)]="password" required /></label>
         <button type="submit">Sign up</button>
       </form>
-      <p *ngIf="message">{{ message }}</p>
+      @if (message) {
+        <p>{{ message }}</p>
+      }
       <p><a routerLink="/login">Back to login</a></p>
     </main>
   `
@@ -41,6 +43,6 @@ export class RegisterComponent {
       return;
     }
     this.message = 'Registrierung erfolgreich. Du kannst dich jetzt einloggen.';
-    this.router.navigate(['/login']);
+    await this.router.navigate(['/login']);
   }
 }

@@ -28,12 +28,8 @@ export class TodosPageComponent {
     this.route.paramMap.subscribe(params => {
       const folderId = Number(params.get('id'));
       this.folderService.setFolderID(folderId);
-      this.todoService.loadTodos(folderId);
+      this.todoService.loadTodos(folderId).then();
     });
-  }
-
-  async toggleCompleted(todo: any, state: any): Promise<void> {
-    await this.todoService.updateTodo(todo.id, { completed: !state });
   }
 
   async deleteTodo(id: number) {
