@@ -4,6 +4,10 @@ import {RouterModule, Router} from '@angular/router';
 import {AuthService} from '../../core/auth.service';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {LucideAngularModule, Bird} from 'lucide-angular';
+import {IconField} from 'primeng/iconfield';
+import {InputIcon} from 'primeng/inputicon';
+import {ButtonDirective, ButtonLabel} from 'primeng/button';
+import {InputText} from 'primeng/inputtext';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +18,12 @@ import {LucideAngularModule, Bird} from 'lucide-angular';
     RouterModule,
     ReactiveFormsModule,
     LucideAngularModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    IconField,
+    InputIcon,
+    ButtonDirective,
+    ButtonLabel,
+    InputText
   ],
   templateUrl: './login.component.html',
 })
