@@ -1,6 +1,5 @@
 import {Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AuthService} from '../../../core/auth.service';
 import {FolderService} from '../../../folder.service';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {RouterLink} from '@angular/router';
@@ -21,7 +20,6 @@ import { BadgeModule } from 'primeng/badge';
   styleUrls: ['./folder.css']
 })
 export class ProtectedComponent {
-  auth = inject(AuthService);
   folderService = inject(FolderService);
   confirmation = inject(ConfirmationService);
   fab = false;
@@ -52,9 +50,5 @@ export class ProtectedComponent {
     };
 
     this.confirmation.confirm(options);
-  }
-
-  logout() {
-    this.auth.signOut();
   }
 }
