@@ -19,6 +19,10 @@ server {
     rewrite ^ https://$host$request_uri permanent;
   }
 
+  location / {
+    try_files $uri $uri/ /index.html;
+  }
+
   location ~ /.well-known {
     auth_basic off;
     allow all;
@@ -35,9 +39,5 @@ server {
     add_header alt-svc 'h3=":443"; ma=86400';
     expires max;
     access_log off;
-  }
-
-  if (-f $request_filename) {
-    break;
   }
 }
