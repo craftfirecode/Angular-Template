@@ -1,7 +1,7 @@
 import { Component, signal, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AuthService } from './core/supabase.service';
+import { AuthService } from './core/auth.service';
 
 @Component({
   selector: 'app-root',

@@ -1,7 +1,7 @@
 import { inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthService } from './supabase.service';
+import { AuthService } from './auth.service';
 
 export const guestGuard: CanActivateFn = async () => {
   const auth = inject(AuthService);

@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {RouterModule, Router} from '@angular/router';
-import {AuthService} from '../../core/supabase.service';
+import {AuthService} from '../../core/auth.service';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {LucideAngularModule, Bird} from 'lucide-angular';
 

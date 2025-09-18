@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AuthService} from '../../../core/supabase.service';
+import {AuthService} from '../../../core/auth.service';
 import {FolderService} from '../../../folder.service';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {RouterLink} from '@angular/router';

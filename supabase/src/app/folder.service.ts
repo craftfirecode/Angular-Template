@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthService } from './core/supabase.service';
+import { AuthService } from './core/auth.service';
 
 // const API_URL = 'http://localhost:4000';
 const API_URL = 'https://auth.craftfire.de';
