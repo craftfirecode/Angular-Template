@@ -10,11 +10,12 @@ import {InputText} from 'primeng/inputtext';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import {AnimateOnScroll} from 'primeng/animateonscroll';
+import { BadgeModule } from 'primeng/badge';
 
 @Component({
   selector: 'app-protected',
   standalone: true,
-  imports: [CommonModule, ConfirmDialogModule, RouterLink, ButtonModule, Drawer, ReactiveFormsModule, InputText, AnimateOnScroll],
+  imports: [CommonModule,BadgeModule, ConfirmDialogModule, RouterLink, ButtonModule, Drawer, ReactiveFormsModule, InputText, AnimateOnScroll],
   providers: [ConfirmationService],
   templateUrl: './folder.html',
   styleUrls: ['./folder.css']
@@ -28,13 +29,13 @@ export class ProtectedComponent {
     newFolder: new FormControl('', Validators.required),
   });
 
-  get folders() {
-    return this.folderService.folderList();
-  }
-
   async onSubmit() {
     await this.folderService.createFolder({ name: this.profileForm.value.newFolder });
     this.profileForm.reset();
+  }
+
+  log() {
+    console.log(this.folderService.folderList());
   }
 
   async deleteFolder(id: number) {

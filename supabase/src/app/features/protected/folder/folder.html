@@ -18,7 +18,12 @@
             [routerLink]="'/protected/todos/' + folder.id"
             class="w-full left border border-gray-200 px-4 py-2 shadow rounded-full hover:bg-gray-100"
           >
-            {{ folder.name }}
+            <div class="flex justify-between">
+              <div>{{ folder.name }}</div>
+              <div>
+                <small>{{ folder.todos.length }} Aufgaben</small>
+              </div>
+            </div>
           </a>
           <p-button icon="pi pi-trash"
                     (click)="deleteFolder(folder.id)"
@@ -46,3 +51,4 @@
 </p-drawer>
 
 <p-confirmDialog/>
+<!--<button (click)="log()">log</button>-->
