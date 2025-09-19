@@ -1,0 +1,47 @@
+<div class="container mx-auto px-5">
+  <div class="mt-5 pb-30">
+    <p-button routerLink="/supabase/public/" outlined severity="contrast" icon="pi pi-angle-left"></p-button>
+    <div class="my-5 overflow-hidden min-h-20">
+      @if (todoService.loading()) {
+        <div class="text-sm text-gray-500 animate-pulse"></div>
+      } @else {
+        @if (todoService.todoList().length === 0) {
+          <div pAnimateOnScroll
+               enterClass="animate-enter fade-in-10 animate-duration-1000"
+               once=true
+               class="text-sm text-gray-400">Keine Todos vorhanden.
+          </div>
+        } @else {
+          @for (todo of todoService.todoList(); track todo.id) {
+            <div
+              pAnimateOnScroll
+              enterClass="animate-enter fade-in-10 animate-duration-1000"
+              once=true
+              class="flex flex-col"
+            >
+              <div class="my-3 flex gap-3 items-center">
+                <div class="w-full left border border-gray-200 px-4 py-2 shadow rounded-full hover:bg-gray-100">
+                  <span [ngClass]="{ 'line-through': todo.completed }">{{ todo.name }}</span>
+                </div>
+                <p-button icon="pi pi-trash"
+                          (click)="deleteTodo(todo.id)"
+                          [rounded]="true"
+                          [text]="true"
+                          severity="danger"/>
+              </div>
+            </div>
+          }
+        }
+      }
+    </div>
+  </div>
+  <div
+    class="fixed bottom-0 left-0 right-0 bg-white p-3  border-t border-gray-200 flex justify-center md:justify-start items-center">
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="w-full flex gap-3">
+      <input #todoInput pInputText type="text" placeholder="New Todo" formControlName="newTodo"
+             class="w-full shadow-0!"/>
+      <p-button type="submit" icon="pi pi-send" [disabled]="!profileForm.valid"></p-button>
+    </form>
+  </div>
+</div>
+

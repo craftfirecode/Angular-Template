@@ -1,0 +1,42 @@
+<div
+  class="h-full px-6 py-20 md:px-20 lg:px-80 flex items-center justify-center backdrop-blur-3xl bg-cover! bg-center! bg-no-repeat!"
+  style="background-image: url('https://fqjltiegiezfetthbags.supabase.co/storage/v1/object/public/block.images/blocks/signin/signin-glass.jpg')"
+>
+  <div
+    class="px-8 md:px-12 lg:px-20 py-12 flex flex-col items-center gap-12 w-full backdrop-blur-2xl rounded-2xl bg-white/10 border border-white/10 max-w-sm">
+    <div class="flex flex-col items-center gap-4 w-full">
+      <lucide-icon size="50" [img]="Bird" class="my-icon text-white"></lucide-icon>
+      <div class="flex flex-col gap-2 w-full">
+        <div class="text-center text-3xl font-medium text-white leading-tight">Welcome Back</div>
+      </div>
+    </div>
+    <div class="flex flex-col items-center gap-8 w-full">
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-6 w-full">
+        <p-iconfield icon-position="left">
+          <p-inputicon class="pi pi-user text-white/70!"></p-inputicon>
+          <input
+            pInputText
+            type="text"
+            class="appearance-none! border! border-white/10! w-full! outline-0! bg-white/10! text-white! placeholder:text-white/70! rounded-3xl! shadow-sm!"
+            placeholder="Username"
+            formControlName="username"
+          />
+        </p-iconfield>
+        <p-iconfield icon-position="left">
+          <p-inputicon class="pi pi-lock text-white/70!"></p-inputicon>
+          <input
+            pInputText
+            type="password"
+            class="appearance-none! border! border-white/10! w-full! outline-0! bg-white/10! text-white! placeholder:text-white/70! rounded-3xl! shadow-sm!"
+            placeholder="Password"
+            formControlName="password"
+          />
+        </p-iconfield>
+        <button pButton
+                class="w-full! rounded-3xl! bg-surface-950! border! border-surface-950! text-white! hover:bg-surface-950/80!">
+          <span pButtonLabel type="submit">Sign In</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
