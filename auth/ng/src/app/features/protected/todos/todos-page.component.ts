@@ -1,8 +1,8 @@
 import {Component, inject, ViewChild, ElementRef} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ActivatedRoute, RouterLink} from '@angular/router';
-import {FolderService} from '../../../folder.service';
-import {TodoService} from '../../../todo.service';
+import {FolderService} from '../../../service/folder.service';
+import {TodoService} from '../../../service/todo.service';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
 import {InputText} from 'primeng/inputtext';

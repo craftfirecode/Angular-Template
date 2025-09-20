@@ -1,10 +1,10 @@
 import {Injectable, signal} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {AuthService} from './core/auth.service';
+import {AuthService} from '../core';
 import {FolderService} from './folder.service';
+import {environment} from '../environment';
 
-// const API_URL = 'http://localhost:4000';
-const API_URL = 'https://auth.craftfire.de';
+const API_URL = environment.apiUrl;
 
 @Injectable({providedIn: 'root'})
 export class TodoService {

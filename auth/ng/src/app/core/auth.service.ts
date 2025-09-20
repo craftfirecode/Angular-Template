@@ -1,8 +1,8 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {environment} from '../environment';
 
-// const API_URL = 'http://localhost:4000';
-const API_URL = 'https://auth.craftfire.de';
+const API_URL = environment.apiUrl;
 const TOKEN_KEY = 'jwt_token';
 
 @Injectable({ providedIn: 'root' })
