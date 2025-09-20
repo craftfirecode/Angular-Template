@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FolderService} from '../../../service/folder.service';
+import {FolderService} from '../../../signal/folder.service';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {RouterLink} from '@angular/router';
 import { ButtonModule } from 'primeng/button';
