@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../core';
 import { environment } from '../environment';
@@ -9,6 +9,14 @@ const API_URL = environment.apiUrl;
 export class FolderService {
   folderList = signal<any[]>([]);
   folderID = signal<number | null>(null);
+
+  currentFolderName = computed(() => {
+    const id = this.folderID();
+    const list = this.folderList();
+    if (id === null) return null;
+    const folder = list.find(f => f.id === id);
+    return folder ? folder.name : null;
+  });
 
   constructor(
     private http: HttpClient,
