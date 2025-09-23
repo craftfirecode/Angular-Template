@@ -2235,3 +2235,4 @@
 /auth/backend/node_modules/.package-lock.json
 /auth/backend/prisma/migrations/20250923074533_init/migration.sql
 /auth/backend/prisma/migrations/migration_lock.toml
+/auth/backend/.env
