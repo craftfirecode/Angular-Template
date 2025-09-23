@@ -2,3 +2,5 @@
 /backend/node_modules/
 /backend/prisma/dev.db
 /backend/prisma/dev.db-journal
+/auth/backend/prisma/dev.db
+/auth/backend/prisma/dev.db-journal
