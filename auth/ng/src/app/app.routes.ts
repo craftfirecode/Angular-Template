@@ -14,7 +14,7 @@ export const routes: Routes = [
   // },
   {
     path: 'protected',
-    loadComponent: () => import('./features/protected/folder/protected.component').then(m => m.ProtectedComponent),
+    loadComponent: () => import('./features/protected/folder/folders-page.component').then(m => m.FoldersPageComponent),
     canActivate: [authGuard]
   },
   {

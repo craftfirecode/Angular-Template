@@ -19,7 +19,8 @@ import { BadgeModule } from 'primeng/badge';
   templateUrl: './folder.html',
   styleUrls: ['./folder.css']
 })
-export class ProtectedComponent {
+
+export class FoldersPageComponent {
   folderService = inject(FolderService);
   confirmation = inject(ConfirmationService);
   fab = false;
