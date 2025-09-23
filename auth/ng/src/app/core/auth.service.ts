@@ -54,6 +54,11 @@ export class AuthService {
     this.user.set(null);
   }
 
+  async logout() {
+    localStorage.removeItem(TOKEN_KEY);
+    this.user.set(null);
+  }
+
   isAuthenticated() {
     return !!localStorage.getItem(TOKEN_KEY);
   }
