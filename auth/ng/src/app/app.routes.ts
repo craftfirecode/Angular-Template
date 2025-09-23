@@ -4,22 +4,22 @@ import { guestGuard, authGuard } from './core';
 export const routes: Routes = [
   {
     path: 'login',
-    loadComponent: () => import('./features/auth/login.component').then(m => m.LoginComponent),
+    loadComponent: () => import('./routes/auth/login.component').then(m => m.LoginComponent),
     canActivate: [guestGuard]
   },
   // {
   //   path: 'register',
-  //   loadComponent: () => import('./features/auth/register.component').then(m => m.RegisterComponent),
+  //   loadComponent: () => import('./routes/auth/register.component').then(m => m.RegisterComponent),
   //   canActivate: [guestGuard]
   // },
   {
     path: 'protected',
-    loadComponent: () => import('./features/protected/folder/folders-page.component').then(m => m.FoldersPageComponent),
+    loadComponent: () => import('./routes/protected/folder/folders-page.component').then(m => m.FoldersPageComponent),
     canActivate: [authGuard]
   },
   {
     path: 'protected/todos/:id',
-    loadComponent: () => import('./features/protected/todos/todos-page.component').then(m => m.TodosPageComponent),
+    loadComponent: () => import('./routes/protected/todos/todos-page.component').then(m => m.TodosPageComponent),
     canActivate: [authGuard]
   },
   { path: '', redirectTo: 'protected', pathMatch: 'full' },
