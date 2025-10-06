@@ -31,6 +31,7 @@ export class FoldersPageComponent {
   async onSubmit() {
     await this.folderService.createFolder({ name: this.profileForm.value.newFolder });
     this.profileForm.reset();
+    this.fab = false;
   }
 
   log() {
