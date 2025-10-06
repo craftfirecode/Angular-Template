@@ -29,18 +29,18 @@ function authMiddleware(req, res, next) {
   }
 }
 
-app.post("/auth/register", async (req, res) => {
-  const { email, username, password } = req.body;
-  const hashed = await bcrypt.hash(password, 10);
-  try {
-    const user = await prisma.user.create({
-      data: { email, username, password: hashed },
-    });
-    res.json({ message: "User created", user: { id: user.id, username: user.username } });
-  } catch (err) {
-    res.status(400).json({ error: "User already exists" });
-  }
-});
+// app.post("/auth/register", async (req, res) => {
+//   const { email, username, password } = req.body;
+//   const hashed = await bcrypt.hash(password, 10);
+//   try {
+//     const user = await prisma.user.create({
+//       data: { email, username, password: hashed },
+//     });
+//     res.json({ message: "User created", user: { id: user.id, username: user.username } });
+//   } catch (err) {
+//     res.status(400).json({ error: "User already exists" });
+//   }
+// });
 
 app.post("/auth/login", async (req, res) => {
   const { username, password } = req.body;
