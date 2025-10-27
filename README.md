@@ -8,7 +8,44 @@ Vorgehen und die eingesetzten Konzepte.
 
 ## Projektstruktur
 
-Das Projekt ist in zwei Bereiche unterteilt:
+Das Projekt ist in drei Bereiche unterteilt:
+
+### 📁 `./auth`
+
+| Ordner/Datei       | Zweck                                                                 |
+|--------------------|-----------------------------------------------------------------------|
+| **`/components`**  | Auth-spezifische Komponenten (Login, Signup, Profil)                |
+| **`/guards`**      | `auth.guard.ts` – Schutz für Routen                                  |
+| **`/interceptors`**| `auth.interceptor.ts` – JWT-Token in Requests einfügen               |
+| **`/models`**      | `user.model.ts`, `auth-response.model.ts` – Typen                    |
+| **`/services`**    | `auth.service.ts` – Auth-Logik, API-Kommunikation                    |
+| **`/store`**       | `auth.store.ts` – State-Management mit Signals                       |
+| **`/utils`**       | Helferfunktionen (z. B. Token-Decoding)                             |
+
+---
+
+## ✅ Wichtige Features
+
+- **Standalone Components** (keine Module, nur `imports: [...]`)
+- **Signals** für reaktiven State (`authStatus`, `user`)
+- **Reactive Forms** mit `FormBuilder` und Validierung
+- **HTTP-Interceptor** für automatische Token-Übertragung
+- **AuthGuard** zum Schutz von Routen
+- **JWT-Handling** (Speicherung in `localStorage`, Decoding)
+- **Fehlerbehandlung** (z. B. abgelaufene Tokens)
+- **Type-Safety** mit starken Typen für API-Responses
+
+---
+
+## ⚠️ Wichtiger Hinweis zur Sicherheit
+
+> **`localStorage` wird in diesem Projekt nur für Demonstrationszwecke (POC) verwendet!**
+> In einer **Produktionsumgebung** sollte stattdessen **`HttpOnly-Cookies`** oder eine sichere Server-seitige Session-Verwaltung genutzt werden, um **XSS-Angriffe** zu verhindern.
+> Dies ist eine bewusste Vereinfachung für Lernzwecke – **nicht für den Einsatz in echten Anwendungen geeignet!**
+
+---
+
+
 
 ### 📁 `./essentials`
 
