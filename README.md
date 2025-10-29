@@ -14,13 +14,11 @@ Das Projekt ist in drei Bereiche unterteilt:
 
 | Ordner/Datei       | Zweck                                                                 |
 |--------------------|-----------------------------------------------------------------------|
-| **`/components`**  | Auth-spezifische Komponenten (Login, Signup, Profil)                |
+| **`/components`**  | Auth-spezifische Komponenten (Login, Signup)                |
 | **`/guards`**      | `auth.guard.ts` – Schutz für Routen                                  |
-| **`/interceptors`**| `auth.interceptor.ts` – JWT-Token in Requests einfügen               |
 | **`/models`**      | `user.model.ts`, `auth-response.model.ts` – Typen                    |
 | **`/services`**    | `auth.service.ts` – Auth-Logik, API-Kommunikation                    |
-| **`/store`**       | `auth.store.ts` – State-Management mit Signals                       |
-| **`/utils`**       | Helferfunktionen (z. B. Token-Decoding)                             |
+| **`/store`**       | `auth.store.ts` – State-Management mit Signals                       
 
 ---
 
