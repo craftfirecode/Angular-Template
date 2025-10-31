@@ -12,18 +12,36 @@ Das Projekt ist in drei Bereiche unterteilt:
 
 ### 📁 `./auth`
 
+Vollständige Authentifizierungsanwendung mit Frontend und Backend:
+
+#### 🎯 **Backend** (`./auth/backend`)
+
 | Ordner/Datei       | Zweck                                                                 |
 |--------------------|-----------------------------------------------------------------------|
-| **`/components`**  | Auth-spezifische Komponenten (Login, Signup)                |
-| **`/guards`**      | `auth.guard.ts` – Schutz für Routen                                  |
-| **`/models`**      | `user.model.ts`, `auth-response.model.ts` – Typen                    |
-| **`/services`**    | `auth.service.ts` – Auth-Logik, API-Kommunikation                    |
-| **`/store`**       | `auth.store.ts` – State-Management mit Signals                       
+| **`index.js`**     | Express-Server mit Auth-Endpoints                                     |
+| **`add-user.js`**  | Script zum Hinzufügen von Benutzern                                  |
+| **`package.json`** | Backend-Dependencies (Express, Prisma, JWT, bcrypt)                  |
+| **`/prisma`**      | `schema.prisma` – Datenbankschema für User-Management                |
+
+#### 🎯 **Frontend** (`./auth/ng`)
+
+| Ordner/Datei           | Zweck                                                             |
+|------------------------|-------------------------------------------------------------------|
+| **`/src/app/core`**    | `auth.service.ts`, `auth.guard.ts`, `guest.guard.ts`            |
+| **`/src/app/routes`**  | Auth-Komponenten (`/auth`) und geschützte Routen (`/protected`) |
+| **`/src/app/signal`**  | `folder.service.ts`, `todo.service.ts` – State-Management       |
 
 ---
 
 ## ✅ Wichtige Features
 
+### 🔐 **Auth-Bereich (Vollstack)**
+- **Express.js Backend** mit JWT-Authentifizierung
+- **Prisma ORM** für Datenbankzugriff
+- **bcrypt** für Passwort-Hashing
+- **CORS-Konfiguration** für Frontend-Backend-Kommunikation
+
+### 🎨 **Angular Frontend**
 - **Standalone Components** (keine Module, nur `imports: [...]`)
 - **Signals** für reaktiven State (`authStatus`, `user`)
 - **Reactive Forms** mit `FormBuilder` und Validierung
@@ -68,14 +86,60 @@ Grundlegende Angular-Konzepte und -Features:
 
 Erweiterte Angular-Features:
 
-- 🔄 API-Integration (`AsyncApiService`)
-- 🌐 Routing (`RouterModule`, `Routes`, `routerLink`, `outlet`)
+- 🔄 **API-Integration** (`ApiService`)
+- 🌐 **Routing** (`RouterModule`, `Routes`, `routerLink`, `router-outlet`)
+- 📄 **Page Components** (`HomeComponent`, `UsersComponent`)
+- 🎯 **Service Layer** für HTTP-Kommunikation
+
+## Tech Stack
+
+### Backend (Auth)
+- **Node.js** mit Express.js
+- **Prisma ORM** für Datenbank-Management
+- **JWT** für Token-basierte Authentifizierung
+- **bcrypt** für sichere Passwort-Speicherung
+
+### Frontend (Angular)
+- **Angular 17+** mit Standalone Components
+- **TypeScript** für Type-Safety
+- **Signals** für reaktives State-Management
+- **SCSS** für erweiterte Styling-Features
+- **Reactive Forms** für Formular-Handling
 
 ## Zielsetzung
 
-- 🧠 Vertiefung moderner Angular-Konzepte
-- ⚙️ Hands-on Erfahrung mit Signals und Standalone Components
-- 🚀 Vorbereitung auf Angular-Entwicklung mit Fokus auf Clean Code und modulare Architektur
+- 🧠 **Vertiefung moderner Angular-Konzepte** (Signals, Standalone Components)
+- 🔐 **Fullstack-Entwicklung** mit Node.js Backend und Angular Frontend
+- ⚙️ **Hands-on Erfahrung** mit JWT-Authentifizierung und Prisma ORM
+- 🗄️ **Datenbank-Integration** mit modernen ORM-Praktiken
+- 🚀 **Vorbereitung auf Enterprise-Entwicklung** mit Clean Code und modularer Architektur
+
+## Entwicklung & Setup
+
+### Backend starten (Auth)
+```bash
+cd auth/backend
+npm install
+npm run dev
+```
+
+### Frontend starten
+```bash
+# Essentials
+cd essentials
+npm install
+ng serve
+
+# Auth Frontend
+cd auth/ng
+npm install
+ng serve
+
+# NG (Advanced)
+cd ng
+npm install
+ng serve
+```
 
 ## Hinweise
 
