@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { AsyncPipe, NgForOf } from '@angular/common';
 import { ApiService, User } from '../../api.service';
 import { Observable } from 'rxjs';
@@ -10,12 +10,12 @@ import { Observable } from 'rxjs';
   styleUrls: ['./users.component.scss']
 })
 
-export class UsersComponent implements OnInit {
+export class UsersComponent {
   users$!: Observable<User[]>;
 
   private apiService = inject(ApiService);
 
-  ngOnInit() {
+  constructor() {
     this.users$ = this.apiService.getUsers();
   }
 }
