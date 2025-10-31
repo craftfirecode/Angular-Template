@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 export interface User {
   id: number;
@@ -13,7 +13,7 @@ export interface User {
 })
 
 export class ApiService {
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
 
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>('https://jsonplaceholder.typicode.com/users');

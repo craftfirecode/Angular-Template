@@ -1,7 +1,11 @@
-<ul>
-  <li *ngFor="let user of users$ | async">
-    {{ user.id }}:
-    {{ user.name }},
-    {{ user.email }}
-  </li>
-</ul>
+@if (users$ | async; as users) {
+  <ul>
+    @for (user of users; track user.id) {
+      <li>
+        {{ user.id }}: {{ user.name }}, {{ user.email }}
+      </li>
+    }
+  </ul>
+} @else {
+  <p>Lädt Benutzer...</p>
+}
