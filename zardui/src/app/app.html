@@ -22,5 +22,7 @@
             </z-accordion-item>
         </z-accordion>
     </div>
-
+    <div>
+        <z-date-picker [value]="selectedDate()" placeholder="Pick a date" (dateChange)="onDateChange($event)" />
+    </div>
 </div>
