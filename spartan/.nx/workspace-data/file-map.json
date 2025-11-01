@@ -1,0 +1,196 @@
+{
+  "version": "6.0",
+  "nxVersion": "22.0.2",
+  "pathMappings": {
+    "@spartan-ng/helm/accordion": [
+      "./libs/ui/accordion/src/index.ts"
+    ],
+    "@spartan-ng/helm/utils": [
+      "./libs/ui/utils/src/index.ts"
+    ],
+    "@spartan-ng/helm/icon": [
+      "./libs/ui/icon/src/index.ts"
+    ]
+  },
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "projectFileMap": {
+      "spartan": [
+        {
+          "file": ".editorconfig",
+          "hash": "8037249353422744134"
+        },
+        {
+          "file": ".gitignore",
+          "hash": "10175894702052279752"
+        },
+        {
+          "file": ".postcssrc.json",
+          "hash": "12098411909725170385"
+        },
+        {
+          "file": ".vscode/extensions.json",
+          "hash": "11934160580685414355"
+        },
+        {
+          "file": ".vscode/launch.json",
+          "hash": "17406702432687230417"
+        },
+        {
+          "file": ".vscode/tasks.json",
+          "hash": "10093397977228577162"
+        },
+        {
+          "file": "README.md",
+          "hash": "2235963224322470361"
+        },
+        {
+          "file": "angular.json",
+          "hash": "16139294661042250026"
+        },
+        {
+          "file": "components.json",
+          "hash": "16224180875073320387"
+        },
+        {
+          "file": "libs/ui/accordion/src/index.ts",
+          "hash": "7042090315135346467"
+        },
+        {
+          "file": "libs/ui/accordion/src/lib/hlm-accordion-content.ts",
+          "hash": "495684836047318880"
+        },
+        {
+          "file": "libs/ui/accordion/src/lib/hlm-accordion-icon.ts",
+          "hash": "16708431098242100477"
+        },
+        {
+          "file": "libs/ui/accordion/src/lib/hlm-accordion-item.ts",
+          "hash": "8327567847879661469"
+        },
+        {
+          "file": "libs/ui/accordion/src/lib/hlm-accordion-trigger.ts",
+          "hash": "10732942516450624235"
+        },
+        {
+          "file": "libs/ui/accordion/src/lib/hlm-accordion.ts",
+          "hash": "7062336180335675043"
+        },
+        {
+          "file": "libs/ui/icon/src/index.ts",
+          "hash": "50232955296608235"
+        },
+        {
+          "file": "libs/ui/icon/src/lib/hlm-icon.token.ts",
+          "hash": "14997959720888420814"
+        },
+        {
+          "file": "libs/ui/icon/src/lib/hlm-icon.ts",
+          "hash": "11632766376988804619"
+        },
+        {
+          "file": "libs/ui/utils/src/index.ts",
+          "hash": "1762895332825194971"
+        },
+        {
+          "file": "libs/ui/utils/src/lib/hlm.ts",
+          "hash": "2589154290145504468"
+        },
+        {
+          "file": "package-lock.json",
+          "hash": "17268966280047794415"
+        },
+        {
+          "file": "package.json",
+          "hash": "4273936267731741295",
+          "deps": [
+            "npm:@angular/build",
+            "npm:@angular/cli",
+            "npm:@angular/compiler-cli",
+            "npm:@spartan-ng/cli",
+            "npm:@types/jasmine",
+            "npm:jasmine-core",
+            "npm:karma",
+            "npm:karma-chrome-launcher",
+            "npm:karma-coverage",
+            "npm:karma-jasmine",
+            "npm:karma-jasmine-html-reporter",
+            "npm:tw-animate-css",
+            "npm:typescript",
+            "npm:@angular/cdk",
+            "npm:@angular/common",
+            "npm:@angular/compiler",
+            "npm:@angular/core",
+            "npm:@angular/forms",
+            "npm:@angular/platform-browser",
+            "npm:@angular/router",
+            "npm:@ng-icons/core",
+            "npm:@ng-icons/lucide",
+            "npm:@spartan-ng/brain",
+            "npm:@tailwindcss/postcss",
+            "npm:clsx",
+            "npm:postcss",
+            "npm:rxjs",
+            "npm:tailwind-merge",
+            "npm:tailwindcss",
+            "npm:tslib"
+          ]
+        },
+        {
+          "file": "public/favicon.ico",
+          "hash": "3988961587069885523"
+        },
+        {
+          "file": "src/app/app.config.ts",
+          "hash": "11994487781212144442"
+        },
+        {
+          "file": "src/app/app.html",
+          "hash": "17252535711655849548"
+        },
+        {
+          "file": "src/app/app.routes.ts",
+          "hash": "809736233805555256"
+        },
+        {
+          "file": "src/app/app.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "src/app/app.spec.ts",
+          "hash": "6178488549380282869"
+        },
+        {
+          "file": "src/app/app.ts",
+          "hash": "8218754354699395242"
+        },
+        {
+          "file": "src/index.html",
+          "hash": "17504436909166679398"
+        },
+        {
+          "file": "src/main.ts",
+          "hash": "10405740721546735325"
+        },
+        {
+          "file": "src/styles.scss",
+          "hash": "969511997586073995"
+        },
+        {
+          "file": "tsconfig.app.json",
+          "hash": "10136459155298117738"
+        },
+        {
+          "file": "tsconfig.json",
+          "hash": "16967034411837276198"
+        },
+        {
+          "file": "tsconfig.spec.json",
+          "hash": "15504553596141903120"
+        }
+      ]
+    },
+    "nonProjectFiles": []
+  },
+  "externalNodesHash": "10554700419290958821"
+}
