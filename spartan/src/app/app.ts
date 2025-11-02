@@ -8,6 +8,7 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 import { lucideChevronRight } from '@ng-icons/lucide';
 import { HlmDatePickerImports } from '@spartan-ng/helm/date-picker';
 import { injectBrnCalendarI18n } from '@spartan-ng/brain/calendar';
+import {formatDateDE} from '../../utility/date';
 
 @Component({
   selector: 'app-root',
@@ -37,12 +38,12 @@ export class App implements OnInit {
         return weekdays[index];
       },
       formatHeader: (month: number, year: number) => {
-        const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 
+        const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
                        'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
         return `${months[month]} ${year}`;
       },
       formatMonth: (month: number) => {
-        const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 
+        const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
                        'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
         return months[month];
       },
@@ -51,13 +52,8 @@ export class App implements OnInit {
   }
 
   // Deutsche Datumsformatierung: DD.MM.YYYY
-  formatDateDE = (date: Date): string => {
-    if (!(date instanceof Date)) return `${date}`;
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}.${month}.${year}`;
-  };
+
+
   protected readonly title = signal('spartan');
 
   /** The minimum date */
@@ -68,4 +64,5 @@ export class App implements OnInit {
 
   protected readonly _captionLayout = model<'dropdown' | 'label' | 'dropdown-months' | 'dropdown-years'>('dropdown');
 
+  protected readonly formatDateDE = formatDateDE;
 }
