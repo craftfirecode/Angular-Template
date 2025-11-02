@@ -38,7 +38,7 @@
     <button hlmBtn variant="destructive">Destructive</button>
     <button hlmBtn variant="outline">Outline</button>
     <button hlmBtn variant="outline">
-            <ng-icon hlm name="lucideChevronRight" />
+      <ng-icon hlm name="lucideChevronRight" />
 
       123
     </button>
@@ -48,3 +48,9 @@
     </button>
   </div>
 </div>
+
+
+
+<hlm-date-picker [autoCloseOnSelect]="true" [captionLayout]="_captionLayout()" [min]="minDate" [max]="maxDate">
+  <span>Pick a date</span>
+</hlm-date-picker>

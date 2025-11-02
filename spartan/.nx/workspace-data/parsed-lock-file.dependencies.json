@@ -8675,6 +8675,11 @@
     "type": "static"
   },
   {
+    "source": "npm:class-variance-authority",
+    "target": "npm:clsx",
+    "type": "static"
+  },
+  {
     "source": "npm:cli-cursor",
     "target": "npm:restore-cursor",
     "type": "static"

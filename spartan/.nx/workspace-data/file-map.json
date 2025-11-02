@@ -10,6 +10,9 @@
     ],
     "@spartan-ng/helm/icon": [
       "./libs/ui/icon/src/index.ts"
+    ],
+    "@spartan-ng/helm/button": [
+      "./libs/ui/button/src/index.ts"
     ]
   },
   "nxJsonPlugins": [],
@@ -77,6 +80,18 @@
           "hash": "7062336180335675043"
         },
         {
+          "file": "libs/ui/button/src/index.ts",
+          "hash": "5168917203269790378"
+        },
+        {
+          "file": "libs/ui/button/src/lib/hlm-button.token.ts",
+          "hash": "9576183639981922411"
+        },
+        {
+          "file": "libs/ui/button/src/lib/hlm-button.ts",
+          "hash": "7085117891458425478"
+        },
+        {
           "file": "libs/ui/icon/src/index.ts",
           "hash": "50232955296608235"
         },
@@ -98,11 +113,11 @@
         },
         {
           "file": "package-lock.json",
-          "hash": "17268966280047794415"
+          "hash": "6018074025162073416"
         },
         {
           "file": "package.json",
-          "hash": "4273936267731741295",
+          "hash": "12960798683937692421",
           "deps": [
             "npm:@angular/build",
             "npm:@angular/cli",
@@ -128,6 +143,7 @@
             "npm:@ng-icons/lucide",
             "npm:@spartan-ng/brain",
             "npm:@tailwindcss/postcss",
+            "npm:class-variance-authority",
             "npm:clsx",
             "npm:postcss",
             "npm:rxjs",
@@ -146,7 +162,7 @@
         },
         {
           "file": "src/app/app.html",
-          "hash": "17252535711655849548"
+          "hash": "14948220984056833884"
         },
         {
           "file": "src/app/app.routes.ts",
@@ -162,7 +178,7 @@
         },
         {
           "file": "src/app/app.ts",
-          "hash": "8218754354699395242"
+          "hash": "10354175912947392551"
         },
         {
           "file": "src/index.html",
@@ -174,7 +190,7 @@
         },
         {
           "file": "src/styles.scss",
-          "hash": "969511997586073995"
+          "hash": "9496272267551717354"
         },
         {
           "file": "tsconfig.app.json",
@@ -182,7 +198,7 @@
         },
         {
           "file": "tsconfig.json",
-          "hash": "16967034411837276198"
+          "hash": "13827911761681365733"
         },
         {
           "file": "tsconfig.spec.json",
@@ -192,5 +208,5 @@
     },
     "nonProjectFiles": []
   },
-  "externalNodesHash": "10554700419290958821"
+  "externalNodesHash": "2419250640783175706"
 }

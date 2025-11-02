@@ -6416,6 +6416,15 @@
       "hash": "sha512-NIxF55hv4nSqQswkAeiOi1r83xy8JldOFDTWiug55KBu9Jnblncd2U6ViHmYgHf01TPZS77NJBhBMKdWj9HQMQ=="
     }
   },
+  "npm:class-variance-authority": {
+    "type": "npm",
+    "name": "npm:class-variance-authority",
+    "data": {
+      "version": "0.7.1",
+      "packageName": "class-variance-authority",
+      "hash": "sha512-Ka+9Trutv7G8M6WT6SeiRWz792K5qEqIGEGzXKhAE6xOWAY6pPH8U+9IY3oCMv6kqTmLsv7Xh/2w2RigkePMsg=="
+    }
+  },
   "npm:cli-cursor": {
     "type": "npm",
     "name": "npm:cli-cursor",
