@@ -47,10 +47,11 @@
       New Branch
     </button>
   </div>
+
+  <div class="my-4">
+    <hlm-date-picker [autoCloseOnSelect]="true" [formatDate]="formatDateDE" [captionLayout]="_captionLayout()"
+      [min]="minDate" [max]="maxDate">
+      <span>Wählen Sie ein Datum</span>
+    </hlm-date-picker>
+  </div>
 </div>
-
-
-
-<hlm-date-picker [autoCloseOnSelect]="true" [captionLayout]="_captionLayout()" [min]="minDate" [max]="maxDate">
-  <span>Pick a date</span>
-</hlm-date-picker>

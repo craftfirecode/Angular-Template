@@ -21,7 +21,7 @@ export class App implements OnInit {
   private readonly _i18n = injectBrnCalendarI18n();
 
   ngOnInit(): void {
-    // Erweitere das Jahr-Range bis 2050
+    // Erweitere das Jahr-Range bis 2050 und setze deutsches Datumsformat
     this._i18n.use({
       years: (startYear?: number, endYear?: number) => {
         const start = startYear || 1900;
@@ -31,9 +31,33 @@ export class App implements OnInit {
           years.push(i);
         }
         return years;
-      }
+      },
+      formatWeekdayName: (index: number) => {
+        const weekdays = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+        return weekdays[index];
+      },
+      formatHeader: (month: number, year: number) => {
+        const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 
+                       'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+        return `${months[month]} ${year}`;
+      },
+      formatMonth: (month: number) => {
+        const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 
+                       'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+        return months[month];
+      },
+      firstDayOfWeek: () => 1  // Montag als erster Tag der Woche (0 = Sonntag, 1 = Montag)
     });
   }
+
+  // Deutsche Datumsformatierung: DD.MM.YYYY
+  formatDateDE = (date: Date): string => {
+    if (!(date instanceof Date)) return `${date}`;
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+  };
   protected readonly title = signal('spartan');
 
   /** The minimum date */
