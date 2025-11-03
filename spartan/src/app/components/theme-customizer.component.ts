@@ -185,8 +185,8 @@ import { FormsModule } from '@angular/forms';
             </div>
           </div>
 
-          <!-- Export/Import Section -->
-          <div class="mt-4 space-y-2">
+          <!-- Export Section -->
+          <div class="mt-4">
             <button
               hlmBtn
               variant="outline"
@@ -194,15 +194,6 @@ import { FormsModule } from '@angular/forms';
               (click)="exportTheme()"
             >
               Export CSS (Zwischenablage)
-            </button>
-            
-            <button
-              hlmBtn
-              variant="outline"
-              class="w-full"
-              (click)="importTheme()"
-            >
-              Import CSS
             </button>
           </div>
 
@@ -277,35 +268,67 @@ export class ThemeCustomizerComponent {
   }
 
   oklchToHex(oklch: string): string {
-    // Extract OKLCH values from string like "oklch(0.5 0.2 180)"
-    const match = oklch.match(/oklch\(([\d.]+)\s+([\d.]+)\s+([\d.]+)/);
-    if (!match) return '#000000';
+    // Extract OKLCH values - handle both percentage and decimal notation
+    const match = oklch.match(/oklch\(([\d.]+%?)\s+([\d.]+)\s+([\d.]+)/);
+    if (!match) return '#808080';
 
-    const [, l, c, h] = match.map(Number);
+    let l = parseFloat(match[1]);
+    const c = parseFloat(match[2]);
+    const h = parseFloat(match[3]);
     
-    // Simple approximation: convert to RGB
-    // This is a very simplified conversion - in production, use a proper color library
-    const lightness = l * 255;
-    const r = Math.round(Math.min(255, Math.max(0, lightness)));
-    const g = Math.round(Math.min(255, Math.max(0, lightness)));
-    const b = Math.round(Math.min(255, Math.max(0, lightness)));
+    // Convert percentage to decimal if needed
+    if (match[1].includes('%')) {
+      l = l / 100;
+    }
+    
+    // Convert OKLCH to linear RGB (simplified)
+    const hueRad = (h * Math.PI) / 180;
+    const a = c * Math.cos(hueRad);
+    const b_val = c * Math.sin(hueRad);
+    
+    // Simple Lab to RGB conversion
+    let r = l + 0.3963 * a + 0.2158 * b_val;
+    let g = l - 0.1055 * a - 0.0638 * b_val;
+    let b = l - 0.0894 * a - 1.2914 * b_val;
+    
+    // Clamp and convert to 0-255
+    r = Math.round(Math.min(255, Math.max(0, r * 255)));
+    g = Math.round(Math.min(255, Math.max(0, g * 255)));
+    b = Math.round(Math.min(255, Math.max(0, b * 255)));
 
     return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
   }
 
   hexToOklch(hex: string): string {
-    // Convert HEX to RGB
+    // Convert HEX to RGB (0-1 range)
     const r = parseInt(hex.slice(1, 3), 16) / 255;
     const g = parseInt(hex.slice(3, 5), 16) / 255;
     const b = parseInt(hex.slice(5, 7), 16) / 255;
 
-    // Simple approximation to OKLCH
-    // In production, use a proper color library like culori
-    const lightness = (r + g + b) / 3;
-    const chroma = Math.max(r, g, b) - Math.min(r, g, b);
-    const hue = 0; // Simplified, would need proper calculation
+    // Convert RGB to linear RGB
+    const linearR = r <= 0.04045 ? r / 12.92 : Math.pow((r + 0.055) / 1.055, 2.4);
+    const linearG = g <= 0.04045 ? g / 12.92 : Math.pow((g + 0.055) / 1.055, 2.4);
+    const linearB = b <= 0.04045 ? b / 12.92 : Math.pow((b + 0.055) / 1.055, 2.4);
 
-    return `oklch(${lightness.toFixed(3)} ${chroma.toFixed(3)} ${hue})`;
+    // Simplified RGB to Lab conversion
+    const l = 0.4122214708 * linearR + 0.5363325363 * linearG + 0.0514459929 * linearB;
+    const m = 0.2119034982 * linearR + 0.6806995451 * linearG + 0.1073969566 * linearB;
+    const s = 0.0883024619 * linearR + 0.2817188376 * linearG + 0.6299787005 * linearB;
+
+    const L = Math.cbrt(l);
+    const A = Math.cbrt(m);
+    const B = Math.cbrt(s);
+
+    const lightness = 0.2104542553 * L + 0.7936177850 * A - 0.0040720468 * B;
+    const a = 1.9779984951 * L - 2.4285922050 * A + 0.4505937099 * B;
+    const b_val = 0.0259040371 * L + 0.7827717662 * A - 0.8086757660 * B;
+
+    // Calculate chroma and hue
+    const chroma = Math.sqrt(a * a + b_val * b_val);
+    let hue = Math.atan2(b_val, a) * 180 / Math.PI;
+    if (hue < 0) hue += 360;
+
+    return `oklch(${lightness.toFixed(3)} ${chroma.toFixed(3)} ${hue.toFixed(3)})`;
   }
 
   exportTheme() {
@@ -339,54 +362,5 @@ export class ThemeCustomizerComponent {
       console.error('Fehler beim Kopieren:', err);
       alert('Fehler beim Kopieren in die Zwischenablage.');
     });
-  }
-
-  importTheme() {
-    const cssInput = prompt('Fügen Sie Ihre CSS-Variablen ein (nur die :root und :root.dark Blöcke):');
-    
-    if (!cssInput) return;
-
-    try {
-      const lightColors = { ...this.themeService.lightColors() };
-      const darkColors = { ...this.themeService.darkColors() };
-
-      // Parse light mode colors
-      const lightMatch = cssInput.match(/:root\s*{([^}]+)}/);
-      if (lightMatch) {
-        const lightVars = lightMatch[1];
-        const varMatches = lightVars.matchAll(/--([a-z-]+):\s*([^;]+);/g);
-        
-        for (const match of varMatches) {
-          const [, key, value] = match;
-          if (key !== 'radius' && key in lightColors) {
-            lightColors[key as keyof typeof lightColors] = value.trim();
-          }
-        }
-      }
-
-      // Parse dark mode colors
-      const darkMatch = cssInput.match(/:root\.dark\s*{([^}]+)}/);
-      if (darkMatch) {
-        const darkVars = darkMatch[1];
-        const varMatches = darkVars.matchAll(/--([a-z-]+):\s*([^;]+);/g);
-        
-        for (const match of varMatches) {
-          const [, key, value] = match;
-          if (key !== 'radius' && key in darkColors) {
-            darkColors[key as keyof typeof darkColors] = value.trim();
-          }
-        }
-      }
-
-      // Update theme
-      this.themeService.lightColors.set(lightColors);
-      this.themeService.darkColors.set(darkColors);
-      this.themeService.applyThemeManually();
-
-      alert('Theme erfolgreich importiert!');
-    } catch (error) {
-      console.error('Import Fehler:', error);
-      alert('Fehler beim Importieren. Bitte überprüfen Sie das CSS-Format.');
-    }
   }
 }

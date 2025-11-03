@@ -99,6 +99,9 @@ export class ThemeService {
   darkColors = signal<ThemeColors>({ ...this.defaultDarkColors });
 
   constructor(private router: Router) {
+    // Read initial values from CSS to preserve any existing customizations
+    this.readCurrentCSSVariables();
+
     // Check system preference on init
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     this.isDarkMode.set(prefersDark);
@@ -107,6 +110,40 @@ export class ThemeService {
     effect(() => {
       this.applyTheme();
     });
+  }
+
+  private readCurrentCSSVariables() {
+    const root = document.documentElement;
+    const computedStyle = getComputedStyle(root);
+    
+    // Read light mode colors (from :root)
+    const lightColors = { ...this.lightColors() };
+    Object.keys(lightColors).forEach(key => {
+      const cssValue = computedStyle.getPropertyValue(`--${key}`).trim();
+      if (cssValue) {
+        lightColors[key as keyof ThemeColors] = cssValue;
+      }
+    });
+    this.lightColors.set(lightColors);
+
+    // Temporarily add dark class to read dark mode colors
+    const wasDark = root.classList.contains('dark');
+    root.classList.add('dark');
+    const darkComputedStyle = getComputedStyle(root);
+    
+    const darkColors = { ...this.darkColors() };
+    Object.keys(darkColors).forEach(key => {
+      const cssValue = darkComputedStyle.getPropertyValue(`--${key}`).trim();
+      if (cssValue) {
+        darkColors[key as keyof ThemeColors] = cssValue;
+      }
+    });
+    this.darkColors.set(darkColors);
+
+    // Restore dark class state
+    if (!wasDark) {
+      root.classList.remove('dark');
+    }
   }
 
   toggleDarkMode() {
@@ -139,7 +176,8 @@ export class ThemeService {
 
     // Apply CSS variables
     Object.entries(colors).forEach(([key, value]) => {
-      const cssVarName = '--' + key.replace(/([A-Z])/g, '-$1').toLowerCase();
+      // Keys are already in kebab-case format (e.g., 'card-foreground')
+      const cssVarName = '--' + key;
       root.style.setProperty(cssVarName, value);
     });
   }
