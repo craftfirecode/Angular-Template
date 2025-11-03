@@ -52,7 +52,7 @@ import { FormsModule } from '@angular/forms';
 
       <!-- Sidebar -->
       <div
-        class="pointer-events-auto fixed top-0 right-0 h-full w-80 bg-card border-l border-border shadow-2xl transform transition-transform duration-300 ease-in-out overflow-y-auto"
+        class="pointer-events-auto fixed top-0 right-0 h-full w-130 bg-card border-l border-border shadow-2xl transform transition-transform duration-300 ease-in-out overflow-y-auto"
         [class.translate-x-0]="themeService.sidebarOpen()"
         [class.translate-x-full]="!themeService.sidebarOpen()"
       >
@@ -218,7 +218,8 @@ export class ThemeCustomizerComponent {
   }
 
   formatLabel(key: string): string {
-    return key.replace(/([A-Z])/g, ' $1').trim();
+    // Show the CSS variable name as it appears in styles.scss
+    return '--' + key;
   }
 
   updateColor(colorKey: string, event: Event, isDark: boolean) {
