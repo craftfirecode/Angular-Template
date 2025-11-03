@@ -196,6 +196,11 @@ export class ThemeService {
     return Object.keys(this.lightColors()) as (keyof ThemeColors)[];
   }
 
+  applyThemeManually() {
+    this.applyTheme();
+    this.updateUrlParams();
+  }
+
   resetToDefaults() {
     this.lightColors.set({ ...this.defaultLightColors });
     this.darkColors.set({ ...this.defaultDarkColors });

@@ -185,6 +185,27 @@ import { FormsModule } from '@angular/forms';
             </div>
           </div>
 
+          <!-- Export/Import Section -->
+          <div class="mt-4 space-y-2">
+            <button
+              hlmBtn
+              variant="outline"
+              class="w-full"
+              (click)="exportTheme()"
+            >
+              Export CSS (Zwischenablage)
+            </button>
+            
+            <button
+              hlmBtn
+              variant="outline"
+              class="w-full"
+              (click)="importTheme()"
+            >
+              Import CSS
+            </button>
+          </div>
+
           <!-- Reset Button -->
           <div class="mt-4">
             <button
@@ -285,5 +306,87 @@ export class ThemeCustomizerComponent {
     const hue = 0; // Simplified, would need proper calculation
 
     return `oklch(${lightness.toFixed(3)} ${chroma.toFixed(3)} ${hue})`;
+  }
+
+  exportTheme() {
+    const lightColors = this.themeService.lightColors();
+    const darkColors = this.themeService.darkColors();
+
+    // Generate CSS in the exact format of styles.scss
+    let cssOutput = ':root {\n';
+    cssOutput += 'color-scheme: light;\n\n';
+    
+    Object.entries(lightColors).forEach(([key, value]) => {
+      cssOutput += `--${key}: ${value};\n`;
+    });
+    
+    cssOutput += '--radius: 0.625rem;\n'; // Add radius as it's not in ThemeColors
+    cssOutput += '}\n\n';
+    
+    cssOutput += ':root.dark {\n';
+    cssOutput += 'color-scheme: dark;\n\n';
+    
+    Object.entries(darkColors).forEach(([key, value]) => {
+      cssOutput += `--${key}: ${value};\n`;
+    });
+    
+    cssOutput += '}';
+
+    // Copy to clipboard
+    navigator.clipboard.writeText(cssOutput).then(() => {
+      alert('CSS wurde in die Zwischenablage kopiert! Sie können es jetzt in Ihre styles.scss einfügen.');
+    }).catch(err => {
+      console.error('Fehler beim Kopieren:', err);
+      alert('Fehler beim Kopieren in die Zwischenablage.');
+    });
+  }
+
+  importTheme() {
+    const cssInput = prompt('Fügen Sie Ihre CSS-Variablen ein (nur die :root und :root.dark Blöcke):');
+    
+    if (!cssInput) return;
+
+    try {
+      const lightColors = { ...this.themeService.lightColors() };
+      const darkColors = { ...this.themeService.darkColors() };
+
+      // Parse light mode colors
+      const lightMatch = cssInput.match(/:root\s*{([^}]+)}/);
+      if (lightMatch) {
+        const lightVars = lightMatch[1];
+        const varMatches = lightVars.matchAll(/--([a-z-]+):\s*([^;]+);/g);
+        
+        for (const match of varMatches) {
+          const [, key, value] = match;
+          if (key !== 'radius' && key in lightColors) {
+            lightColors[key as keyof typeof lightColors] = value.trim();
+          }
+        }
+      }
+
+      // Parse dark mode colors
+      const darkMatch = cssInput.match(/:root\.dark\s*{([^}]+)}/);
+      if (darkMatch) {
+        const darkVars = darkMatch[1];
+        const varMatches = darkVars.matchAll(/--([a-z-]+):\s*([^;]+);/g);
+        
+        for (const match of varMatches) {
+          const [, key, value] = match;
+          if (key !== 'radius' && key in darkColors) {
+            darkColors[key as keyof typeof darkColors] = value.trim();
+          }
+        }
+      }
+
+      // Update theme
+      this.themeService.lightColors.set(lightColors);
+      this.themeService.darkColors.set(darkColors);
+      this.themeService.applyThemeManually();
+
+      alert('Theme erfolgreich importiert!');
+    } catch (error) {
+      console.error('Import Fehler:', error);
+      alert('Fehler beim Importieren. Bitte überprüfen Sie das CSS-Format.');
+    }
   }
 }
