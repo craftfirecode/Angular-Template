@@ -39,6 +39,9 @@
       ],
       "@spartan-ng/helm/form-field": [
         "./libs/ui/form-field/src/index.ts"
+      ],
+      "@spartan-ng/helm/input": [
+        "./libs/ui/input/src/index.ts"
       ]
     }
   },

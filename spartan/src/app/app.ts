@@ -9,10 +9,13 @@ import { lucideChevronRight } from '@ng-icons/lucide';
 import { HlmDatePickerImports } from '@spartan-ng/helm/date-picker';
 import { injectBrnCalendarI18n } from '@spartan-ng/brain/calendar';
 import { formatDateDE, calendarI18nDE, DEFAULT_MIN_DATE, DEFAULT_MAX_DATE } from '../utility/date';
+import { HlmFormFieldImports } from '@spartan-ng/helm/form-field';
+import { HlmInputImports } from '@spartan-ng/helm/input';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [NgIcon, HlmIcon, HlmIconImports, HlmAccordionImports, HlmButtonImports, HlmDatePickerImports],
+  imports: [NgIcon, HlmIcon, HlmFormFieldImports,ReactiveFormsModule, HlmInputImports, HlmIconImports, HlmAccordionImports, HlmButtonImports, HlmDatePickerImports],
   templateUrl: './app.html',
   providers: [provideIcons({ lucideChevronRight })],
   styleUrl: './app.scss'
@@ -34,4 +37,5 @@ export class App implements OnInit {
   public maxDate = DEFAULT_MAX_DATE;
   protected readonly _captionLayout = model<'dropdown' | 'label' | 'dropdown-months' | 'dropdown-years'>('dropdown');
   protected readonly formatDateDE = formatDateDE;
+  public control = new FormControl('', [Validators.required, Validators.email]);
 }

@@ -54,4 +54,12 @@
       <span>Wählen Sie ein Datum</span>
     </hlm-date-picker>
   </div>
+
+  <div class="my-4">
+    <hlm-form-field>
+      <input class="w-80" hlmInput [formControl]="control" type="email" placeholder="Email" />
+      <hlm-hint>This is your email address.</hlm-hint>
+      <hlm-error>The email is required.</hlm-error>
+    </hlm-form-field>
+  </div>
 </div>
