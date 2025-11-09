@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a8f1481a-3f6a-4a25-b46c-74cd7cc16f1c" name="Changes" comment="feat(database): add migration files for User, Folder, and Todo tables" />
+    <list default="true" id="a8f1481a-3f6a-4a25-b46c-74cd7cc16f1c" name="Changes" comment="feat(database): add migration files for User, Folder, and Todo tables">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/backend/src/controllers/auth.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/auth/backend/src/controllers/auth.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/backend/src/utils/token.js" beforeDir="false" afterPath="$PROJECT_DIR$/auth/backend/src/utils/token.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -67,7 +71,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="npm.start">
+  <component name="RunManager" selected="npm.start (1)">
     <configuration name="add-user.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/auth/backend/add-user.js" working-dir="$PROJECT_DIR$/auth/backend">
       <method v="2" />
     </configuration>
@@ -113,8 +117,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.start" />
         <item itemvalue="npm.start (1)" />
+        <item itemvalue="npm.start" />
         <item itemvalue="Node.js.add-user.js" />
         <item itemvalue="npm.db:init" />
         <item itemvalue="npm.migrate" />
@@ -142,6 +146,8 @@
       <workItem from="1762695204275" duration="360000" />
       <workItem from="1762696665718" duration="43000" />
       <workItem from="1762696766086" duration="2261000" />
+      <workItem from="1762699292836" duration="195000" />
+      <workItem from="1762700902541" duration="125000" />
     </task>
     <task id="LOCAL-00001" summary="feat(date): add German date formatting utility and integrate into app">
       <option name="closed" value="true" />
@@ -207,7 +213,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762698981172</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="feat(database): add migration files for User, Folder, and Todo tables">
+      <option name="closed" value="true" />
+      <created>1762699481561</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1762699481561</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

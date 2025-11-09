@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 const ACCESS_EXP = process.env.ACCESS_EXP || '15m';
-const REFRESH_EXP = process.env.REFRESH_EXP || '365d';
+const REFRESH_EXP = process.env.REFRESH_EXP || '30d';
 
 const ACCESS_SECRET = process.env.ACCESS_TOKEN_SECRET || process.env.JWT_SECRET || 'access-secret';
 const REFRESH_SECRET = process.env.REFRESH_TOKEN_SECRET || 'refresh-secret';
@@ -21,4 +21,3 @@ export function verifyAccessToken(token) {
 export function verifyRefreshToken(token) {
   return jwt.verify(token, REFRESH_SECRET);
 }
-

@@ -1,12 +1,12 @@
 import { signAccessToken, signRefreshToken, verifyRefreshToken } from '../utils/token.js';
 import { getUserByUsernameAndPassword, getUserById } from '../services/user.service.js';
 
-const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000;
+const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
 const ACCESS_MS = 15 * 60 * 1000; // 15 minutes
 const COOKIE_ACCESS = 'accessToken';
 const COOKIE_REFRESH = 'refreshToken';
 
-function cookieOptions({ httpOnly = true, maxAge = ONE_YEAR_MS } = {}) {
+function cookieOptions({ httpOnly = true, maxAge = THIRTY_DAYS_MS } = {}) {
   return {
     httpOnly,
     secure: process.env.NODE_ENV === 'production',
@@ -27,7 +27,7 @@ export async function login(req, res) {
 
   // Set cookies: short-lived access and long-lived refresh
   res.cookie(COOKIE_ACCESS, accessToken, cookieOptions({ maxAge: ACCESS_MS }));
-  res.cookie(COOKIE_REFRESH, refreshToken, cookieOptions({ maxAge: ONE_YEAR_MS }));
+  res.cookie(COOKIE_REFRESH, refreshToken, cookieOptions({ maxAge: THIRTY_DAYS_MS }));
 
   // Return minimal user info (no tokens in body)
   return res.json({ user: { id: user.id, username: user.username } });
