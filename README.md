@@ -55,9 +55,7 @@ Vollständige Authentifizierungsanwendung mit Frontend und Backend:
 - **Reactive Forms** mit `FormBuilder` und Validierung
 - **HTTP-Interceptor** für automatische Token-Übertragung
 - **AuthGuard** zum Schutz von Routen
-- **JWT-Handling** (Speicherung in `localStorage`, Decoding)
 - **Fehlerbehandlung** (z. B. abgelaufene Tokens)
-- **Type-Safety** mit starken Typen für API-Responses
 
 ---
 
