@@ -16,12 +16,17 @@ Vollständige Authentifizierungsanwendung mit Frontend und Backend:
 
 #### 🎯 **Backend** (`./auth/backend`)
 
-| Ordner/Datei       | Zweck                                                                 |
-|--------------------|-----------------------------------------------------------------------|
-| **`index.js`**     | Express-Server mit Auth-Endpoints                                     |
-| **`add-user.js`**  | Script zum Hinzufügen von Benutzern                                  |
-| **`package.json`** | Backend-Dependencies (Express, Prisma, JWT, bcrypt)                  |
-| **`/prisma`**      | `schema.prisma` – Datenbankschema für User-Management                |
+| Ordner/Datei              | Zweck                                                               |
+|---------------------------|---------------------------------------------------------------------|
+| **`index.js`**            | Express-Server Entry Point                                          |
+| **`add-user.js`**         | Script zum Hinzufügen von Benutzern                               |
+| **`package.json`**        | Backend-Dependencies (Express, Prisma, JWT, bcrypt, cookie-parser) |
+| **`/prisma`**             | `schema.prisma` – Datenbankschema für User-Management             |
+| **`/src/controllers`**    | `auth.controller.js` – Login, Refresh, Logout Logic               |
+| **`/src/middleware`**     | `verifyAccessToken.js` – JWT Token Validation                     |
+| **`/src/routes`**         | Route-Definitionen (auth, folders, todos)                         |
+| **`/src/services`**       | `user.service.js` – Datenbank-Zugriff                            |
+| **`/src/utils`**          | Token-Utilities (sign, verify, decode)                            |
 
 #### 🎯 **Frontend** (`./auth/ng`)
 
@@ -36,10 +41,13 @@ Vollständige Authentifizierungsanwendung mit Frontend und Backend:
 ## ✅ Wichtige Features
 
 ### 🔐 **Auth-Bereich (Vollstack)**
-- **Express.js Backend** mit JWT-Authentifizierung
-- **Prisma ORM** für Datenbankzugriff
-- **bcrypt** für Passwort-Hashing
-- **CORS-Konfiguration** für Frontend-Backend-Kommunikation
+- **Express.js Backend** mit strukturierter Architektur (MVC-Pattern)
+- **Cookie-basierte Authentifizierung** mit HttpOnly-Cookies für Sicherheit
+- **Dual-Token System** (kurzzeitige Access-Tokens + langlebige Refresh-Tokens)
+- **Prisma ORM** für typisierte Datenbankzugriffe
+- **bcrypt** für sichere Passwort-Hashing
+- **Middleware-basierte Token-Verifikation** mit Fallback auf Authorization Header
+- **CORS-Konfiguration** für sichere Frontend-Backend-Kommunikation
 
 ### 🎨 **Angular Frontend**
 - **Standalone Components** (keine Module, nur `imports: [...]`)
@@ -55,9 +63,12 @@ Vollständige Authentifizierungsanwendung mit Frontend und Backend:
 
 ## ⚠️ Wichtiger Hinweis zur Sicherheit
 
-> **`localStorage` wird in diesem Projekt nur für Demonstrationszwecke (POC) verwendet!**
-> In einer **Produktionsumgebung** sollte stattdessen **`HttpOnly-Cookies`** oder eine sichere Server-seitige Session-Verwaltung genutzt werden, um **XSS-Angriffe** zu verhindern.
-> Dies ist eine bewusste Vereinfachung für Lernzwecke – **nicht für den Einsatz in echten Anwendungen geeignet!**
+> **Das Backend nutzt jetzt sichere `HttpOnly-Cookies` für die Authentifizierung!**
+> - **Access-Token**: Kurzzeitig (15 Minuten) in HttpOnly-Cookie
+> - **Refresh-Token**: Langlebig (30 Tage) in HttpOnly-Cookie  
+> - **Fallback**: Authorization Header wird weiterhin unterstützt
+> - **Schutz vor XSS**: HttpOnly-Cookies sind nicht über JavaScript zugreifbar
+> Dies entspricht modernen Sicherheitsstandards für Webanwendungen.
 
 ---
 
