@@ -14,6 +14,7 @@ model User {
   username String  @unique
   password String
   folders  Folder[]
+  todos    Todo[]
 }
 
 model Folder {
@@ -29,5 +30,7 @@ model Todo {
   id       Int    @id @default(autoincrement())
   name     String
   folderId Int
+  userId Int
+  user   User    @relation(fields: [userId], references: [id])
   folder   Folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
 }

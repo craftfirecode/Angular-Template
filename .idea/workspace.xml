@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a8f1481a-3f6a-4a25-b46c-74cd7cc16f1c" name="Changes" comment="fix(auth): update refresh token lifespan to 30 days" />
+    <list default="true" id="a8f1481a-3f6a-4a25-b46c-74cd7cc16f1c" name="Changes" comment="fix(workspace): update last commit message and task summary to reflect auth refresh token lifespan change">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/backend/prisma/migrations/20251109135238_init/migration.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/backend/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/auth/backend/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/backend/src/routes/todos.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/auth/backend/src/routes/todos.routes.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,6 +17,13 @@
   </component>
   <component name="ComposerSettings">
     <execution />
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="false" />
+    <option name="myAllFileTypesSelected" value="true" />
+    <option name="mySelectedFileTypes">
+      <set />
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -67,7 +79,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="npm.start (1)">
+  <component name="RunManager" selected="Node.js.add-user.js">
     <configuration name="add-user.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/auth/backend/add-user.js" working-dir="$PROJECT_DIR$/auth/backend">
       <method v="2" />
     </configuration>
@@ -113,11 +125,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.start (1)" />
-        <item itemvalue="npm.start" />
         <item itemvalue="Node.js.add-user.js" />
-        <item itemvalue="npm.db:init" />
+        <item itemvalue="npm.start" />
+        <item itemvalue="npm.start (1)" />
         <item itemvalue="npm.migrate" />
+        <item itemvalue="npm.db:init" />
       </list>
     </recent_temporary>
   </component>
@@ -144,6 +156,7 @@
       <workItem from="1762696766086" duration="2261000" />
       <workItem from="1762699292836" duration="195000" />
       <workItem from="1762700902541" duration="125000" />
+      <workItem from="1762705996491" duration="1748000" />
     </task>
     <task id="LOCAL-00001" summary="feat(date): add German date formatting utility and integrate into app">
       <option name="closed" value="true" />
@@ -225,7 +238,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762701541098</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="fix(workspace): update last commit message and task summary to reflect auth refresh token lifespan change">
+      <option name="closed" value="true" />
+      <created>1762702004242</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1762702004242</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -252,6 +273,7 @@
     <MESSAGE value="feat(folders): implement folder management routes and refactor Prisma client usage" />
     <MESSAGE value="feat(database): add migration files for User, Folder, and Todo tables" />
     <MESSAGE value="fix(auth): update refresh token lifespan to 30 days" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(auth): update refresh token lifespan to 30 days" />
+    <MESSAGE value="fix(workspace): update last commit message and task summary to reflect auth refresh token lifespan change" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(workspace): update last commit message and task summary to reflect auth refresh token lifespan change" />
   </component>
 </project>
