@@ -5,17 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a8f1481a-3f6a-4a25-b46c-74cd7cc16f1c" name="Changes" comment="feat(date): add German date formatting utility and integrate into app">
-      <change afterPath="$PROJECT_DIR$/auth/backend/src/controllers/auth.controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth/backend/src/middleware/verifyAccessToken.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth/backend/src/routes/auth.routes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth/backend/src/services/user.service.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth/backend/src/utils/token.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth/ng/src/app/core/auth.interceptor.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/backend/add-user.js" beforeDir="false" afterPath="$PROJECT_DIR$/auth/backend/add-user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/backend/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/auth/backend/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/auth/backend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/auth/backend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spartan/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/spartan/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/backend/src/controllers/auth.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/auth/backend/src/controllers/auth.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/backend/src/middleware/verifyAccessToken.js" beforeDir="false" afterPath="$PROJECT_DIR$/auth/backend/src/middleware/verifyAccessToken.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/backend/src/routes/auth.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/auth/backend/src/routes/auth.routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/ng/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/auth/ng/src/app/app.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/ng/src/app/core/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/auth/ng/src/app/core/auth.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="spartan" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -37,12 +33,12 @@
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {}
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/craftfirecode/Angular-Template.git&quot;,
-    &quot;accountId&quot;: &quot;ef9789ab-befb-4a61-bcbf-0e61d183d855&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/craftfirecode/Angular-Template.git",
+    "accountId": "be097ce3-0ab9-4b2a-8538-29e121a03404"
   }
-}</component>
+}]]></component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -59,7 +55,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "cookie",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/vhost/Angular-Template",
     "node.js.detected.package.eslint": "true",
@@ -67,19 +63,41 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "npm.dev.executor": "Run",
     "npm.start (1).executor": "Run",
+    "npm.start (2).executor": "Run",
     "npm.start.executor": "Run",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "ts.external.directory.path": "C:\\vhost\\Angular-Template\\ng\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Node.js.add-user.js">
+  <component name="RunManager" selected="npm.start (2)">
     <configuration name="add-user.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/auth/backend/add-user.js" working-dir="$PROJECT_DIR$/auth/backend">
+      <method v="2" />
+    </configuration>
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/auth/backend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
       <method v="2" />
     </configuration>
     <configuration name="start (1)" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/auth/ng/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="start (2)" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/auth/backend/package.json" />
       <command value="run" />
       <scripts>
         <script value="start" />
@@ -100,9 +118,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Node.js.add-user.js" />
+        <item itemvalue="npm.start (2)" />
         <item itemvalue="npm.start (1)" />
-        <item itemvalue="npm.start" />
+        <item itemvalue="npm.dev" />
+        <item itemvalue="Node.js.add-user.js" />
         <item itemvalue="npm.start" />
       </list>
     </recent_temporary>
@@ -127,7 +146,7 @@
       <workItem from="1762163839399" duration="127000" />
       <workItem from="1762695204275" duration="360000" />
       <workItem from="1762696665718" duration="43000" />
-      <workItem from="1762696766086" duration="396000" />
+      <workItem from="1762696766086" duration="1031000" />
     </task>
     <task id="LOCAL-00001" summary="feat(date): add German date formatting utility and integrate into app">
       <option name="closed" value="true" />
@@ -145,7 +164,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762080306482</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="feat(date): add German date formatting utility and integrate into app">
+      <option name="closed" value="true" />
+      <created>1762697264764</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1762697264764</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,6 +190,8 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="feat(date): add German date formatting utility and integrate into app" />
     <option name="LAST_COMMIT_MESSAGE" value="feat(date): add German date formatting utility and integrate into app" />
   </component>

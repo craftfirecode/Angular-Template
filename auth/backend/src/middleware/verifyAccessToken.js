@@ -1,9 +1,11 @@
 import { verifyAccessToken } from '../utils/token.js';
 
 export function verifyAccess(req, res, next) {
+  // prefer cookie named 'accessToken'
+  const cookieToken = req.cookies?.accessToken;
   const auth = req.headers.authorization;
-  if (!auth || !auth.startsWith('Bearer ')) return res.status(401).json({ error: 'Unauthorized' });
-  const token = auth.split(' ')[1];
+  const token = cookieToken || (auth && auth.startsWith('Bearer ') ? auth.split(' ')[1] : null);
+  if (!token) return res.status(401).json({ error: 'Unauthorized' });
   try {
     const payload = verifyAccessToken(token);
     req.user = payload;
@@ -12,4 +14,3 @@ export function verifyAccess(req, res, next) {
     return res.status(401).json({ error: 'Invalid token' });
   }
 }
-

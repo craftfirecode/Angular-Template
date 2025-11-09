@@ -1,5 +1,5 @@
 import {Injectable, signal} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {AuthService} from '../core';
 import {FolderService} from './folder.service';
 import {environment} from '../environment';
@@ -21,11 +21,8 @@ export class TodoService {
   ) {
   }
 
-  private getHeaders() {
-    return new HttpHeaders({
-      Authorization: `Bearer ${this.auth.getToken()}`
-    });
-  }
+  // Using cookie-based authentication (httpOnly cookies set by server).
+  // HTTP requests must include credentials so cookies are sent.
 
   async loadTodos(folderId: number) {
     const token = ++this.requestToken;
@@ -40,7 +37,7 @@ export class TodoService {
     }
 
     try {
-      const folder: any = await this.http.get(`${API_URL}/folders/${folderId}`, {headers: this.getHeaders()}).toPromise();
+      const folder: any = await this.http.get(`${API_URL}/folders/${folderId}`, { withCredentials: true }).toPromise();
       if (token === this.requestToken) {
         this.todoList.set(folder.todos || []);
       }
@@ -60,12 +57,12 @@ export class TodoService {
     if (this.currentFolderId !== null) {
       const folder: any = await this.http.get(
         `${API_URL}/folders/${this.currentFolderId}`,
-        {headers: this.getHeaders()}
+        { withCredentials: true }
       ).toPromise();
       this.todoList.set(folder.todos || []);
     }
     try {
-      const folders: any = await this.http.get(`${API_URL}/folders`, {headers: this.getHeaders()}).toPromise();
+      const folders: any = await this.http.get(`${API_URL}/folders`, { withCredentials: true }).toPromise();
       this.folderService.folderList.set(folders);
     } catch (e) {
       this.folderService.folderList.set([]);
@@ -74,17 +71,17 @@ export class TodoService {
   }
 
   async createTodo(data: any) {
-    await this.http.post(`${API_URL}/todos`, data, {headers: this.getHeaders()}).toPromise();
+    await this.http.post(`${API_URL}/todos`, data, { withCredentials: true }).toPromise();
     await this.refreshCurrentTodos();
   }
 
   async updateTodo(id: number, data: any) {
-    await this.http.put(`${API_URL}/todos/${id}`, data, {headers: this.getHeaders()}).toPromise();
+    await this.http.put(`${API_URL}/todos/${id}`, data, { withCredentials: true }).toPromise();
     await this.refreshCurrentTodos();
   }
 
   async deleteTodo(id: number) {
-    await this.http.delete(`${API_URL}/todos/${id}`, {headers: this.getHeaders()}).toPromise();
+    await this.http.delete(`${API_URL}/todos/${id}`, { withCredentials: true }).toPromise();
     await this.refreshCurrentTodos();
   }
 }

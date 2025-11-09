@@ -1,9 +1,8 @@
 import { Injectable, signal } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {environment} from '../environment';
 
 const API_URL = environment.apiUrl;
-const TOKEN_KEY = 'jwt_token';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -15,20 +14,19 @@ export class AuthService {
   }
 
   private async init() {
-    const token = localStorage.getItem(TOKEN_KEY);
-    if (!token) {
-      this.user.set(null);
-      return;
-    }
-    // Versuche, User-Daten zu laden (z.B. /folders als Ping)
+    // Try to get current user via cookie-based access token
     try {
-      const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-      await this.http.get(`${API_URL}/folders`, { headers }).toPromise();
-      // User ist eingeloggt, aber wir haben keine Userdaten → nur Token merken
-      this.user.set({ token });
-    } catch {
-      this.user.set(null);
-      localStorage.removeItem(TOKEN_KEY);
+      const res: any = await this.http.get(`${API_URL}/auth/me`, { withCredentials: true }).toPromise();
+      this.user.set(res.user || null);
+    } catch (e) {
+      // try refresh
+      try {
+        await this.http.post(`${API_URL}/auth/refresh`, {}, { withCredentials: true }).toPromise();
+        const res2: any = await this.http.get(`${API_URL}/auth/me`, { withCredentials: true }).toPromise();
+        this.user.set(res2.user || null);
+      } catch (e2) {
+        this.user.set(null);
+      }
     }
   }
 
@@ -37,33 +35,46 @@ export class AuthService {
   }
 
   async signUp(email: string, username: string, password: string) {
-    return this.http.post(`${API_URL}/auth/register`, { email, username, password }).toPromise();
+    return this.http.post(`${API_URL}/auth/register`, { email, username, password }, { withCredentials: true }).toPromise();
   }
 
   async signIn(username: string, password: string) {
-    const res: any = await this.http.post(`${API_URL}/auth/login`, { username, password }).toPromise();
-    if (res.token) {
-      localStorage.setItem(TOKEN_KEY, res.token);
-      this.user.set({ token: res.token });
-    }
+    // server sets httpOnly cookies for access and refresh
+    const res: any = await this.http.post(`${API_URL}/auth/login`, { username, password }, { withCredentials: true }).toPromise();
+    if (res?.user) this.user.set(res.user);
     return res;
   }
 
+  async refresh() {
+    try {
+      await this.http.post(`${API_URL}/auth/refresh`, {}, { withCredentials: true }).toPromise();
+      const res: any = await this.http.get(`${API_URL}/auth/me`, { withCredentials: true }).toPromise();
+      this.user.set(res.user || null);
+      return true;
+    } catch (e) {
+      this.user.set(null);
+      return false;
+    }
+  }
+
   async signOut() {
-    localStorage.removeItem(TOKEN_KEY);
     this.user.set(null);
+    try {
+      await this.http.post(`${API_URL}/auth/logout`, {}, { withCredentials: true }).toPromise();
+    } catch (e) {
+      // ignore
+    }
   }
 
   async logout() {
-    localStorage.removeItem(TOKEN_KEY);
-    this.user.set(null);
+    await this.signOut();
   }
 
   isAuthenticated() {
-    return !!localStorage.getItem(TOKEN_KEY);
+    return !!this.user();
   }
 
-  getToken() {
-    return localStorage.getItem(TOKEN_KEY);
+  getUser() {
+    return this.user();
   }
 }
