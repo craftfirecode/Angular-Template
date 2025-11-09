@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a8f1481a-3f6a-4a25-b46c-74cd7cc16f1c" name="Changes" comment="fix(add-user): clear default values for email, username, and password">
-      <change afterPath="$PROJECT_DIR$/auth/backend/src/routes/folders.routes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth/backend/src/routes/todos.routes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth/backend/src/utils/prisma.js" afterDir="false" />
+    <list default="true" id="a8f1481a-3f6a-4a25-b46c-74cd7cc16f1c" name="Changes" comment="feat(folders): implement folder management routes and refactor Prisma client usage">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/backend/add-user.js" beforeDir="false" afterPath="$PROJECT_DIR$/auth/backend/add-user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/backend/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/auth/backend/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/backend/src/services/user.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/auth/backend/src/services/user.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/auth/backend/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +58,10 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "npm.db:init.executor": "Run",
     "npm.dev.executor": "Run",
+    "npm.migrate.executor": "Run",
+    "npm.prisma.executor": "Run",
     "npm.start (1).executor": "Run",
     "npm.start (2).executor": "Run",
     "npm.start.executor": "Run",
@@ -72,15 +70,35 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="npm.start (2)">
+  <component name="RunManager" selected="Node.js.add-user.js">
     <configuration name="add-user.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/auth/backend/add-user.js" working-dir="$PROJECT_DIR$/auth/backend">
       <method v="2" />
     </configuration>
-    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+    <configuration name="db:init" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/auth/backend/package.json" />
       <command value="run" />
       <scripts>
-        <script value="dev" />
+        <script value="db:init" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="migrate" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/auth/backend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="migrate" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="prisma" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/auth/backend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="prisma" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
@@ -96,33 +114,13 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="start (2)" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/auth/backend/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="start" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
-    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/spartan/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="start" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.start (1)" />
-        <item itemvalue="npm.start (2)" />
-        <item itemvalue="npm.dev" />
         <item itemvalue="Node.js.add-user.js" />
-        <item itemvalue="npm.start" />
+        <item itemvalue="npm.db:init" />
+        <item itemvalue="npm.migrate" />
+        <item itemvalue="npm.prisma" />
+        <item itemvalue="npm.start (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -146,7 +144,7 @@
       <workItem from="1762163839399" duration="127000" />
       <workItem from="1762695204275" duration="360000" />
       <workItem from="1762696665718" duration="43000" />
-      <workItem from="1762696766086" duration="1844000" />
+      <workItem from="1762696766086" duration="2195000" />
     </task>
     <task id="LOCAL-00001" summary="feat(date): add German date formatting utility and integrate into app">
       <option name="closed" value="true" />
@@ -196,7 +194,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762698313615</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="feat(folders): implement folder management routes and refactor Prisma client usage">
+      <option name="closed" value="true" />
+      <created>1762698623463</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1762698623463</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -220,6 +226,7 @@
     <MESSAGE value="feat(auth): implement cookie-based authentication with access and refresh tokens" />
     <MESSAGE value="fix(workspace): update task summaries and last commit message for authentication feature" />
     <MESSAGE value="fix(add-user): clear default values for email, username, and password" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(add-user): clear default values for email, username, and password" />
+    <MESSAGE value="feat(folders): implement folder management routes and refactor Prisma client usage" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(folders): implement folder management routes and refactor Prisma client usage" />
   </component>
 </project>
