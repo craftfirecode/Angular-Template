@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a8f1481a-3f6a-4a25-b46c-74cd7cc16f1c" name="Changes" comment="feat(database): add migration files for User, Folder, and Todo tables">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="a8f1481a-3f6a-4a25-b46c-74cd7cc16f1c" name="Changes" comment="fix(auth): update refresh token lifespan to 30 days" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -219,7 +217,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762699481561</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="fix(auth): update refresh token lifespan to 30 days">
+      <option name="closed" value="true" />
+      <created>1762701541098</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1762701541098</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -245,6 +251,7 @@
     <MESSAGE value="fix(add-user): clear default values for email, username, and password" />
     <MESSAGE value="feat(folders): implement folder management routes and refactor Prisma client usage" />
     <MESSAGE value="feat(database): add migration files for User, Folder, and Todo tables" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(database): add migration files for User, Folder, and Todo tables" />
+    <MESSAGE value="fix(auth): update refresh token lifespan to 30 days" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(auth): update refresh token lifespan to 30 days" />
   </component>
 </project>
