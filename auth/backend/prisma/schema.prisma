@@ -20,7 +20,6 @@ model User {
 model Folder {
   id     Int     @id @default(autoincrement())
   name   String
-  done   Boolean @default(false)
   userId Int
   user   User    @relation(fields: [userId], references: [id])
   todos  Todo[]
