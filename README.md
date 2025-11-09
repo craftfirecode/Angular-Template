@@ -40,7 +40,7 @@ Vollständige Authentifizierungsanwendung mit Frontend und Backend:
 
 ## ✅ Wichtige Features
 
-### 🔐 **Auth-Bereich (Vollstack)**
+### 🔐 **Auth-Bereich**
 - **Express.js Backend** mit strukturierter Architektur (MVC-Pattern)
 - **Cookie-basierte Authentifizierung** mit HttpOnly-Cookies für Sicherheit
 - **Dual-Token System** (kurzzeitige Access-Tokens + langlebige Refresh-Tokens)
