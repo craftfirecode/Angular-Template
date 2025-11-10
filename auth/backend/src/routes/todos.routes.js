@@ -13,8 +13,6 @@ router.post('/', verifyAccess, async (req, res) => {
   try {
     const folder = await prisma.folder.findFirst({ where: { id: folderId } });
     if (!folder) return res.status(404).json({ error: 'Folder nicht gefunden' });
-    // Prüfen, ob der Folder dem eingeloggten User gehört
-    if (folder.userId !== userId) return res.status(403).json({ error: 'Keine Berechtigung für diesen Folder' });
 
     const todo = await prisma.todo.create({ data: { name, folderId, userId } });
     res.json(todo);
@@ -61,7 +59,7 @@ router.delete('/:id', verifyAccess, async (req, res) => {
   if (!Number.isInteger(userId)) return res.status(401).json({ error: 'Ungültiger Benutzer' });
 
   try {
-    const exists = await prisma.todo.findFirst({ where: { id, userId } });
+    const exists = await prisma.todo.findFirst({ where: { id } });
     if (!exists) return res.status(404).json({ error: 'Todo nicht gefunden oder keine Berechtigung' });
     await prisma.todo.delete({ where: { id } });
     res.json({ success: true });

@@ -2,9 +2,9 @@ import { prisma } from './src/utils/prisma.js';
 import bcrypt from 'bcrypt';
 
 async function addUser() {
-  const email = '';
-  const username = '';
-  const password = '';
+  const email = 'admin2';
+  const username = 'admin2';
+  const password = 'admin2';
 
   try {
     // Password hashen
