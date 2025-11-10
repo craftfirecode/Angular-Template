@@ -66,7 +66,6 @@ router.delete('/:id', verifyAccess, async (req, res) => {
     if (!folder) return res.status(404).json({ error: 'Folder nicht gefunden' });
 
     await prisma.$transaction([
-      prisma.todo.deleteMany({ where: { folderId: id } }),
       prisma.folder.delete({ where: { id } })
     ]);
 

@@ -21,7 +21,7 @@ model Folder {
   id     Int     @id @default(autoincrement())
   name   String
   userId Int
-  user   User    @relation(fields: [userId], references: [id])
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   todos  Todo[]
 }
 
@@ -30,6 +30,6 @@ model Todo {
   name     String
   folderId Int
   userId Int
-  user   User    @relation(fields: [userId], references: [id])
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   folder   Folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
 }
