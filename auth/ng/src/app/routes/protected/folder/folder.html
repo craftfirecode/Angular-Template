@@ -20,7 +20,7 @@
           <div class="my-3 flex gap-3 items-center">
             <a
               [routerLink]="'/protected/todos/' + folder.id"
-              class="b-0 w-full left border border-gray-200 px-4 py-2 shadow rounded-full"
+              class="fx-button b-0 w-full left border border-gray-200 px-4 py-2 shadow rounded-full"
             >
               <div class="flex justify-between">
                 <div>{{ folder.name }}</div>
@@ -43,7 +43,7 @@
   <p-drawer closable="false" [(visible)]="fab" position="bottom">
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
       <div class="flex gap-3">
-        <input class="w-full" pInputText type="text" placeholder="" formControlName="newFolder">
+        <input class="w-full" pInputText placeholder="New Folder" type="text" formControlName="newFolder">
           <p-button type="submit"
                     class="fx-button"
                     severity="success"
