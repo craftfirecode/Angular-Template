@@ -4,7 +4,7 @@
        enterClass="animate-enter fade-in-10 animate-duration-1000"
        once=true>
     <div class="flex items-center gap-3">
-      <p-button routerLink="/supabase/public/" outlined severity="contrast" icon="pi pi-angle-left"></p-button>
+      <p-button routerLink="/supabase/public/" class="fx-button" outlined icon="pi pi-angle-left"></p-button>
       <div class="text-lg uppercase">{{ folderService.currentFolderName() }}</div>
     </div>
 
@@ -27,7 +27,7 @@
               class="flex flex-col"
             >
               <div class="my-3 flex gap-3 items-center">
-                <div class="w-full left border border-gray-200 px-4 py-2 shadow rounded-full hover:bg-gray-100">
+                <div class="w-full left border border-gray-200 px-4 py-2 shadow rounded-full">
                   <span [ngClass]="{ 'line-through': todo.completed }">{{ todo.name }}</span>
                 </div>
                 <p-button icon="pi pi-trash"
@@ -50,7 +50,12 @@
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="w-full flex gap-3">
       <input #todoInput pInputText type="text" placeholder="New Todo" formControlName="newTodo"
              class="w-full shadow-0!"/>
-      <p-button type="submit" icon="pi pi-send" [disabled]="!profileForm.valid"></p-button>
+      <p-button
+        type="submit"
+        class="fx-button"
+        severity="success"
+        icon="pi pi-send"
+        [disabled]="!profileForm.valid"></p-button>
     </form>
   </div>
 </div>

@@ -1,9 +1,10 @@
 <div class="container mx-auto px-5">
-  <p-button class="fixed bottom-3 right-3"
+  <p-button class="fixed! bottom-4! right-4! fx-button"
             pAnimateOnScroll
             enterClass="animate-enter fade-in-10 animate-duration-1000"
             once=true
             type="button"
+            severity="success"
             (click)="fab = true"
             icon="pi pi-plus"/>
 
@@ -19,7 +20,7 @@
           <div class="my-3 flex gap-3 items-center">
             <a
               [routerLink]="'/protected/todos/' + folder.id"
-              class="w-full left border border-gray-200 px-4 py-2 shadow rounded-full hover:bg-gray-100"
+              class="b-0 w-full left border border-gray-200 px-4 py-2 shadow rounded-full"
             >
               <div class="flex justify-between">
                 <div>{{ folder.name }}</div>
@@ -39,18 +40,17 @@
     </div>
   </div>
 
-  <p-drawer header="New Folder" [(visible)]="fab" position="bottom">
+  <p-drawer closable="false" [(visible)]="fab" position="bottom">
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
       <div class="flex gap-3">
         <input class="w-full" pInputText type="text" placeholder="" formControlName="newFolder">
-        <div class="">
           <p-button type="submit"
+                    class="fx-button"
+                    severity="success"
                     [disabled]="!profileForm.valid"
                     (click)="fab = true"
                     icon="pi pi-send"/>
-        </div>
       </div>
-
     </form>
   </p-drawer>
   <p-confirmDialog/>

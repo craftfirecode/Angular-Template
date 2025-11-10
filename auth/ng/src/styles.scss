@@ -1,5 +1,7 @@
+@use "fx-button";
 @use "tailwindcss";
 @use "primeicons/primeicons.css";
+
 @plugin "tailwindcss-primeui";
 
 @layer components {
@@ -49,4 +51,30 @@ a.left, button.left {
 
 .p-dialog {
   margin: 15px;
+}
+
+.fx-button {
+  .p-button {
+    border: none;
+    background: none !important;
+  }
+
+  .p-button:hover {
+    border: none !important;
+    background: none !important;
+  }
+}
+
+.p-drawer-header {
+  padding-top: 0 !important;
+}
+
+.p-button-success {
+  color: #10b981 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .p-button-success {
+    color: #10b981 !important;
+  }
 }
